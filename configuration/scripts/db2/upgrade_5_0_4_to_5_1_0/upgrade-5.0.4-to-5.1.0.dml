@@ -1,0 +1,92 @@
+update items
+set createdBy = 1, lastmodifiedby = 1
+where createdBy is null
+@
+
+update property_definition
+set internalValue = 'backbase'
+where name = 'template'
+and internalValue = 'bb4'
+@
+
+update property_definition
+set internalValue = '$(contextRoot)/static/dashboard/templates/html/' || internalValue || '.html'
+where name = 'widgetChrome'
+@
+
+
+BEGIN
+  DECLARE occurance INTEGER;
+  DECLARE i INTEGER;
+  DECLARE splitted_value nvarchar(255);
+  DECLARE idx INTEGER;
+  DECLARE SQLCODE  INTEGER default 0;
+  
+  DECLARE ITEM_ID bigint;
+  DECLARE ITEM_CONTEXTITEMNAME nvarchar(255);
+  DECLARE ITEM_TAG nvarchar(255);
+  DECLARE LN_TAG_ID bigint;
+
+  DECLARE C_ITEM CURSOR FOR SELECT ID, CONTEXTITEMNAME, TAG FROM ITEMS WHERE TAG IS NOT NULL AND TRIM(TAG) != '';
+
+  -- Open item cursor
+  OPEN C_ITEM;
+  FETCH C_ITEM INTO ITEM_ID, ITEM_CONTEXTITEMNAME, ITEM_TAG;
+  
+  WHILE SQLCODE <> 100
+  DO
+    -- Split the tag column
+    SET occurance = (SELECT LENGTH(ITEM_TAG) - LENGTH(REPLACE(ITEM_TAG, ',', ''))+1 FROM SYSIBM.SYSDUMMY1);
+    SET i=1;
+    WHILE i <= occurance
+    DO
+      SET idx = (SELECT LOCATE(',',ITEM_TAG) FROM SYSIBM.SYSDUMMY1);
+      IF idx!=0
+      THEN
+        SET splitted_value = TRIM(SUBSTR(ITEM_TAG, 1, idx - 1));
+      ELSE
+        SET splitted_value = TRIM(ITEM_TAG);
+      END IF;
+
+      SET ITEM_TAG = (SELECT TRIM(SUBSTR(ITEM_TAG, idx + 1, LENGTH(ITEM_TAG))) FROM SYSIBM.SYSDUMMY1);
+
+      SET LN_TAG_ID = (SELECT ID FROM TAGS WHERE NAME = splitted_value AND CONTEXTITEMNAME = ITEM_CONTEXTITEMNAME);
+    
+      IF LN_TAG_ID IS NULL
+      THEN
+        SET LN_TAG_ID = (hibernate_sequence.nextVal);
+        INSERT INTO TAGS
+        ( ID
+        , NAME
+        , TYPE
+        ,CONTEXTITEMNAME
+        )
+        VALUES
+        ( LN_TAG_ID
+        , splitted_value
+        , 'regular'
+        , ITEM_CONTEXTITEMNAME
+        );
+      END IF;
+    
+      -- Insert item tag record
+      INSERT INTO ITEM_TAGS
+      ( ID
+      , ITEM_ID
+      , TAG_ID
+      )
+      VALUES
+      ( hibernate_sequence.nextVal
+      , ITEM_ID
+      , LN_TAG_ID
+      );
+     
+      SET i = i + 1;
+    END WHILE;
+  
+    FETCH C_ITEM INTO ITEM_ID, ITEM_CONTEXTITEMNAME, ITEM_TAG;
+  END WHILE;
+  CLOSE C_ITEM;
+END@
+
+COMMIT@

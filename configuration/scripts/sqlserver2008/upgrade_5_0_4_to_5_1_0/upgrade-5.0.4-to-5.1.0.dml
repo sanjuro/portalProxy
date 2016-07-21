@@ -1,0 +1,95 @@
+update items
+set createdBy = 1, lastmodifiedby = 1
+where createdBy is null
+GO
+
+update property_definition
+set internalValue = 'backbase'
+where name = 'template'
+and internalValue = 'bb4'
+GO
+
+update property_definition
+set internalValue = '$(contextRoot)/static/dashboard/templates/html/' + internalValue +  '.html'
+where name = 'widgetChrome'
+GO
+
+
+CREATE PROCEDURE tag_splitter
+AS
+BEGIN
+  DECLARE @occurance INT
+  DECLARE @i INT
+  DECLARE @splitted_value varchar(255)
+  DECLARE @idx INT  
+  
+  DECLARE @ITEM_ID bigint
+  DECLARE @ITEM_CONTEXTITEMNAME varchar(255)
+  DECLARE @ITEM_TAG varchar(255)
+  DECLARE @LN_TAG_ID bigint
+
+  DECLARE C_ITEM CURSOR FOR SELECT ID, CONTEXTITEMNAME, TAG FROM ITEMS WHERE TAG IS NOT NULL
+
+  -- Open item cursor
+  OPEN C_ITEM
+  FETCH NEXT FROM C_ITEM INTO @ITEM_ID, @ITEM_CONTEXTITEMNAME, @ITEM_TAG
+  
+  WHILE @@FETCH_STATUS = 0
+  BEGIN
+
+    -- Split the tag column
+    SET @occurance = (SELECT LEN(@ITEM_TAG) - LEN(REPLACE(@ITEM_TAG, ',', ''))+1)
+    SET @i=1
+    WHILE @i <= @occurance
+  BEGIN
+      SET @idx = charindex(',',@ITEM_TAG)
+    IF @idx!=0
+        SET @splitted_value = LTRIM(RTRIM(SUBSTRING(@ITEM_TAG, 0, @idx)))
+      ELSE
+        SET @splitted_value = LTRIM(RTRIM(@ITEM_TAG))
+
+      SET @ITEM_TAG = LTRIM(RTRIM(SUBSTRING(@ITEM_TAG, @idx + 1, LEN(@ITEM_TAG))))
+
+    SET @LN_TAG_ID = (SELECT ID FROM TAGS WHERE NAME = @splitted_value AND CONTEXTITEMNAME = @ITEM_CONTEXTITEMNAME)
+    
+    IF @LN_TAG_ID IS NULL
+    BEGIN
+        INSERT INTO TAGS
+        ( NAME
+        , TYPE
+        ,CONTEXTITEMNAME
+        )
+        VALUES
+        ( @splitted_value
+        , 'regular'
+        , @ITEM_CONTEXTITEMNAME
+        )
+
+        SET @LN_TAG_ID = (SELECT ID FROM TAGS WHERE NAME = @splitted_value AND CONTEXTITEMNAME = @ITEM_CONTEXTITEMNAME)
+      END    
+    
+      -- Insert item tag record
+      INSERT INTO ITEM_TAGS
+      ( ITEM_ID
+      , TAG_ID
+      )
+      VALUES
+      ( @ITEM_ID
+      , @LN_TAG_ID
+      )
+     
+      SET @i = @i + 1
+    END
+  
+    FETCH NEXT FROM C_ITEM INTO @ITEM_ID, @ITEM_CONTEXTITEMNAME, @ITEM_TAG
+  END
+  CLOSE C_ITEM
+  DEALLOCATE C_ITEM
+END
+GO
+
+EXEC tag_splitter
+GO
+
+DROP PROCEDURE tag_splitter
+GO

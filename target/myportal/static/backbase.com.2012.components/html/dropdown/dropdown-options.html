@@ -1,0 +1,82 @@
+<div class="bc-dropdown-items bc-roundcorner-5 {{#actionSelect}}bc-action-select{{/actionSelect}} {{#slideup}}bc-shadow-up{{/slideup}} {{#sid}}bc-permissions-dd{{/sid}}" {{#sid}}data-sid="{{sid}}"{{/sid}} {{#forlabel}}for="{{forlabel}}" forlabel="{{forlabel}}Label" {{/forlabel}}style="display: none;">
+    {{#searchable}}
+        <div class="bc-dropdown-search bc-dropdown-search-empty">
+            <input class="bc-input bc-roundcorner-5 bc-dropdown-search-input" type="text" />
+            <div class="bc-dropdown-search-reset"></div>
+        </div>
+    {{/searchable}}
+    {{#actionSelect}}
+        <header>{{header}}</header>
+    {{/actionSelect}}
+        <div class="bc-scroll-section">
+    {{#dropdown}}
+        {{#options}}
+            {{#isDivider}}
+            <a class="bc-dropdown-item bc-ellipsis bc-dd-divider {{#classname}}{{classname}}{{/classname}}" ><span class="bc-option-label"></span></a>
+            {{/isDivider}}
+            {{^isDivider}}
+            <a {{#href}}href="{{href}}" {{/href}}{{#onclick}} onclick="{{onclick}}"{{/onclick}} class="{{#sel}}bc-template-selected{{/sel}} {{stateClass}}  bc-dropdown-item bc-ellipsis {{#classname}}{{classname}}{{/classname}}" data-value="{{value}}"{{#data}} data-{{name}}="{{value}}"{{/data}}><span {{#addTitle}}title="{{name}}"{{/addTitle}} class="bc-option-label">{{^noEscape}}{{name}}{{/noEscape}}{{#noEscape}}{{{name}}}{{/noEscape}}</span></a>
+            {{/isDivider}}
+        {{/options}}
+    {{/dropdown}}
+    {{#allSelect}}
+            <a {{#href}}href="{{href}}" {{/href}}class="bc-dropdown-item bc-ellipsis bc-selectall {{#sel}}bc-template-selected{{/sel}} {{stateClass}} " data-value="selectall"><span class="bc-option-label">Select All</span></a>
+            <a {{#href}}href="{{href}}" {{/href}}class="bc-dropdown-item bc-ellipsis bc-selectnone {{#sel}}bc-template-selected{{/sel}} {{stateClass}} " data-value="none"><span class="bc-option-label">None</span></a>
+    {{/allSelect}}
+    {{#imageSelect}}
+        {{#options}}
+            <a {{#href}}href="{{href}}" {{/href}}class="bc-g bc-dropdown-item bc-template {{#sel}}bc-template-selected{{/sel}} {{stateClass}} " title="{{name}}" data-value="{{value}}">
+                <p class="bc-u"><span class="bc-i bc-template-image" style="background-image:url({{image}})"></span></p>
+                <p class="bc-u"><span class="bc-i bc-option-label bc-ellipsis">{{name}}</span></p>
+            </a>
+        {{/options}}
+    {{/imageSelect}}
+    {{#multiSelect}}
+        {{#options}}
+            <a {{#href}}href="{{href}}" {{/href}}class="bc-ellipsis bc-dropdown-item {{stateClass}} " data-value="{{value}}">
+                <span class="bc-custom-checkbox bc-checkbox-grey c_off">
+                    <input type="checkbox">
+                </span>
+                <span class="bc-option-label">{{name}}</span>
+            </a>
+        {{/options}}
+    {{/multiSelect}}
+    {{#deviceSelect}}
+        <a href="#" class="bc-dropdown-item bc-optimized-all {{#sel}}bc-template-selected{{/sel}} {{stateClass}} " data-value="{{value}}"><span class="bc-device-name">All {{device}} Devices</span></a>
+        {{#options}}
+        <a href="#" class="bc-dropdown-item bc-optimized-all {{#sel}}bc-template-selected{{/sel}} {{stateClass}} " data-value="{{value}}">
+            <span class="bc-device-name">{{device}}</span>
+            <span class="bd-dimension">{{width}}x{{height}}</span>
+        </a>
+        {{/options}}
+    {{/deviceSelect}}
+    {{#previewSelect}}
+        {{#options}}
+        <!--<a href="#" class="bd-devicelink" optimizedFor="tablet" targetDevice ="{{device}}">{{device}} ({{width}}x{{height}})</a>  -->
+        <a href="#" class="bc-dropdown-item bd-devicelink bc-optimized-all {{#sel}}bc-template-selected{{/sel}} {{stateClass}} " targetDevice="{{device}}">
+            <span class="bc-device-name">{{device}}</span>
+            <span class="bd-dimension">{{width}}x{{height}}</span>
+        </a>
+        {{/options}}
+    {{/previewSelect}}
+    {{#groupSelect}}
+        {{#options}}
+            {{#isDivider}}
+            <a class="bc-dropdown-item bc-ellipsis bc-dd-divider {{#classname}}{{classname}}{{/classname}}" ><span class="bc-option-label"></span></a>
+            {{/isDivider}}
+            {{^isDivider}}
+                {{#isHeader}}
+                    <a {{#href}}href="{{href}}" {{/href}}{{#onclick}} onclick="{{onclick}}"{{/onclick}} class="{{stateClass}} bc-dropdown-item bc-dropdown-item-header bc-ellipsis {{#classname}}{{classname}}{{/classname}}" data-value="{{value}}"{{#data}} data-{{name}}="{{value}}"{{/data}}>
+                        <span class="bc-icn bc-triangle-right-grey"></span>
+                        <span class="bc-icn bc-triangle-down-grey"></span>
+                        <span {{#addTitle}}title="{{name}}"{{/addTitle}} class="bc-option-label bc-optionheader-label">{{^noEscape}}{{name}}{{/noEscape}}{{#noEscape}}{{{name}}}{{/noEscape}}</span>
+                    </a>
+                {{/isHeader}}
+                {{^isHeader}}
+                    <a style="padding-left:21px" {{#href}}href="{{href}}" {{/href}}{{#onclick}} onclick="{{onclick}}"{{/onclick}} class="{{#sel}}bc-template-selected{{/sel}} {{stateClass}}  bc-dropdown-item bc-dropdown-item-grouphide bc-ellipsis {{#classname}}{{classname}}{{/classname}}" data-value="{{value}}"{{#data}} data-{{name}}="{{value}}"{{/data}}><span {{#addTitle}}title="{{name}}"{{/addTitle}} class="bc-option-label">{{^noEscape}}{{name}}{{/noEscape}}{{#noEscape}}{{{name}}}{{/noEscape}}</span></a>
+                {{/isHeader}}
+            {{/isDivider}}
+        {{/options}}
+    {{/groupSelect}}
+</div>
+</div>

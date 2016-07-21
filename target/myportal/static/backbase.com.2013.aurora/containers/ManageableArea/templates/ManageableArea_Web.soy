@@ -1,0 +1,17 @@
+{namespace backbase_com_2013_aurora}
+/**
+ * ManageableArea
+ * @param item Item in context
+ */
+{template .ManageableArea}
+    <div class="bp-container bp-ui-dragRoot bp-manageableArea --area bp-area" data-pid="{$item.name}">
+        {if $ij.designmode == true}
+        <div class="bp-manageableArea--message">
+            Manageable area reordering, deleting and adding items is allowed on regular pages
+        </div>
+        {/if}
+        {foreach $child in $item.children}
+            {include($child) |noAutoescape}
+        {/foreach}
+    </div>
+{/template}

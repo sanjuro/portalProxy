@@ -1,0 +1,10 @@
+<div class="pm-icon2 {{^isServerCatalog}}bp-ui-dragRoot{{/isServerCatalog}} {{#isVirtualWidget}}pm-panelCatalogIcon{{/isVirtualWidget}}{{^isVirtualWidget}}pm-widgetCatalogIcon{{/isVirtualWidget}}" title="{{#deprecated}}[DEPRECATED] {{/deprecated}}{{#hasHiddenTag}}[HIDE IN CATALOG] {{/hasHiddenTag}}{{#description}}{{description}}{{/description}}" data-id="{{uuid}}" data-type="{{itemType}}">
+    {{#hasCXPTag}}<div class="bc-badge bc-badge-cxp"></div>{{/hasCXPTag}}
+    {{#hasHiddenTag}}<div class="bc-badge bc-badge-hide-catalog"></div>{{/hasHiddenTag}}
+    {{#deprecated}}<div class="bc-badge bc-badge-deprecated"></div>{{/deprecated}}
+    <div class="pm-icon2-img">
+        {{#iconPath}}<img src="{{iconPath}}" onError="onImageError(this)"/>{{/iconPath}}
+        {{^iconPath}}<i class="bi bi-xxl {{icon}}"></i>{{/iconPath}}
+    </div>
+    <div class="pm-icon2-label"><p>{{title}}</p></div>
+</div>

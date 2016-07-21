@@ -1,0 +1,1 @@
+define(["backbase.com.2014.components/scripts/nativeDnD"],function(b){var a;function c(d){if(a){a.reset(d?d:a.defaults)}else{a=new b.NativeDnD(d);a.defaults=d}return a}return{set:c}});

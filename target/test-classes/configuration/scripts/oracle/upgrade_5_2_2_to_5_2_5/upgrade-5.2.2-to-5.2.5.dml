@@ -1,0 +1,42 @@
+-- Script to populate the page_id field for all 'INSTANTIATED' items
+
+-- Procedure to go through all items whose parentItemName is set to the name of the items that have their page_id set.
+DECLARE
+    toContinue BOOLEAN := true;
+BEGIN
+    -- Update all instantiated pages to set their page_id to value of the id field.
+    update items
+    set page_id = id
+    where  discriminator = 'Page'
+    and    state = 'INSTANTIATED'
+    ;
+
+    while toContinue
+    loop
+
+        update items child
+        set page_id = (select page_id
+                       from   items parent
+                       where  child.parentItemName = parent.name
+                       and    child.contextItemName = parent.contextItemName
+                       and    parent.page_id is not null
+                       )
+        where page_id is null
+        and exists (select '1'
+                    from   items parent
+                    where  parent.name = child.parentItemName
+                    and    child.contextItemName = parent.contextItemName
+                    and    parent.page_id is not null
+                    )
+        ;
+
+        IF( SQL%ROWCOUNT >= 1 )
+          THEN
+            toContinue := TRUE;
+          ELSE
+            toContinue := FALSE;
+          END IF;
+    END LOOP;
+
+END;
+/

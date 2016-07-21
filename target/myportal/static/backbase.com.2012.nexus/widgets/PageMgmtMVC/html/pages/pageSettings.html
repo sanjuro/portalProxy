@@ -1,0 +1,61 @@
+<div class="pageDetails">
+    <div class="bd-columnEditor">
+
+        <h2><span>Settings for</span> {{pageTitle}}</h2>
+
+        <div class="spacer"></div>
+    </div>
+
+    <form id="updatePageForm">
+        <fieldset>
+
+            <input name="portalName" type="hidden" value="{{portalName}}" />
+
+            <table class="table-form">
+                <tr>
+                    <td class="td-label">URL</td>
+                    <td class="td-field"><a href="{{urlRoot}}{{contextRoot}}/portals/{{portalName}}/pages/{{pageName}}" target="_blank" class="ellipsis bd-pageNameLink">{{contextRoot}}/portals/{{portalName}}/pages/{{pageName}}</a></td>
+                </tr>
+                <tr>
+                    <td class="td-label">Page Template</td>
+                    <td class="td-field">{{pageTemplate}}</td>
+                </tr>
+                <tr>
+                    <td class="td-label">Tags</td>
+                    <td class="td-field">{{tags}}</td>
+                </tr>
+                <tr>
+                    <td class="td-label">Status</td>
+                    <td class="td-field">{{pageStatus}}</td>
+                </tr>
+                <tr>
+                    <td class="td-label">Created By</td>
+                    <td class="td-field">{{createdBy}}</td>
+                </tr>
+                <tr>
+                    <td class="td-label">Created Date</td>
+                    <td class="td-field">{{createdDate}}</td>
+                </tr>
+                <tr>
+                    <td class="td-label">Modified By</td>
+                    <td class="td-field">{{modifiedBy}}</td>
+                </tr>
+                <tr>
+                    <td class="td-label">Last Modified</td>
+                    <td class="td-field">{{modifiedDate}}</td>
+                </tr>
+                {{#exposedProperties}}
+                <tr>
+                    <td class="td-label">{{label}}</td>
+                    <td class="td-field">{{value}}</td>
+                </tr>
+                {{/exposedProperties}}
+            </table>
+
+            <div class="bd-buttons{{buttonsClass}}">
+                <button class="bd-editPageSettings bd-button bd-roundcorner-3" pagename="{{pageName}}">Edit Settings</button>
+                <button class="bd-cancelNewPageForm bd-buttonText">Close</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

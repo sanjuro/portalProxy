@@ -1,0 +1,19 @@
+-- Add the system to system role and user for orchestrator - portal server communications
+insert into users (username, password, enabled) values ('sys2sys', 'ac2e9f96dc73314df3e7c554751ed8e4d0b962428fcdbf1252cdaa452a8cc9a9', true);
+SET @sys2sys_user_id = LAST_INSERT_ID();
+insert into groups (name, role, description) values ('sys2sys', 'SYS2SYS', 'Sys2Sys');
+set @sys2sys_group_id = LAST_INSERT_ID();
+insert into users_groups (users_id, groups_id) values (@sys2sys_user_id, @sys2sys_group_id);
+
+insert into acl_sid (principal, sid) values (true, 'sys2sys');
+insert into acl_sid (principal, sid) values (false, 'group_sys2sys');
+SET @group_sys2sys_sid = LAST_INSERT_ID();
+
+-- Get the acl_object_identity fro PortalFoundation
+SET @oid  = (SELECT obj.id FROM acl_object_identity obj, acl_class cls WHERE obj.object_id_class = cls.id and cls.class = 'com.backbase.portal.foundation.domain.model.PortalFoundation');
+
+INSERT INTO acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES (@oid, 6, @group_sys2sys_sid, 1, true, false, false);
+INSERT INTO acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES (@oid, 7, @group_sys2sys_sid, 2, true, false, false);
+INSERT INTO acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES (@oid, 8, @group_sys2sys_sid, 4, true, false, false);
+INSERT INTO acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES (@oid, 9, @group_sys2sys_sid, 8, true, false, false);
+INSERT INTO acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES (@oid, 10, @group_sys2sys_sid, 16, true, false, false);

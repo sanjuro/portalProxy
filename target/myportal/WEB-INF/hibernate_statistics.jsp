@@ -1,0 +1,130 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Hibernate statistics</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>PrepareStatementCount</td>
+        <td>${model['statistics'].prepareStatementCount}</td>
+    </tr>
+    <tr>
+        <td>CloseStatementCount</td>
+        <td>${model['statistics'].closeStatementCount}</td>
+    </tr>
+    <tr>
+        <td>QueryExecutionCount</td>
+        <td>${model['statistics'].queryExecutionCount}</td>
+    </tr>
+    <tr>
+        <td>QueryExecutionMaxTime</td>
+        <td>${model['statistics'].queryExecutionMaxTime}</td>
+    </tr>
+    <tr>
+        <td>QueryExecutionMaxTimeQueryString</td>
+        <td>${model['statistics'].queryExecutionMaxTimeQueryString}</td>
+    </tr>
+    <tr>
+        <td>QueryCacheHitCount</td>
+        <td>${model['statistics'].queryCacheHitCount}</td>
+    </tr>
+    <tr>
+        <td>QueryCacheMissCount</td>
+        <td>${model['statistics'].queryCacheMissCount}</td>
+    </tr>
+    <tr>
+        <td>QueryCachePutCount</td>
+        <td>${model['statistics'].queryCachePutCount}</td>
+    </tr>
+
+    <tr>
+        <td>SecondLevelCacheHitCount</td>
+        <td>${model['statistics'].secondLevelCacheHitCount}</td>
+    </tr>
+    <tr>
+        <td>SecondLevelCacheMissCount</td>
+        <td>${model['statistics'].secondLevelCacheMissCount}</td>
+    </tr>
+    <tr>
+        <td>SecondLevelCachePutCount</td>
+        <td>${model['statistics'].secondLevelCachePutCount}</td>
+    </tr>
+
+
+    <tr>
+        <td>CollectionFetchCount</td>
+        <td>${model['statistics'].collectionFetchCount}</td>
+    </tr>
+    <tr>
+        <td>CollectionLoadCount</td>
+        <td>${model['statistics'].collectionLoadCount}</td>
+    </tr>
+    <tr>
+        <td>EntityFetchCount</td>
+        <td>${model['statistics'].entityFetchCount}</td>
+    </tr>
+    <tr>
+        <td>EntityLoadCount</td>
+        <td>${model['statistics'].entityLoadCount}</td>
+    </tr>
+
+    <tr>
+        <td>CollectionUpdateCount</td>
+        <td>${model['statistics'].collectionUpdateCount}</td>
+    </tr>
+    <tr>
+        <td>CollectionRemoveCount</td>
+        <td>${model['statistics'].collectionRemoveCount}</td>
+    </tr>
+    <tr>
+        <td>CollectionRecreateCount</td>
+        <td>${model['statistics'].collectionRecreateCount}</td>
+    </tr>
+    <tr>
+        <td>EntityDeleteCount</td>
+        <td>${model['statistics'].entityDeleteCount}</td>
+    </tr>
+    <tr>
+        <td>EntityInsertCount</td>
+        <td>${model['statistics'].entityInsertCount}</td>
+    </tr>
+    <tr>
+        <td>EntityUpdateCount</td>
+        <td>${model['statistics'].entityUpdateCount}</td>
+    </tr>
+
+    <tr>
+        <td>ConnectCount</td>
+        <td>${model['statistics'].connectCount}</td>
+    </tr>
+
+    <tr>
+        <td>SessionOpenCount</td>
+        <td>${model['statistics'].sessionOpenCount}</td>
+    </tr>
+    <tr>
+        <td>SessionCloseCount</td>
+        <td>${model['statistics'].sessionCloseCount}</td>
+    </tr>
+    <tr>
+        <td>TransactionCount</td>
+        <td>${model['statistics'].transactionCount}</td>
+    </tr>
+    <tr>
+        <td>SuccessfulTransactionCount</td>
+        <td>${model['statistics'].successfulTransactionCount}</td>
+    </tr>
+    <tr>
+        <td>OptimisticFailureCount</td>
+        <td>${model['statistics'].optimisticFailureCount}</td>
+    </tr>
+
+
+    <tr>
+        <td>FlushCount</td>
+        <td>${model['statistics'].flushCount}</td>
+    </tr>
+</table>
+</body>
+</html>

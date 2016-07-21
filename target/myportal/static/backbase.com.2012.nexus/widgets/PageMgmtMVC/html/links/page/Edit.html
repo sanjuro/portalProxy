@@ -1,0 +1,378 @@
+<form id="updatePageForm" class="bc-default-form bc-pages-form bd-settingsPanel bd-pageEditingForm">
+    <input name="portalName" type="hidden" value="{{portalName}}" />
+    <input name="pageSetting_portalName" type="hidden" value="{{portalName}}" />
+    <input name="pageName" id="pageName" type="hidden" value="{{pageName}}" maxlength="150" />
+    <div class="bc-form-top">
+        <h4 class="bc-formheading"><span class="bc-form-title bc-ellipsis"><span class="bd-{{itemType}}-icon bd-nav-icon"></span>{{linkTitle}}</span></h4>
+    </div>
+    <div class="bc-form-body bd-scrollbar">
+        {{^isMasterPage}}
+        <ul class="bc-g">
+            <li class="bc-1"><div class="bc-i"><h3 class="bc-no-margin-top">Menu</h3></div></li>
+        </ul>
+        <ul class="bc-g">
+            <li class="bc-1-3 bd-form-label">
+                <div class="bc-g">
+                    <div class="bc-7-8"><div class="bc-i">Menu Label</div></div>
+                    <div class="bc-1-8">
+                        <div class="bc-i">
+                            <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                <span class="bc-align-left" style="width: 316px">
+                                    <p>Label of the link to this page. This label is visible in navigation menus. The title visible in the browser window is the value you define in the page title field.</p>
+                                    <a href="{bbDocUrl}/{bbDocVersion}/pages_properties.html" class="bc-doc-link" target="_blank"></a>
+                                </span>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bc-15-24">
+                <div class="bc-i bc-ellipsis">
+                    <input id="linkTitle" name="linkTitle" type="text" size="45" maxlength="150" oldTitleValue="{{linkTitle}}" oldURLValue="{{linkTitle}}" class="field field-wide required bd-titleInput" minlength="2" value="{{linkTitle}}" />
+                </div>
+            </li>
+            <li class="bc-1-24"></li>
+        </ul>
+        <ul class="bc-g">
+            <li class="bc-1-3 bd-form-label">
+                <div class="bc-g">
+                    <div class="bc-7-8"><div class="bc-i">Friendly URL <span class="bd-optionalLabel">(optional)</span></div></div>
+                    <div class="bc-1-8">
+                        <div class="bc-i">
+                            <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                <span class="bc-align-left" style="width: 316px">
+                                    <p>This is an optional readable or easy-to-remember URL of the page link.</p>
+                                    <p>Friendly URLs have a global scope which means they need to be unique across portals.</p>
+                                    <a href="{bbDocUrl}/{bbDocVersion}/navigation_linksurls.html" class="bc-doc-link" target="_blank">Learn more...</a>
+                                </span>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bc-15-24">
+                <div class="bc-i bc-ellipsis">
+                    <input name="Url" type="text" maxlength="150" value="{{Url}}" class="field field-wide autoCorrect" />
+                </div>
+            </li>
+            <li class="bc-1-24"></li>
+        </ul>
+        <ul class="bc-g">
+            <li class="bc-1-3 bd-form-label">
+                <div class="bc-g">
+                    <div class="bc-7-8"><div class="bc-i">Hierarchical URL</div></div>
+                    <div class="bc-1-8">
+                        <div class="bc-i">
+                            <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                <span class="bc-align-left" style="width: 316px">
+                                    <p>Hierarchical URLs for portal pages and navigation items are defined by appending their menu labels to the URL of Hierarchical URL of their parent. The appended part of the URL regarding the item is the link section. The link section is what you can edit in the Hierarchical URL details for a page or a navigation item.</p>
+                                    <a href="{bbDocUrl}/{bbDocVersion}/navigation_linksurls.html" class="bc-doc-link" target="_blank">Learn more...</a>
+                                </span>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bc-15-24">
+                <div class="bc-i">
+                    <p class="bd-editableContainer"><span class="bc-portal-url">{{path}}</span><span class="bd-editable bd-urlEditable" for="sectionName" title="Click to change URL">{{sectionName}}</span><input type="button" class="bd-button bd-buttonEditable bd-roundcorner-3" value="Edit"/></p>
+                    <input id="sectionName" name="sectionName" type="text" value="{{sectionName}}" maxlength="150" class="required bd-invisible" />
+                </div>
+            </li>
+            <li class="bc-1-24"></li>
+        </ul>
+            {{#defaultStateUrl}}
+        <ul class="bc-g">
+            <li class="bc-1-3 bd-form-label"><div class="bc-i">Default State URL</div></li>
+            <li class="bc-15-24">
+                <div class="bc-i">
+                    <div class="bd-urlTemplate">{{path}}{{sectionName}}//{{defaultStateUrl}}</div>
+                </div>
+            </li>
+        </ul>
+            {{/defaultStateUrl}}
+            {{#exposedLinkProperties.regularPro}}
+        {{#label}}
+        <ul class="bc-g">
+            <li class="bc-1-3 bd-form-label"><div class="bc-i">{{label}}</div></li>
+            <li class="bc-15-24">
+                <div class="bc-i bc-ellipsis">
+                    <input name="{{name}}" class="bd-link-{{name}} bd-exposedLinkProperty" type="hidden" value="{{value}}" />
+                    <input id="{{name}}Input" data-for=".bd-link-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" />
+                </div>
+            </li>
+            <li class="bc-1-24"></li>
+        </ul>
+        {{/label}}
+        {{^label}}
+        <div class="bc-i bc-ellipsis hidden">
+            <input name="{{name}}" class="bd-link-{{name}} bd-exposedLinkProperty" type="hidden" value="{{value}}" />
+            <input id="{{name}}Input" data-for=".bd-link-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" />
+        </div>
+        {{/label}}
+            {{/exposedLinkProperties.regularPro}}
+        {{/isMasterPage}}
+        <ul class="bc-g">
+            <li class="bc-1"><div class="bc-i"><h3>Page</h3></div></li>
+        </ul>
+
+        <ul class="bc-g">
+            <li class="bc-1-3 bd-form-label">
+                <div class="bc-g">
+                    <div class="bc-7-8"><div class="bc-i">Page Title</div></div>
+                    <div class="bc-1-8">
+                        <div class="bc-i">
+                            <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                <span class="bc-align-left" style="width: 316px">
+                                {{#isMasterPage}}
+                                    <p>Internal title of the master page, visible only in CXP Manager.</p>
+                                    <a href="{bbDocUrl}/{bbDocVersion}/pagemanagement_masterpages.html" class="bc-doc-link" target="_blank">Learn more...</a>
+                                {{/isMasterPage}}
+                                {{^isMasterPage}}
+                                    <p>Title of the page that is visible as the title of the browser window. To change the title visible in a navigation menu edit the menu label field in the page details, or the title of the respective navigation item (link) pointing to the page.</p>
+                                    <a href="{bbDocUrl}/{bbDocVersion}/pages_properties.html" class="bc-doc-link" target="_blank">Learn more...</a>
+                                {{/isMasterPage}}
+                                </span>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bc-15-24">
+                <div class="bc-i bc-ellipsis">
+                    <input id="pageTitle" name="pageTitle" type="text" size="45" oldvalue="{{pageTitleFormatted}}" class="field field-wide required bd-titleEditable" minlength="2" maxlength="150" value="{{pageTitle}}" />
+                </div>
+            </li>
+            <li class="bc-1-24"></li>
+        </ul>
+
+        {{#hasMasterPageFeature}}
+            {{#isMasterPage}}
+            <ul class="bc-g">
+                <li class="bc-1-3 bd-form-label">
+                    <div class="bc-g">
+                        <div class="bc-7-8"><div class="bc-i">Enable SEO</div></div>
+                        <div class="bc-1-8">
+                            <div class="bc-i">
+                                <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                    <span class="bc-align-left" style="width: 316px">
+                                        <p>Whether to use the Search Engine Optimization (SEO) features of Backbase CXP. SEO features allow you to easily manage HTML meta tags that search engines use to index websites.</p>
+                                        <a href="{bbDocUrl}/{bbDocVersion}/masterpages_creating.html" class="bc-doc-link" target="_blank">Learn more...</a>
+                                    </span>
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="bc-15-24"><div class="bc-i bc-ellipsis"><div class="bd-seo-toggle"></div></div></li>
+                <li class="bc-1-24"></li>
+            </ul>
+            {{/isMasterPage}}
+        {{/hasMasterPageFeature}}
+
+        {{^isMasterPage}}
+        {{#tagsManageable}}
+        <ul class="bc-g bp-page-tags">
+            <li class="bc-1-3 bd-form-label">
+                <div class="bc-g">
+                    <div class="bc-7-8"><div class="bc-i">Tags <span class="bd-optionalLabel">(optional)</span></div></div>
+                    <div class="bc-1-8">
+                        <div class="bc-i">
+                            <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                <span class="bc-align-left" style="width: 316px">
+                                    <p>Enter tags to be associated with this item. Tags are used for searching items within CXP Manager.</p>
+                                    <a href="{bbDocUrl}/{bbDocVersion}/pages_properties.html" class="bc-doc-link" target="_blank">Learn more...</a>
+                                </span>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bc-15-24">
+                <div class="bc-i bc-ellipsis">
+                    <input name="pageTags" data-manageable="{{tagsManageable}}" class="bd-pageTags" type="hidden" value="{{tags}}" />
+                    <input id="pageTagsInput" data-manageable="{{tagsManageable}}" data-for=".bd-pageTags" type="text" class="input-wide pageTagsInput" size="20" maxlength="200" value="{{tags}}" />
+                </div>
+            </li>
+        </ul>
+        {{/tagsManageable}}
+        {{#cusTags}}
+        {{#manageable}}
+        <ul class="bc-g bp-page-tags">
+            <li class="bc-1-3 bd-form-label"><div class="bc-i bc-capitalize">{{key}} <span class="bd-optionalLabel bc-notransform">(optional)</span></div></li>
+            <li class="bc-15-24">
+                <div class="bc-i bc-ellipsis">
+                    <input name="pageTags" data-manageable="{{manageable}}" data-tags="{{key}}" class="bd-pageTags-{{#removeSpace}}{{key}}{{/removeSpace}}" type="hidden" value="{{value}}"/>
+                    <input id="pageTagsTrackingInput" data-manageable="{{manageable}}" data-for=".bd-pageTags-{{#removeSpace}}{{key}}{{/removeSpace}}" type="text" class="input-wide pageTagsInput" size="20" maxlength="200" value="{{value}}"/>
+                </div>
+            </li>
+        </ul>
+        {{/manageable}}
+        {{/cusTags}}
+        {{/isMasterPage}}
+
+        {{#isMasterPage}}
+        <ul class="bc-g bp-page-tags">
+            <li class="bc-1-3 bd-form-label">
+                <div class="bc-g">
+                    <div class="bc-7-8"><div class="bc-i">Tags <span class="bd-optionalLabel">(optional)</span></div></div>
+                    <div class="bc-1-8">
+                        <div class="bc-i">
+                            <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                <span class="bc-align-left" style="width: 316px">
+                                    <p>Enter tags to be associated with this item. Tags are used for searching items within CXP Manager.</p>
+                                    <a href="{bbDocUrl}/{bbDocVersion}/pages_properties.html" class="bc-doc-link" target="_blank">Learn more...</a>
+                                </span>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bc-15-24">
+                <div class="bc-i bc-ellipsis">
+                    <input name="pageTags" data-manageable="{{tagsManageable}}" class="bd-pageTags" type="hidden" value="{{tags}}" />
+                    <input id="pageTagsInput" data-manageable="{{tagsManageable}}" data-for=".bd-pageTags" type="text" class="input-wide pageTagsInput" size="20" maxlength="200" value="{{tags}}" />
+                </div>
+            </li>
+            <li class="bc-1-24 bc-right"><div style="display: none" data-taglock="{{tagsManageable}}" data-id="pageTags" title="" class="bc-icn bd-man bd-man-{{#tagsManageable}}on{{/tagsManageable}}{{^tagsManageable}}off{{/tagsManageable}}"></div></li>
+        </ul>
+        {{#cusTags}}
+        <ul class="bc-g bp-page-tags">
+            <li class="bc-1-3 bd-form-label"><div class="bc-i bc-capitalize">{{key}} <span class="bd-optionalLabel bc-notransform">(optional)</span></div></li>
+            <li class="bc-15-24">
+                <div class="bc-i bc-ellipsis">
+                    <input name="pageTags" data-manageable="{{manageable}}" data-tags="{{key}}" class="bd-pageTags-{{#removeSpace}}{{key}}{{/removeSpace}}" type="hidden" value="{{value}}"/>
+                    <input id="pageTagsTrackingInput" data-manageable="{{manageable}}" data-for=".bd-pageTags-{{#removeSpace}}{{key}}{{/removeSpace}}" type="text" class="input-wide pageTagsInput" size="20" maxlength="200" value="{{value}}"/>
+                </div>
+            </li>
+            <li class="bc-1-24 bc-right"><div style="display: none" data-taglock="{{manageable}}" data-id="pageTagsTracking" title="" class="bc-icn bd-man bd-man-{{#manageable}}on{{/manageable}}{{^manageable}}off{{/manageable}}"></div></li>
+        </ul>
+        {{/cusTags}}
+        {{/isMasterPage}}
+        {{#hasMasterPageFeature}}
+            <!-- {{#isMasterPage}}
+                <input name="extendedItemName" type="hidden" value="{{extendedMasterPage}}" />
+            {{/isMasterPage}}
+             -->
+            {{^isTargetingPage}}
+            {{^isMasterPage}}
+                <ul class="bc-g">
+                    <li class="bc-1"><div class="bc-i"><h3>Master Page</h3></div></li>
+                </ul>
+            {{/isMasterPage}}
+                <ul class="bc-g">
+                    <li class="bc-1-3 bd-form-label">
+                        <div class="bc-g">
+                            <div class="bc-7-8"><div class="bc-i">
+                                {{#isMasterPage}}Extended from{{/isMasterPage}}
+                                {{^isMasterPage}}Master Page{{/isMasterPage}}
+                                </div></div>
+                            <div class="bc-1-8">
+                                <div class="bc-i">
+                                    <!-- <span class="bc-icn bc-info bc-ttip-bottom-right" style="top: -2px">
+                                    <span class="bc-align-left" style="width: 316px">
+                                        <p>Placeholder for "Master Page" tooltip text</p>
+                                    </span>
+                                    </span> -->
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="bc-15-24"><div class="bc-i bc-ellipsis"><div class="pageDropDownList masterPageList"></div></div></li>
+                    <li class="bc-1-24"><div data-id="" title="Reset to default" class="bd-gradient-grey bd-roundcorner-3"><div data-id="" title="" class="bc-icn bd-revert"></div></div></li>
+                </ul>
+            {{/isTargetingPage}}
+        {{/hasMasterPageFeature}}
+        <ul class="bc-g templateWrapper hidden">
+            <li class="bc-1-3 bd-form-label">
+                <div class="bc-g">
+                    <div class="bc-7-8"><div class="bc-i">Page Template</div></div>
+                    <div class="bc-1-8">
+                        <div class="bc-i">
+                            <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                <span class="bc-align-left" style="width: 316px">
+                                    <p>Determines the look-and-feel of the page.</p>
+                                </span>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bc-15-24"><div class="bc-i bc-ellipsis"><div class="pageDropDownList templatesList"></div></div></li>
+            <li class="bc-1-24"></li>
+        </ul>
+        {{#exposedPageProperties.regularPro}}
+            {{#isMasterPage}}
+                {{#label}}
+                <ul class="bc-g">
+                    <li class="bc-1-3 bd-form-label"><div class="bc-i">{{label}}</div></li>
+                    <li class="bc-15-24">
+                        <div class="bc-i bc-ellipsis">
+                            <input name="{{name}}" class="bd-page-{{name}} bd-exposedPageProperty" type="hidden" value="{{#value}}{{value}}{{/value}}" data-manageable="{{manageable}}" />
+                            <input id="{{name}}Input" data-for=".bd-page-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" data-manageable="{{manageable}}" />
+                        </div>
+                    </li>
+                    <li class="bc-1-24 bc-right"><div data-id="{{name}}" title="" class="bc-icn bd-man bd-man-{{#manageable}}on{{/manageable}}{{^manageable}}off{{/manageable}}"></div></li>
+                </ul>
+                {{/label}}
+                {{^label}}
+                    <div class="bc-i bc-ellipsis hidden">
+                        <input name="{{name}}" class="bd-page-{{name}} bd-exposedPageProperty" type="hidden" value="{{#value}}{{value}}{{/value}}" data-manageable="{{manageable}}" />
+                        <input id="{{name}}Input" data-for=".bd-page-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" data-manageable="{{manageable}}" />
+                    </div>
+                {{/label}}
+            {{/isMasterPage}}
+            {{^isMasterPage}}
+                {{#manageable}}
+                {{#label}}
+                    <ul class="bc-g">
+                        <li class="bc-1-3 bd-form-label"><div class="bc-i">{{label}}</div></li>
+                        <li class="bc-15-24">
+                            <div class="bc-i bc-ellipsis">
+                                <input name="{{name}}" class="bd-page-{{name}} bd-exposedPageProperty" type="hidden" value="{{#value}}{{value}}{{/value}}" data-manageable="{{manageable}}" />
+                                <input id="{{name}}Input" data-for=".bd-page-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" data-manageable="{{manageable}}" />
+                            </div>
+                        </li>
+                        <li class="bc-1-24"></li>
+                    </ul>
+                {{/label}}
+                {{^label}}
+                    <div class="bc-i bc-ellipsis hidden">
+                        <input name="{{name}}" class="bd-page-{{name}} bd-exposedPageProperty" type="hidden" value="{{#value}}{{value}}{{/value}}" data-manageable="{{manageable}}" />
+                        <input id="{{name}}Input" data-for=".bd-page-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" data-manageable="{{manageable}}" />
+                    </div>
+                {{/label}}
+                {{/manageable}}
+            {{/isMasterPage}}
+        {{/exposedPageProperties.regularPro}}
+        <div class="bd-inheried-Property">
+            {{#exposedPageProperties.inheritedPro}}
+                {{#manageable}}
+                    <ul class="bc-g">
+                        <li class="bc-1-3 bd-form-label"><div class="bc-i">{{label}}</div></li>
+                        <li class="bc-15-24">
+                            <div class="bc-i bc-ellipsis">
+                                <input name="{{name}}" class="bd-page-{{name}} bd-exposedPageProperty" type="hidden" value="{{#value}}{{value}}{{/value}}" data-manageable="{{manageable}}" />
+                                <input id="{{name}}Input" data-for=".bd-page-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" data-manageable="{{manageable}}" />
+                            </div>
+                        </li>
+                        <li class="bc-1-24"></li>
+                    </ul>
+                {{/manageable}}
+                {{^manageable}}
+                    <div class="bc-i bc-ellipsis hidden">
+                        <input name="{{name}}" class="bd-page-{{name}} bd-exposedPageProperty" type="hidden" value="{{#value}}{{value}}{{/value}}" data-manageable="{{manageable}}" />
+                        <input id="{{name}}Input" data-for=".bd-page-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" data-manageable="{{manageable}}" />
+                    </div>
+                {{/manageable}}
+            {{/exposedPageProperties.inheritedPro}}
+        </div>
+        <div class="bd-masterPage-Property"></div>
+    </div>
+    <div class="bd-buttons">
+        <div class="bd-buttons-inner">
+        <button class="bd-updatePage bd-button bd-green bd-roundcorner-3" name="default" type="submit">Save</button>
+        <button class="bd-pageSettingsTemplate bd-buttonText" pagename="{{pageName}}">Cancel</button>
+        </div>
+    </div>
+</form>

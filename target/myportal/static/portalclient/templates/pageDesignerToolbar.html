@@ -1,0 +1,51 @@
+<div class="pageDesignerWrapper">
+<!-- Copyright � 2011 Backbase B.V. -->
+	<div class="pageDesignerToolbarWrapper bd-fullWidthBorderBox bd-shadow bd-gradient">
+		<div class="pageDesignerToolbar">
+
+			<button class="tb-button tb-openClose">
+				<div style="position: relative;"><div class="tb-icon"></div>&nbsp;</div>
+			</button>
+			{{#enableDNDForContainers}}
+			<button class="tb-button tb-layouts">
+				<div style="position: relative;"><div class="tb-icon"></div>Layouts</div>
+			</button>
+			{{/enableDNDForContainers}}
+
+			<button class="tb-button tb-widgets">
+				<div style="position: relative;"><div class="tb-icon"></div>Widgets</div>
+			</button>
+
+			{{#iceEnabled}}
+			<button onclick="return bd.repositoryBrowser.contentRepositoryBrowser.toggleContentCatalog(this);" class="tb-button tb-repo">
+				<div style="position: relative;"><div class="tb-icon"></div>Assets</div>
+			</button>
+			{{/iceEnabled}}
+
+			<span class="tb-publish">
+
+				<button data-action="Edit" class="bd-button bd-gradient-grey bd-roundcorner-3 tb-edit">
+					<div style="position: relative;"><div class="tb-icon"></div>Edit</div>
+				</button>
+
+				<button class="bd-button bd-gradient-grey bd-roundcorner-3 bd-previewPage">
+					<div style="position: relative;"><div class="tb-icon"></div>Preview</div>
+				</button>
+
+			</span>
+
+		</div>
+	</div>
+	<div class="pageDesignerCatalog" style="display: none;">
+        <div class="pm-composer">
+            <div class="pm-composer-stripViewPort">
+                <div class="pm-composer-strip"></div>
+            </div>
+            <div class="pm-composer-previous pm-composer-previous-disabled"></div>
+            <div class="pm-composer-next pm-composer-next-disabled"></div>
+            <div class="pm-composer-pagerContainer">
+                <div class="pm-designer-pager"></div>
+            </div>
+        </div>
+	</div>
+</div>

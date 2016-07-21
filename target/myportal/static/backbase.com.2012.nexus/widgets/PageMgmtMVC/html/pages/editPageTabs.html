@@ -1,0 +1,56 @@
+<div class="bd-pageSettings">
+    <div class="bd-columnHeader bd-tabLabels" pagename="{{pageName}}">
+        <div class="bd-tabLabel bd-tab1 bd-settings-tab" for=".bd-settings-tab" title="Settings (s)" data-tab-name="settings"><span class="bc-tab-icon bi bi-s bi-pm-wrench"></span><span class="bc-tab-text">Settings</span></div>
+        {{#pageName}}
+            <div class="bd-tabLabel bd-tab2 bd-permissions bd-page-permissions" for=".bd-page-permissions" title="Permissions (a)" data-tab-name="permissions"><span class="bc-tab-icon bi bi-s bi-pm-groups"></span><span class="bc-tab-text">Permissions</span></div>
+        {{/pageName}}
+        {{#info}}
+            <div class="bd-tabLabel bd-tab3 bd-linkInfo" for=".bd-linkInfo" data-tab-name="info" title="Info (i)"><span class="bc-tab-icon bi bi-s bi-pm-square-info"></span><span class="bc-tab-text">Info</span></div>
+        {{/info}}
+        {{#showVersionTab}}
+            <div class="bd-tabLabel bd-tab4 bd-versions" for=".bd-versions" data-tab-name="versions" title="Versions (v)"><span class="bc-tab-icon bi bi-s bi-pm-sign-clock"></span><span class="bc-tab-text">Versions</span></div>
+        {{/showVersionTab}}
+         {{#showTargetingTab}}
+            <div class="bd-tabLabel bd-tab5 bd-targeting" for=".bd-targeting" title="Targeting (t)" data-tab-name="targeting"><span class="bc-tab-icon bi bi-s bi-pm-nav-targeting"></span><span class="bc-tab-text">Targeting</span></div>
+        {{/showTargetingTab}}
+            <div class="bd-tabLabel bd-tab6 bd-seo bd-hiddenTabLabel" for=".bd-seo" title="SEO" data-tab-name="seo"><span class="bc-tab-icon bi bi-s bi-app-seo"></span><span class="bc-tab-text">SEO</span></div>
+            <div class="bd-close-settings-panel-arrow bi bi-s bi-pm-arrow-left"></div>
+    </div>
+
+    <div class="bd-tabs bc-pages-form">
+        <div class="bd-tab bd-tab1 bd-settings-tab">
+            <div id="editPageTabs_Settings"></div>
+        </div>
+        {{#pageName}}
+        <div class="bd-tab bd-page-permissions">
+            <div class="bd-settingsPanel">
+                <div id="editPageTabs_Permissions" class="editPageTabs_Permissions"></div>
+            </div>
+        </div>
+        {{/pageName}}
+        {{#info}}
+            <div class="bd-tab bd-linkInfo">
+                <div id="editPageTabs_Info"></div>
+            </div>
+        {{/info}}
+        {{#showVersionTab}}
+        <div class="bd-tab bd-versions">
+            <div class="bd-settingsPanel">
+                <div id="editPageTabs_Versions" class="editPageTabs_Versions"></div>
+            </div>
+        </div>
+        {{/showVersionTab}}
+         {{#showTargetingTab}}
+        <div class="bd-tab bd-targeting">
+            <div class="bd-settingsPanel">
+                <div id="editPageTabs_Targeting" class="editPageTabs_Targeting"></div>
+            </div>
+        </div>
+        {{/showTargetingTab}}
+        <div class="bd-tab bd-seo">
+            <div class="bd-settingsPanel">
+                <div id="editPageTabs_SEO" class="editPageTabs_SEO"></div>
+            </div>
+        </div>
+    </div>
+</div>

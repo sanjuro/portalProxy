@@ -1,0 +1,194 @@
+<config>
+    <device-config>
+        <device type="iPhone" fallbackTypes="Smartphone"
+                pageTemplateTag="mobile" title="iPhone" width="320" height="448"
+                rotatable="true">
+            <match>
+                <!-- detectIphoneOrIpod -->
+                <match text="iphone">
+                    <match text="AppleWebKit"/>
+                </match>
+                <match text="ipod">
+                    <match text="AppleWebKit"/>
+                </match>
+                <!-- /detectIphoneOrIpod -->
+            </match>
+        </device>
+
+        <device type="Tablet" title="Tablet" width="768" height="1024" rotatable="true">
+            <!-- detectTierTablet -->
+            <match>
+                <!-- detectTierTablet -->
+                <!-- detectIpad -->
+                <match text="iPad">
+                    <match text="AppleWebKit"/>
+                </match>
+                <!-- /detectIpad -->
+                <!-- detectAndroidTablet -->
+                <match text="xoom"/>
+                <!-- /detectAndroidTablet -->
+                <!-- detectBlackBerryTablet -->
+                <match text="playbook"/>
+                <!-- /detectBlackBerryTablet -->
+                <!-- /detectTierTablet -->
+            </match>
+        </device>
+
+        <device type="Android" fallbackTypes="Smartphone"
+                pageTemplateTag="mobile" title="Android" width="320" height="448"
+                rotatable="true">
+                <match text="Android">
+                    <match text="AppleWebKit"/>
+                </match>
+        </device>
+        <device type="Smartphone" pageTemplateTag="mobile" title="Smartphone"
+                width="320" height="448" rotatable="true">
+            <!-- detectMobileLong -->
+            <!-- detectSmartphone -->
+            <match>
+                <!-- detectMobileLong -->
+                <!-- detectMobileQuick -->
+                <!-- detectWapWml -->
+                <match text="vnd.wap"/>
+                <match text="wml"/>
+                <!-- /detectWapWml -->
+                <!-- detectBrewDevice -->
+                <match text="brew"/>
+                <!-- /detectBrewDevice -->
+                <!-- detectOperaMobile -->
+                <match text="opera">
+                    <match text="mini"/>
+                </match>
+
+                <!-- /detectOperaMobile -->
+                <match text="netfront"/>
+                <match text="up.browser"/>
+                <match text="openweb"/>
+                <!-- detectDangerHiptop -->
+                <match text="danger"/>
+                <match text="hiptop"/>
+                <!-- /detectDangerHiptop -->
+                <!-- detectMidpCapable -->
+                <match text="midp"/>
+                <!-- /detectMidpCapable -->
+                <!-- detectMaemoTablet -->
+                <match text="maemo"/>
+                <!-- /detectMaemoTablet -->
+                <match text="pda"/>
+                <!-- detectArchos -->
+                <match text="archos"/>
+                <!-- /detectArchos -->
+                <!-- /detectMobileQuick -->
+                <!-- detectGameConsole -->
+                <!-- detectSonyPlaystation -->
+                <match text="playstation"/>
+                <!-- /detectSonyPlaystation -->
+                <!-- detectNintendo -->
+                <match text="nintendo"/>
+                <match text="wii"/>
+                <match text="nitro"/>
+                <!-- /detectNintendo -->
+                <!-- detectXbox -->
+                <match text="xbox"/>
+                <!-- /detectXbox -->
+                <!-- /detectGameConsole -->
+                <!-- detectSonyMylo -->
+                <match text="sony">
+                    <match text="qt embedded"/>
+                </match>
+                <match text="com2"/>
+                <!-- /detectSonyMylo -->
+                <match text="up.link"/>
+                <match text="sonyericsson"/>
+                <match text="ericsson"/>
+                <match text="sec-sgh"/>
+                <match text="docomo"/>
+                <match text="kddi"/>
+                <match text="vodafone"/>
+                <!-- /detectMobileLong -->
+
+                <!-- detectSmartphone -->
+                <!-- detectIphoneOrIpod <match text="iphone" /> <match text="ipod" />
+                        detectIphoneOrIpod -->
+
+                <!-- detectS60OssBrowser -->
+                <match text="webkit">
+                    <match text="symbian"/>
+                </match>
+                <!-- /detectS60OssBrowser -->
+
+                <!-- detectSymbianOS -->
+                <match text="symbian"/>
+                <match text="series60"/>
+                <match text="series70"/>
+                <match text="series80"/>
+                <match text="series90"/>
+                <!-- /detectSymbianOS -->
+
+                <!-- detectAndroid -->
+                <match text="android"/>
+                <!-- /detectAndroid -->
+
+                <!-- detectWindowsMobile -->
+                <match text="windows ce"/>
+                <match text="iemobile"/>
+                <match text="wm5 pie"/>
+                <match text="htc">
+                    <match text="windows"/>
+                </match>
+                <match>
+                    <!-- detectWapWml -->
+                    <match text="vnd.wap">
+                        <match text="windows"/>
+                    </match>
+                    <!-- /detectWapWml -->
+                    <!-- detectWapWml -->
+                    <match text="wml">
+                        <match text="windows"/>
+                    </match>
+                    <!-- /detectWapWml -->
+                </match>
+                <match> <!-- ?????? -->
+                    <match text="ppc"/>
+                </match>
+                <!-- /detectWindowsMobile -->
+
+                <!-- detectWindowsPhone7 -->
+                <match text="windows phone os 7"/>
+                <!-- /detectWindowsPhone7 -->
+
+                <!-- detectBlackBerry -->
+                <match text="blackberry"/>
+                <match text="vnd.rim"/>
+                <match text="blackberry95"/>
+                <!-- Storm 1 and 2 -->
+                <match text="blackberry97"/>
+                <!-- Bold -->
+                <match text="blackberry96"/>
+                <!-- Tour -->
+                <match text="blackberry89"/>
+                <!-- Curve 2 -->
+                <match text="blackberry 98"/>
+                <!-- Torch -->
+                <!-- /detectBlackBerry -->
+
+                <!-- detectPalmWebOS -->
+                <match text="webos"/>
+                <!-- /detectPalmWebOS -->
+
+                <!-- detectPalmOS -->
+                <match text="palm"/>
+                <match text="blazer"/>
+                <match>
+                    <match text="xiino"/>
+                </match>
+                <!-- /detectPalmOS -->
+
+                <!-- detectGarminNuvifone -->
+                <match text="nuvifone"/>
+                <!-- /detectGarminNuvifone -->
+                <!-- /detectSmartphone -->
+            </match>
+        </device>
+    </device-config>
+</config>

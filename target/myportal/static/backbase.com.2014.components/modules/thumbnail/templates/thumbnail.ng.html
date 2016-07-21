@@ -1,0 +1,24 @@
+<div class="z-thumb" ng-class="{'z-thumb-active': thumbnailSrc}" ng-controller="ThumbnailCtrl">
+
+    <div class="z-thumb-upload">
+        <div data-bb-fileupload="fileUploadConfig" class="z-bb-fileupload" ng-style="bgImage">
+            <i class="bi bi-s bi-pm-pencil"></i>
+
+            <div class="z-thumb-label z-thumb-empty">
+                <i class="bi bi-xxl bi-pm-plus"></i>
+                {{labels.EMPTY_TXT}}
+            </div>
+            <div class="z-thumb-label z-thumb-overempty">
+                <i class="bi bi-xxl bi-pm-plus"></i>
+                {{labels.OVER_TXT}}
+            </div>
+            <div class="z-thumb-label z-thumb-replace">
+                <i class="bi bi-xxl bi-pm-plus"></i>
+                {{labels.REPLACE_TXT}}
+            </div>
+
+        </div>
+        <input class="input-wide" type="hidden" value="{{thumbnailUrl}}" name="thumbnailUrl" id="thumbnailUrl">
+    </div>
+
+</div>

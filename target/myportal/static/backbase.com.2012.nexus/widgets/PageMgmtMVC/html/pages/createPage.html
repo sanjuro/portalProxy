@@ -1,0 +1,42 @@
+<div class="pageDetails">
+    <div class="bd-columnEditor">
+        <h2>Add New Page</h2>
+    </div>
+    <form id="newPageForm">
+        <fieldset>
+        <input name="portalName" type="hidden" value="{{portalName}}" />
+        <input name="pageSetting_portalName" type="hidden" value="{{portalName}}" />
+            <table class="table-form">
+                <tr>
+                    <td class="td-label required"><label for="pageTitle">Page Title</label></td>
+                    <td class="td-field">
+                        <input id="pageTitle" name="pageTitle" type="text" size="45" maxlength="150" oldvalue=""
+                        class="field field-wide required bd-titleInput" minlength="2" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-label required"><label for="newPageName">URL</label></td>
+                    <td class="td-field">
+                        <p class="bd-editableContainer">{{contextRoot}}/portals/{{portalName}}/pages/<span class="bd-space"> </span><span class="bd-editable bd-nameEditable" for="pageName" title="Click to change page name"></span><input type="button" class="bd-button bd-gradient-grey bd-buttonEditable bd-roundcorner-3" value="Edit"/></p>
+                        <input id="pageName" name="pageName" type="text" maxlength="150" class="required bd-invisible" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-label"><label for="pageName">Page Template</label></td>
+                    <td class="td-field"><div class="templatesList"></div></td>
+                </tr>
+                <tr>
+                    <td class="td-label"><label for="Tags">Tags <span class="bd-optionalLabel">(optional)</span></label></td>
+                    <td class="td-field">
+                        <input name="pageTags" class="bd-pageTags" type="hidden" />
+                        <input id="pageTagsInput" data-for=".bd-pageTags" type="text" class="input-wide" size="20" maxlength="200" />
+                    </td>
+                </tr>
+            </table>
+            <div class="bd-buttons">
+                <button class="bd-saveButton bd-button bd-green bd-roundcorner-3" type="submit">Save</button> or
+                <button class="bd-cancelNewPageForm bd-buttonText">Cancel</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

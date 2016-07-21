@@ -1,0 +1,30 @@
+-- Script to populate the page_id field for all 'INSTANTIATED' items
+
+-- Procedure to go through all items whose parentItemName is set to the name of the items that have their page_id set.
+
+  -- Update all instantiated pages to set their page_id to value of the id field.
+  update items set page_id = id where  discriminator = 'Page' and state = 'INSTANTIATED'
+  GO
+
+  while(1=1)
+  begin
+      update items
+      set page_id = (select page_id
+                     from   items parent
+                     where  items.parentItemName = parent.name
+                     and    items.contextItemName = parent.contextItemName
+                     and    parent.page_id is not null
+                     )
+      where page_id is null
+      and exists (select '1'
+                  from   items parent
+                  where  parent.name = items.parentItemName
+                  and    parent.contextItemName = items.contextItemName
+                  and    parent.page_id is not null
+                  );
+
+      if (@@rowcount=0)
+        break
+  end
+  GO
+

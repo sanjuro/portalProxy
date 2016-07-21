@@ -1,0 +1,36 @@
+<div class="pageDesignerToolbar">
+    <div class="pageDeisgnerToolbarTags">
+        <ul class="tb-section-wrapper">
+            {{#sections}}
+                {{^empty}}
+                    <li class="tb-button tb-section tb-{{escapeLabel}}" data-section="{{name}}" title="{{name}}">
+                        <span class="tb-icon"></span>
+                        {{name}}
+                    </li>
+                {{/empty}}
+                {{#empty}}
+                    <li class="tb-title tb-button tb-openClose" data-section="all">Catalog</li>
+                {{/empty}}
+            {{/sections}}
+            {{^sections}}
+                <li class="tb-button tb-openClose" data-section="all" title="{{name}}">
+                    <span class="bi bi-s bi-pm-arrow-down"></span>
+                </li>
+                <li class="tb-title tb-button tb-openClose" data-section="all">Enterprise catalog</li>
+            {{/sections}}
+        </ul>
+    </div>
+
+    <div class="tb-item-types"></div>
+
+    <div class="tb-search">
+        <input type="text" name="search" value="{{searchFilter}}">
+        <button class="bi bi-s bi-pm-magnifier"></button>
+    </div>
+
+    <div class="tb-filter-tags pull-right">
+        <span class="bi bi-pm-tag"></span>
+        <!-- New icon - only for migration  -->
+        <i class="bi bi-pm-tag"></i>
+    </div>
+</div>

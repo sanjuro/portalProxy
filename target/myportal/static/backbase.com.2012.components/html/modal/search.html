@@ -1,0 +1,28 @@
+{{^isBootStrap}}
+<div class="bc-search-container bc-search-container-hide {{#className}}{{className}} {{/className}}">
+    <div class="bc-search-button"></div>
+    <div class="bc-search-input-container">
+        <button class="bi bi-s bi-pm-magnifier bc-search-icon"></button>
+        <input type="text" class="bc-search-input" maxlength="100"/>
+        <input class="bc-search-hiddenInput" style="position: absolute; top: -100000px; left: -100000px;"/>
+    </div>
+</div>
+{{/isBootStrap}}
+{{#isBootStrap}}
+<div class="input-group z-search-box bc-search-container bc-components-bs bc-search-container-hide {{#className}}{{className}} {{/className}}">
+    {{=<% %>=}}
+    <div class="input-group-btn dropdown" data-ng-if="dropdownOpts.length">
+        <button type="button" class=" btn btn-default btn-sm bc-search-button dropdown-toggle" data-toggle="dropdown"><span class="bi bi-s bi-pm-search"></span>  <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+            <li data-ng-repeat="opt in dropdownOpts"><a href="#" data-ng-click="dropdownClick(opt)">{{opt.text}}</a></li>
+        </ul>
+    </div>
+    <div class="input-group-btn" data-ng-if="!dropdownOpts.length">
+        <button type="button" class=" btn btn-default btn-sm bc-search-button"><span class="bi bi-s bi-pm-search"></span></button>
+    </div>
+    <input type="text" class="bc-search-input" placeholder="Search" maxlength="100"/>
+    <input class="bc-search-hiddenInput" style="position: absolute; top: -100000px; left: -100000px;"/>
+    <div class="input-group-btn"><button class="btn btn-default btn-sm bc-search-cancel-button" type="button"><span class="bi bi-s bi-pm-x"></span></button></div>
+    <%={{ }}=%>
+</div>
+{{/isBootStrap}}

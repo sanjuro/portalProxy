@@ -1,0 +1,616 @@
+/*!
+ *	----------------------------------------------------------------
+ *	Copyright Backbase b.v. 2003/2012
+ *	All rights reserved.
+ *	----------------------------------------------------------------
+ *	Version 5.5
+ *	Author : Backbase R&D - Amsterdam - New York
+ *	----------------------------------------------------------------
+ */
+
+.bp-area{
+    transition: outline-color .2s;
+    -moz-transition: outline-color .2s;
+    -webkit-transition: outline-color .2s;
+    -o-transition: outline-color .2s;
+    border:1px solid red !important;
+}
+
+.bp-container {
+    position:relative;
+    z-index:0;
+}
+.bp-area {
+    position:relative;
+}
+.bp-widget {
+    position:relative;
+}
+
+/* Pref Pane */
+.bp-pref-pane {
+    padding:10px;
+    background-color: #EEEEEE;
+    background: -moz-linear-gradient(center top , #FFFFFF 0pt, #EEEEEE 100%) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFFFFF), color-stop(100%, #EEEEEE) );
+    background: -webkit-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background: -o-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background: -ms-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#EEEEEE', GradientType=0 );
+    background: linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+}
+.bp-pref-form {
+}
+.bp-pref-table {
+    table-layout: fixed;
+}
+
+.bp-pref-td-label {
+    padding:2px 8px 2px 4px;
+    vertical-align:top;
+}
+.bp-pref-td-input {
+    padding:2px 8px 2px 4px;
+    vertical-align:top;
+}
+
+.bp-pref-text {
+    width:240px;
+}
+.bp-container-pref {
+    display:none;
+}
+
+.bp-gradient1 {
+    background-color: #EEEEEE;
+    background: -moz-linear-gradient(center top , #FFFFFF 0pt, #EEEEEE 100%) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFFFFF), color-stop(100%, #EEEEEE) );
+    background: -webkit-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background: -o-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background: -ms-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#EEEEEE', GradientType=0 );
+    background: linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+}
+
+/* Generic */
+
+.bp-align-top {
+    vertical-align: top;
+}
+.bp-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.bp-container-grip {
+    background: url("../../dashboard/media/common/draggrippy.png") no-repeat scroll 0 0 transparent;
+    top:0px;
+    left:0px;
+    height: 19px;
+    position: absolute;
+    width: 8px;
+    z-index: 1000;
+}
+
+.bp-drag-indicator {
+    position:relative;
+    padding:5px;
+}
+.bp-drag-indicator-in {
+    position:relative;
+    border:2px dashed #f1f1f1;
+    border-radius: 8px;
+    text-align:center;
+    background:#f1f1f1 url(../media/drag-area-inactive.png) no-repeat 5px 5px;
+}
+
+.bp-drag-text:after {
+    content: "drop zone";
+}
+
+.bp-drag-text {
+    display:block;
+    color:#939393;
+    width:100%;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0px #f0f0f0;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif;
+    margin-top:50px;
+}
+
+.bp-absolute {
+    position:absolute!important;
+}
+
+.mcp-button, .mcp-input, .mcp-textarea, .mcp-select {
+    display: inline-block;
+    margin: 1px;
+    padding: 1px 0;
+    width: 200px;
+}
+.mcp-input--label {
+    display: none;
+}
+.mcp-input--button {
+    display: none;
+}
+.mcp-input-type-text, .mcp-input-type-password, .mcp-input-type-number, .mcp-input-type-color, .mcp-input-type-email, .mcp-input-type-search, .mcp-input-type-url, .mcp-input-type-datetime, .mcp-input-type-datetime-local, .mcp-input-type-date, .mcp-input-type-time, .mcp-input-type-month, .mcp-input-type-week, .mcp-input-type-tel, .mcp-textarea, .mcp-select {
+    border: 1px solid silver;
+    border-radius: 2px 2px 2px 2px;
+}
+.mcp-button, .mcp-input {
+    height: 16px;
+}
+.mcp-textarea {
+    height: 100px;
+}
+
+.mcp-input-type-hidden {
+    display: none;
+}
+.mcp-input-type-file, .mcp-input-type-range, .mcp-input-type-checkbox, .mcp-input-type-radio {
+    border-color: transparent;
+}
+.mcp-input-type-checkbox--value, .mcp-input-type-radio--value {
+    opacity: 0;
+}
+.mcp-input-type-checkbox, .mcp-input-type-radio {
+    width: 18px;
+}
+.mcp-input-type-button--value, .mcp-input-type-image--value, .mcp-input-type-reset--value, .mcp-input-type-submit--value {
+    display: none;
+}
+.mcp-button, .mcp-input-type-button, .mcp-input-type-image, .mcp-input-type-reset, .mcp-input-type-submit {
+    cursor: default;
+    width: auto;
+}
+.mcp-button--label, .mcp-select--label, .mcp-input-type-color--label, .mcp-input-type-file--label, .mcp-input-type-datetime--label, .mcp-input-type-datetime-local--label, .mcp-input-type-date--label, .mcp-input-type-time--label, .mcp-input-type-month--label, .mcp-input-type-week--label, .mcp-input-type-button--label, .mcp-input-type-reset--label, .mcp-input-type-submit--label {
+    cursor: default;
+    display: block;
+    height: 14px;
+    left: 1px;
+    line-height: 14px;
+    overflow: hidden;
+    position: relative;
+    top: 1px;
+}
+
+.mcp-button--label, .mcp-input-type-button--label, .mcp-input-type-image--label, .mcp-input-type-reset--label, .mcp-input-type-submit--label {
+    border: 1px solid transparent;
+    text-align: center;
+    top: 2px;
+}
+.mcp-input-type-file--label {
+    left: 20px;
+    position: absolute;
+}
+
+.mcp-select--value, .mcp-input-type-color--value, .mcp-input-type-date--value, .mcp-input-type-time--value, .mcp-input-type-datetime--value, .mcp-input-type-datetime-local--value, .mcp-input-type-month--value, .mcp-input-type-week--value {
+    display: none;
+}
+
+
+
+.mcp-input-type-text, .mcp-input-type-password, .mcp-input-type-number, .mcp-input-type-color, .mcp-input-type-email, .mcp-input-type-search, .mcp-input-type-url, .mcp-input-type-datetime, .mcp-input-type-datetime-local, .mcp-input-type-date, .mcp-input-type-time, .mcp-input-type-month, .mcp-input-type-week, .mcp-input-type-tel, .mcp-textarea, .mcp-select {
+    background-color: white;
+}
+.mcp-button_focus, .mcp-input_focus, .mcp-textarea_focus, .mcp-select_focus {
+    background-color: lightyellow;
+    border-color: lightblue;
+    border-width: 2px;
+    margin: 0;
+}
+.mcp-input-type-file.mcp-input_focus, .mcp-input-type-checkbox.mcp-input_focus, .mcp-input-type-radio.mcp-input_focus, .mcp-input-type-range.mcp-input_focus {
+    background: none repeat scroll 0 0 transparent;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+}
+.mcp-button.mcp-button_focus, .mcp-input-type-button.mcp-input_focus, .mcp-input-type-submit.mcp-input_focus, .mcp-input-type-reset.mcp-input_focus {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    margin: 1px;
+}
+.mcp-input--input, .mcp-textarea--value, .mcp-select--value {
+    background-color: transparent;
+    border: medium none;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    outline: medium none;
+    padding: 0;
+    width: 100%;
+    vertical-align:top;
+}
+.mcp-input--placeholder {
+    color: silver;
+    font-style: italic;
+}
+.mcp-input-type-radio--button, .mcp-input-type-checkbox--button, .mcp-input-type-date--button, .mcp-input-type-time--button, .mcp-input-type-datetime--button, .mcp-input-type-datetime-local--button, .mcp-input-type-week--button, .mcp-input-type-month--button, .mcp-input-type-number--button, .mcp-input-type-color--button, .mcp-input-type-range--button, .mcp-input-type-file--button, .mcp-input-type-search--button, .mcp-select--button {
+    position: absolute;
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin: 0 1px;
+    background-image: url("sprite_mini-icons.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
+
+.mcp-input-type-time--button, .mcp-input-type-number--button {
+    background-position: 0 16px;
+}
+
+
+
+/* Select */
+.mcp-select--button {
+    background-position: 0 0;
+}
+.mcp-select_hover .mcp-select--button {
+    background-position: -16px 0;
+}
+.mcp-select_disabled .mcp-select--button {
+    background-position: -32px 0;
+}
+.mcp-select_active .mcp-select--button {
+    background-position: -48px 0;
+}
+
+
+/* Search */
+.mcp-input-type-search--button {
+    background-position: 0 -96px;
+}
+.mcp-input_hover .mcp-input-type-search--button {
+    background-position: -16px -96px;
+}
+.mcp-input_disabled .mcp-input-type-search--button {
+    background-position: -32px -96px;
+}
+.mcp-input_active .mcp-input-type-search--button {
+    background-position: -48px -96px;
+}
+
+
+/* File */
+.mcp-input-type-file--button {
+    left: 0;
+}
+
+.mcp-input-type-file--field {
+    overflow: hidden;
+}
+.mcp-input-type-file--value {
+    height: 1em;
+    opacity: 0;
+    width: 16px;
+}
+
+.mcp-input-type-file--button {
+    background-position: 0 -192px;
+}
+.mcp-input_hover .mcp-input-type-file--button {
+    background-position: -16px -192px;
+}
+.mcp-input_disabled .mcp-input-type-file--button {
+    background-position: -32px -192px;
+}
+.mcp-input_active .mcp-input-type-file--button {
+    background-position: -48px -192px;
+}
+
+
+
+.mcp-input-type-number {
+    width: 60px;
+}
+.mcp-input-type-date {
+    width: 200px;
+}
+.mcp-input-type-time {
+    width: 56px;
+}
+
+
+
+/* Datetime */
+.mcp-input-type-datetime, .mcp-input-type-datetime-local {
+    width: 130px;
+}
+.mcp-input-type-datetime-local--button, .mcp-input-type-datetime--button, .mcp-input-type-date--button {
+    background-position: 0 -32px;
+}
+.mcp-input_hover .mcp-input-type-datetime-local--button, .mcp-input_hover .mcp-input-type-datetime--button, .mcp-input_hover .mcp-input-type-date--button {
+    background-position: -16px -32px;
+}
+.mcp-input_disabled .mcp-input-type-datetime-local--button, .mcp-input_disabled .mcp-input-type-datetime--button, .mcp-input_disabled .mcp-input-type-date--button {
+    background-position: -32px -32px;
+}
+.mcp-input_active .mcp-input-type-datetime-local--button, .mcp-input_active .mcp-input-type-datetime--button, .mcp-input_active .mcp-input-type-date--button {
+    background-position: -48px -32px;
+}
+
+
+
+/* Week */
+.mcp-input-type-week {
+    width: 80px;
+}
+.mcp-input-type-week--button {
+    background-position: 0 -64px;
+}
+.mcp-input_hover .mcp-input-type-week--button {
+    background-position: -16px -64px;
+}
+.mcp-input_disabled .mcp-input-type-week--button {
+    background-position: -32px -64px;
+}
+.mcp-input_active .mcp-input-type-week--button {
+    background-position: -48px -64px;
+}
+
+
+/* Month */
+.mcp-input-type-month {
+    width: 70px;
+}
+.mcp-input-type-month--button {
+    background-position: 0 -48px;
+}
+.mcp-input_hover .mcp-input-type-month--button {
+    background-position: -16px -48px;
+}
+.mcp-input_disabled .mcp-input-type-month--button {
+    background-position: -32px -48px;
+}
+.mcp-input_active .mcp-input-type-month--button {
+    background-position: -48px -48px;
+}
+
+/* Color */
+.mcp-input-type-color {
+    width: 70px;
+}
+.mcp-input-type-color--button {
+    background-position: 0 -208px;
+}
+.mcp-input_hover .mcp-input-type-color--button {
+    background-position: -16px -208px;
+}
+.mcp-input_disabled .mcp-input-type-color--button {
+    background-position: -32px -208px;
+}
+.mcp-input_active .mcp-input-type-color--button {
+    background-position: -48px -208px;
+}
+
+
+
+/* Range */
+.mcp-input-type-range {
+    height: 6px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+    width: 200px;
+}
+.mcp-input-type-range--value {
+    display: none;
+}
+.mcp-input-type-range--field, .mcp-input-type-range--before, .mcp-input-type-range--after {
+    background-image: url("media/forms.png");
+    height: 6px;
+}
+.mcp-input-type-range--before, .mcp-input-type-range--after {
+    width: 6px;
+}
+.mcp-input-type-range--field {
+    background-position: 0 -261px;
+    background-repeat: repeat-x;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+.mcp-input-type-range--before {
+    background-position: -10px -230px;
+}
+.mcp-input-type-range--after {
+    background-position: 0 -245px;
+}
+
+.mcp-input-type-range.mcp-input_focus {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.mcp-input-type-range--button {
+    background-position: 0 -176px;
+    margin-left: -8px;
+    margin-top: -6px;
+}
+.mcp-input_hover .mcp-input-type-range--button {
+    background-position: -16px -176px;
+}
+.mcp-input_disabled .mcp-input-type-range--button {
+    background-position: -32px -176px;
+}
+.mcp-input_active .mcp-input-type-range--button {
+    background-position: -48px -176px;
+}
+
+/* Checkbox */
+
+.mcp-input-type-checkbox--button {
+    background-position: -20px -242px;
+}
+.mcp-input_hover .mcp-input-type-checkbox--button {
+    background-position: -20px -242px;
+}
+.mcp-input_disabled .mcp-input-type-checkbox--button {
+    background-position: -20px -242px;
+}
+.mcp-input_checked .mcp-input-type-checkbox--button {
+    background-position: -20px -262px;
+}
+.mcp-input_hover_checked .mcp-input-type-checkbox--button {
+    background-position: -20px -262px;
+}
+.mcp-input_disabled_checked .mcp-input-type-checkbox--button {
+    background-position: -20px -262px;
+}
+
+/* Radio */
+
+.mcp-input-type-radio--button {
+    background-position: 0 -112px;
+}
+.mcp-input_hover .mcp-input-type-radio--button {
+    background-position: -16px -112px;
+}
+.mcp-input_disabled .mcp-input-type-radio--button {
+    background-position: -32px -112px;
+}
+.mcp-input_checked .mcp-input-type-radio--button {
+    background-position: 0 -128px;
+}
+.mcp-input_hover_checked .mcp-input-type-radio--button {
+    background-position: -16px -128px;
+}
+.mcp-input_disabled_checked .mcp-input-type-radio--button {
+    background-position: -32px -128px;
+}
+
+
+
+/* Button */
+
+.mcp-button--field, .mcp-input-type-button--field, .mcp-input-type-reset--field, .mcp-input-type-submit--field, .mcp-button--before, .mcp-input-type-button--before, .mcp-input-type-reset--before, .mcp-input-type-submit--before, .mcp-button--after, .mcp-input-type-button--after, .mcp-input-type-reset--after, .mcp-input-type-submit--after {
+    background-image: url("media/button.png");
+    height: 20px;
+}
+.mcp-button--field, .mcp-input-type-button--field, .mcp-input-type-reset--field, .mcp-input-type-submit--field {
+    background-repeat: repeat-x;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.mcp-button--before, .mcp-input-type-button--before, .mcp-input-type-reset--before, .mcp-input-type-submit--before, .mcp-button--after, .mcp-input-type-button--after, .mcp-input-type-reset--after, .mcp-input-type-submit--after {
+    width: 5px;
+}
+.mcp-button--field, .mcp-input-type-button--field, .mcp-input-type-reset--field, .mcp-input-type-submit--field {
+    background-position: 0 -40px;
+}
+.mcp-button_hover .mcp-button--field, .mcp-input_hover .mcp-input-type-button--field, .mcp-input_hover .mcp-input-type-reset--field, .mcp-input_hover .mcp-input-type-submit--field {
+    background-position: 0 -60px;
+}
+.mcp-button_disabled .mcp-button--field, .mcp-input_disabled .mcp-input-type-button--field, .mcp-input_disabled .mcp-input-type-reset--field, .mcp-input_disabled .mcp-input-type-submit--field {
+    background-position: 0 -80px;
+}
+.mcp-button_active .mcp-button--field, .mcp-input_active .mcp-input-type-button--field, .mcp-input_active .mcp-input-type-reset--field, .mcp-input_active .mcp-input-type-submit--field {
+    background-position: 0 -100px;
+}
+
+
+
+
+/* Date */
+.mcp-input-type-datetime_focus .mcp-input--label, .mcp-input-type-datetime-local_focus .mcp-input--label, .mcp-input-type-date_focus .mcp-input--label, .mcp-input-type-time_focus .mcp-input--label, .mcp-input-type-month_focus .mcp-input--label, .mcp-input-type-week_focus .mcp-input--label, .mcp-input_focus .mcp-input-type-button--label, .mcp-input_focus .mcp-input-type-reset--label, .mcp-input_focus .mcp-input-type-submit--label, .mcp-button_focus .mcp-button--label {
+    border: 1px dotted black;
+}
+.mcp-input-type-date--field, .mcp-input-type-time--field, .mcp-input-type-datetime--field, .mcp-input-type-datetime-local--field, .mcp-input-type-week--field, .mcp-input-type-month--field, .mcp-input-type-number--field, .mcp-input-type-color--field, .mcp-input-type-search--field, .mcp-select--field {
+    height: 16px;
+    padding-right: 19px;
+}
+
+
+
+/* select */
+.mcp-select--popup {
+    background-color: white;
+    border: 1px solid silver;
+    height: 100px;
+    margin-left: -1px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: inherit;
+    z-index:1;
+}
+.mcp-select--value {
+    cursor: default;
+}
+.mcp-select-multiple- {
+    padding: 0;
+}
+.mcp-select-multiple---popup {
+    border: medium none;
+    margin-left: 0;
+}
+.mcp-optgroup--value {
+    font-style: italic;
+}
+.mcp-option, .mcp-optgroup--value {
+    cursor: default;
+}
+.mcp-option_hover {
+    background-color: lightblue;
+    color: black;
+}
+.mcp-select_focus .mcp-option_selected {
+    background-color: blue;
+    color: white;
+}
+.mcp-option_selected {
+    background-color: gray;
+    color: white;
+}
+
+
+
+
+
+
+/* spinbuttons */
+.mcp-spinbuttons {
+    padding: 10px;
+    width: 16px;
+}
+.mcp-spinbuttons--button-up, .mcp-spinbuttons--button-down {
+    background-image: url("media/forms.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    font-size: 1px;
+    height: 8px;
+    line-height: 8px;
+    position: absolute;
+    right: 0;
+    width: 16px;
+}
+.mcp-spinbuttons--button-up {
+    background-position: 0 -16px;
+    top: 0;
+}
+.mcp-spinbuttons--button-up_hover {
+    background-position: -16px -16px;
+}
+.mcp-spinbuttons_disabled .mcp-spinbuttons--button-up {
+    background-position: -32px -16px;
+}
+.mcp-spinbuttons--button-up_active {
+    background-position: -48px -16px;
+}
+.mcp-spinbuttons--button-down {
+    background-position: 0 -24px;
+    top: 8px;
+}
+.mcp-spinbuttons--button-down_hover {
+    background-position: -16px -24px;
+}
+.mcp-spinbuttons_disabled .mcp-spinbuttons--button-down {
+    background-position: -32px -24px;
+}
+.mcp-spinbuttons--button-down_active {
+    background-position: -48px -24px;
+}
+
+
+
+
+

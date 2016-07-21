@@ -1,0 +1,71 @@
+/**
+ * Copyright � 2013 Backbase B.V.
+ */
+
+/*
+Sample content css for the ckeditor
+contents css :
+The CSS file(s) to be used to apply style to the contents. It should reflect the CSS used in the final pages where the contents are to be used.
+*/
+
+
+
+.be-ice-widget-sample em {
+    font-style: italic;
+    font-weight: inherit;
+}
+
+.be-ice-widget-sample strong {
+    font-style: inherit;
+    font-weight: bold;
+}
+
+.be-ice-widget-sample ul,
+.be-ice-widget-sample ul li,
+.be-ice-widget-sample ol,
+.be-ice-widget-sample ol li{
+    list-style: inherit;
+    list-style-position:inside;
+}
+.be-ice-widget-sample ul > li{
+    list-style-type: disc;
+}
+.be-ice-widget-sample ol > li{
+    list-style-type: decimal;
+}
+
+.be-ice-widget-sample table{
+    border-style: solid;
+}
+.be-ice-widget-sample table th,
+.be-ice-widget-sample tr td{
+    border-width: 1px;
+    border-style: solid;
+}
+.be-ice-widget-sample tr td{
+    border-color: #ccc;
+}
+
+
+
+
+
+
+
+
+.bd-BrandingText{}
+.bd-iceLink{}
+
+.bbTemplate-redBold {
+    color: red;
+    font-weight: bold;
+}
+.bbTemplate-yellowBg {
+    background-color: yellow;
+}
+
+.bbTemplate-borderGreen {
+    border: 1px dotted green;
+    display: inline-block;
+}
+

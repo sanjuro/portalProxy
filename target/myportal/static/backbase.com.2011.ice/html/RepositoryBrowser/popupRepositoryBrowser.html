@@ -1,0 +1,25 @@
+<div class="bd-popupRepositoryBrowser-wrapper{{^editMode}} bd-smallRepositoryBrowser{{/editMode}}" style="display:block;" dir='ltr'>
+<!-- Copyright � 2011 Backbase B.V. -->
+<div class="bd-popupRepositoryBrowser-container">
+    <div class="bd-widgetTitle bd-RepositoryBrowser-titlePanel">
+        <span class="bd-smallIcon"></span>Assets<div class='bd-RepositoryBrowser-closeButton'></div>
+    </div>
+    <div class="bd-RepositoryBrowser-treeList-wrapper">
+        <div class="bd-RepositoryBrowser-treeList-title">Repositories</div>
+        <div class="bd-RepositoryBrowser-treeList"></div>
+        <!-- <div class="bd-RepositoryBrowser-treeList-title">Shortcuts</div>  --></div>
+    <div class="bd-RepositoryBrowser-fileList"></div>
+    <div class="bd-RepositoryBrowser-sortBar">
+        <a href="#" class="bd-roundcorner-12 bd-sortBtn bd-RepositoryBrowser-sortBar-name">Name</a>
+        <a href="#" class="bd-roundcorner-12 bd-sortBtn bd-RepositoryBrowser-sortBar-contentStreamMimeType">Type</a>
+        <a href="#" class="bd-roundcorner-12 bd-sortBtn bd-sortBtn-active bd-RepositoryBrowser-sortBar-lastModificationDate">Date</a>
+        <!-- //comment out for now
+        <a href="#" class="bd-roundcorner-12 bd-sortBtn bd-RepositoryBrowser-sortBar-tagName">Tag Name</a>
+         -->
+    </div>
+    <div class="bd-RepositoryBrowser-loadingGif bd-RepositoryBrowser-loadingCover bd-roundcorner-8" style=""></div>
+     {{#editMode}}
+      <div class="bd-RepositoryBrowser-ToolbarWrapper"></div>
+     {{/editMode}}
+</div>
+</div>

@@ -1,0 +1,13 @@
+<li><h3>Versions</h3></li>
+        {{#versions.version}}
+        <li class="bd-listItem">
+            <span class="bd-listCol bd-versions-pubicon">&bull; </span>
+            <span class="bd-listCol bd-versions-date">{{createdDate}}</span>
+<!--             <span class="bd-listCol bd-versions-timezone">{{timezone}}</span> -->
+<!--             <span class="bd-listCol bd-versions-time">{{time}}</span> -->
+<!--             <span class="bd-listCol bd-versions-pubstate">{{pubstate}}</span> -->
+            <span class="bd-listCol bd-versions-username"><!-- <span class="bd-userBullet" style="color:{{color}}">&#9632;</span>--> {{createdBy}}</span>
+<!--             <span class="bd-listCol bd-versions-tooltip bd-tooltip" title="Publish Release Notes - {{releasenotes}}"></span> -->
+<!--             <span class="bd-listCol bd-versions-restoreButton">(!!)</span> -->
+        </li>
+        {{/versions.version}}

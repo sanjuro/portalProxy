@@ -1,0 +1,21 @@
+<ul class="bc-modal bc-modal-form bc-default-form bc-roundcorner-5 bc-shadow {{cls}}" data-cid="bc-modal-form-{{uid}}">
+    <form>
+        <a class="bc-modal-close bc-close bc-close-grey" data-cid="bc-modal-form-close-{{type}}-{{uid}}"></a>
+        <li class="bc-g">
+            <div class="bc-1"><p class="bc-i bc-h4">{{title}}</p></div>
+        </li>
+        {{{content}}}
+        <li class="bc-g">
+            <div class="bc-1">
+                <p class="bc-i bc-button-row">
+                    <button class="bc-modal-ok bc-button bc-roundcorner-3 bc-primary bc-green" data-cid="bc-modal-form-ok-{{uid}}">{{ok}}</button>
+                    {{#cancel}}
+                    <span class="bc-buttonrow-text">OR</span>
+                    <button class="bc-modal-cancel bc-button bc-roundcorner-3 bc-roundcorner-0 bc-button-text bc-grey" data-cid="bc-modal-form-cancel-{{uid}}">{{cancel}}</button>
+                    {{/cancel}}
+                <p>
+            </div>
+        </li>
+    </form>
+</ul>
+

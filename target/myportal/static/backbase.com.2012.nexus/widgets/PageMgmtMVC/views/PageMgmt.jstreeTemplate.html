@@ -1,0 +1,5 @@
+{{#jsTreeNodes}}
+<li id="{{id}}" class="{{state}}">
+    <ins class="jstree-icon">&nbsp;</ins><a {{#title}}title="{{title}}" {{/title}}class="{{class}} bd-tree-page-pub-state-none {{#isDivider}}bd-divider{{/isDivider}}" href="#">{{{itemTypeIcon}}}<span class="bd-tree-pageIcon bd-tree-pageTraffic" title=""></span><ins class="jstree-icon">&nbsp;</ins>{{title}}&nbsp;{{#hasPublishing}}<span class="bd-tree-pageIcon bd-tree-actionIcon" title="{{titleAction}}"></span><span class="bc-icn bc-pub-in-progress" title="Item is in publication process"></span><div class="bd-pub-button-container" style="display:none;"><div class="bd-pub-button-container-inner"><span class="bc-icn bc-pub-publish bc-pub-publish-inactive"></span><span class="bc-icn bc-pub-unpublish bc-pub-unpublish-inactive"></span></div></div>{{/hasPublishing}}<span class="bd-tree-pageIcon bd-tree-pageDetailsLink bi bi-s bi-pm-arrow-right" title="{{titleDetails}}"></span></a>{{#isRenderChildren}}<ul>{{#children}}{{> partialTemp}}{{/children}}</ul>{{/isRenderChildren}}
+</li>
+{{/jsTreeNodes}}

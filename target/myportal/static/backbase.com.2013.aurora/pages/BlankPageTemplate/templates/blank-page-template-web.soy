@@ -1,0 +1,97 @@
+{namespace backbase_com_2013_aurora}
+
+/**
+ * Blank Page Template
+ * @param item Item in context
+ */
+{template .BlankPageTemplate}
+<!DOCTYPE html>
+{if $ij.designmode}
+  <html class="bd-designMode-true" dir="{$ij.direction}">
+{else}
+  <html dir="{$ij.direction}">
+{/if}
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        {if isNonnull($item.preferences.title)}
+            <title>{$item.preferences.title.value}</title>
+        {/if}
+
+        // Preferences for SEO added when the option Enable SEO is chosen from the masterpage setting
+        {if $item.preferences.enableSEO.value == 'true'}
+            {if isNonnull($item.referencedLinks.bd_seo_canonical)}
+        <link rel="canonical" href="{$item.referencedLinks.bd_seo_canonical.path}"/>
+            {/if}
+            {if isNonnull($item.preferences.bd_seo_locale.value) and $item.preferences.bd_seo_locale.value != ''}
+        <meta name="locale" content="{$item.preferences.bd_seo_locale.value}"/>
+            {/if}
+            {if isNonnull($item.preferences.bd_seo_robots.value) and $item.preferences.bd_seo_robots.value != ''}
+        <meta name="robots" content="{$item.preferences.bd_seo_robots.value}"/>
+            {/if}
+            {if isNonnull($item.preferences.bd_seo_description.value) and $item.preferences.bd_seo_description.value != ''}
+        <meta name="description" content="{$item.preferences.bd_seo_description.value}"/>
+            {/if}
+        {/if}
+
+        <!-- Portal client -->
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/ext-lib/jquery-1.8.3.js"></script>
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/ext-lib/soyutils.js"></script>
+
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/portalclient/client.js?v={$ij.buildVersion}"></script>
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/portalclient/portal_view.js?v={$ij.buildVersion}"></script>
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/portalclient/compatibility.js?v={$ij.buildVersion}"></script>
+
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/portalclient/controllers/ctrl.portal.js"></script>
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/portalclient/controllers/ctrl.preferences.js"></script>
+
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/portalclient/xml-lang/backbase.com.2012.view/js/all.js"></script>
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/portalclient/xml-lang/backbase.com.2013/backbase.com.2013.js"></script>
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/portalclient/xml-lang/www.w3.org.1999.xhtml/xhtml.js"></script>
+
+        <link type="text/css" rel="stylesheet" href="{$ij.portalContextRoot}/static/portalclient/css/normalize.min.css"/>
+        <link type="text/css" rel="stylesheet" href="{$ij.portalContextRoot}/static/portalclient/css/backbase-portal.css"/>
+
+        <script type="text/javascript">{\n}
+            if(!window.b$.portal.config)window.b$.portal.config = {lb}{rb};{\n}
+            b$.portal.config.serverRoot = '{$ij.portalContextRoot}';{\n}
+            b$.portal.config.resourceRoot || (window.b$.portal.config.resourceRoot = window.b$.portal.config.serverRoot);{\n}
+            b$.portal.portalName = '{$item.contextItemName}';{\n}
+            b$.portal.pageName = '{$item.name}';{\n}
+            b$.portal.loggedInUserId = '{$ij.authenticatedUserName}';{\n}
+            {if isNonnull($ij.link)}
+                b$.portal.linkUUID = '{$ij.link.uuid}';{\n}
+            {/if}
+
+            {if $ij.isManager}
+                b$.portal.loggedInUserRole = 'manager';{\n}
+            {elseif $ij.isAdmin}
+                b$.portal.loggedInUserRole = 'admin';{\n}
+            {else}
+                b$.portal.loggedInUserRole = '';{\n}
+            {/if}
+
+            b$.portal.loggedInUserGroup = [{foreach $operand in $ij.groupAuthority}'{$operand}'{if not isLast($operand)},{/if}{/foreach}];{\n}
+        </script>
+        <!-- End Portal client -->
+
+        <!-- Aurora -->
+        <script type="text/javascript">
+            if(window.be == null)  window.be = {lb}{rb};{\n}
+            be.contextRoot = b$.portal.config.serverRoot ;{\n}
+        </script>
+
+        <script type="text/javascript" src="{$ij.portalContextRoot}/static/backbase.com.2012.aurora/js/aurora-lib.min.js?v={$ij.buildVersion}"></script>
+    </head>
+    <body onload="b$.portal.startup('main')">
+
+        <div id="main" data-pid="{$item.name}" class="bp-area --area pageContainer">
+            {foreach $child in $item.children}
+                {include($child) |noAutoescape}
+            {/foreach}
+        </div>
+
+    </body>
+</html>
+{/template}

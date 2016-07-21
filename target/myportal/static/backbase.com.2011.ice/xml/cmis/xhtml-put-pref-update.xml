@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget>
+    <name>{{widgetName}}</name>
+    <contextItemName>{{contextName}}</contextItemName>
+    <properties>
+        <property name="widgetContentsUpdated" viewHint="" label="Widget Contents Updated">
+            <value type="boolean">true</value>
+        </property>
+    </properties>
+</widget>

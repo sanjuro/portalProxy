@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <tlib-version>1.0</tlib-version>
+    <short-name>bptl</short-name>
+    <uri>http://www.backbase.com/taglib</uri>
+
+    <tag>
+        <name>include</name>
+        <tag-class>com.backbase.portal.foundation.presentation.renderer.IncludeTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>src</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>widget</name>
+        <tag-class>com.backbase.portal.foundation.presentation.renderer.WidgetTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>src</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>w3cwidget</name>
+        <tag-class>com.backbase.portal.foundation.presentation.renderer.W3CWidgetTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>src</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>tabContainerInit</name>
+        <tag-class>com.backbase.portal.foundation.presentation.renderer.TabContainerInitTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>src</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>

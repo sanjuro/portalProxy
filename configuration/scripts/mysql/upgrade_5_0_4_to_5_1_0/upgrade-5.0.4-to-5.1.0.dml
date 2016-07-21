@@ -1,0 +1,94 @@
+update items
+set createdBy = 1, lastmodifiedby = 1
+where createdBy is null
+;
+
+update property_definition
+set internalValue = 'backbase'
+where name = 'template'
+and internalValue = 'bb4'
+;
+
+update property_definition
+set internalValue = concat('$(contextRoot)/static/dashboard/templates/html/', internalValue, '.html')
+where name = 'widgetChrome'
+;
+
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS tag_splitter $$
+CREATE PROCEDURE tag_splitter()
+BEGIN
+  DECLARE occurance INT DEFAULT 0;
+  DECLARE i INT DEFAULT 0;
+  DECLARE splitted_value TEXT;
+
+  DECLARE ITEM_ID INT;
+  DECLARE ITEM_CONTEXTITEMNAME TEXT;
+  DECLARE ITEM_TAG TEXT;
+  DECLARE LN_TAG_ID INT DEFAULT 0;
+
+  DECLARE done INT DEFAULT 0;
+  DECLARE C_ITEM CURSOR FOR SELECT ID, CONTEXTITEMNAME, TAG FROM ITEMS WHERE TAG IS NOT NULL AND TRIM(TAG) != '';
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+  -- Open item cursor
+  OPEN C_ITEM;
+    read_loop: LOOP
+      FETCH C_ITEM INTO ITEM_ID, ITEM_CONTEXTITEMNAME, ITEM_TAG;
+  
+      IF done THEN
+        LEAVE read_loop;
+      END IF;
+  
+  
+    -- Split the tag column
+    SET occurance = (SELECT LENGTH(ITEM_TAG) - LENGTH(REPLACE(ITEM_TAG, ',', ''))+1);
+    SET i=1;
+    WHILE i <= occurance DO
+      SET splitted_value =
+        (SELECT TRIM(REPLACE(SUBSTRING(SUBSTRING_INDEX(ITEM_TAG, ',', i),
+        LENGTH(SUBSTRING_INDEX(ITEM_TAG, ',', i - 1)) + 1), ',', '')));
+
+    SET LN_TAG_ID = (SELECT ID FROM TAGS WHERE NAME = splitted_value AND CONTEXTITEMNAME = ITEM_CONTEXTITEMNAME);
+    
+    IF LN_TAG_ID IS NULL
+    THEN
+        INSERT INTO TAGS
+        ( ID
+        , NAME
+        , TYPE
+        ,CONTEXTITEMNAME
+        )
+        VALUES
+        ( LN_TAG_ID
+        , splitted_value
+        , 'regular'
+        , ITEM_CONTEXTITEMNAME
+        );
+
+        SET LN_TAG_ID = (SELECT ID FROM TAGS WHERE NAME = splitted_value AND CONTEXTITEMNAME = ITEM_CONTEXTITEMNAME);
+      END IF;    
+    
+      -- Insert item tag record
+      INSERT INTO ITEM_TAGS
+      ( ITEM_ID
+      , TAG_ID
+      )
+      VALUES
+      ( ITEM_ID
+      , LN_TAG_ID
+      );
+     
+      SET i = i + 1;
+    END WHILE;
+  
+  END LOOP;
+  CLOSE C_ITEM;
+END; $$
+
+DELIMITER ;
+
+CALL tag_splitter();
+DROP PROCEDURE IF EXISTS tag_splitter;

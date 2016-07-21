@@ -1,0 +1,30 @@
+{{#fileExists}}{{#filelist}}
+<div class="bd-RepositoryBrowser-fileContainer" {{#popUp}} title="Double-click to use this asset" {{/popUp}} id="{{contentUId}}"><!-- Copyright � 2011 Backbase B.V. -->
+    <div class="bd-RepositoryBrowser-fileContainer-imageContainer" style="background-image:url('{{thumbUrl}}');">
+        <input type='hidden' class="bd-RepositoryBrowser-fileContainer-file-name" value="{{name}}"/>
+        <input type='hidden' class="bd-RepositoryBrowser-fileContainer-file-type" value="{{type}}"/>
+        <input type='hidden' class="bd-RepositoryBrowser-fileContainer-fileUrl" value="{{url}}"/>
+        <input type='hidden' class="bd-RepositoryBrowser-fileContainer-filePath" value="{{folderPath}}"/>
+    </div>
+    <div class="bd-RepositoryBrowser-fileContainer-Name" itemidx="{{idx}}" itemname="{{name}}" title="{{name}}">{{#truncateFunc}}{{name}}{{/truncateFunc}}</div>
+    {{#editMode}}
+    <div class="bd-RepositoryBrowser-fileContainer-actionButton">
+        <div class="bd-RepositoryBrowser-fileContainer-previewFileButton bd-rb-btn"><div class="bd-RepositoryBrowser-fileContainer-previewFileButtonImage"></div></div>
+        <div class="bd-RepositoryBrowser-fileContainer-editFileButton bd-rb-btn"><div class="bd-RepositoryBrowser-fileContainer-editFileButtonImage"></div></div>
+    </div>
+    <div class="bd-RepositoryBrowser-fileContainer-dropDownListWrapper" style="display:none;">
+        <div class="bd-rb-dd bd-RepositoryBrowser-fileContainer-dropDownList-info">Info<span class="bd-rb-dd-icon"></span></div>
+        {{#isAdmin}}
+           {{#isGeneratedContentFolder}}
+           <div class="bd-rb-dd bd-RepositoryBrowser-fileContainer-dropDownList-edit">Rename<span class="bd-rb-dd-icon"></span></div>
+           <!-- <div class="bd-rb-dd bd-RepositoryBrowser-fileContainer-dropDownList-edit">Edit<span class="bd-rb-dd-icon"></span></div>-->
+           <div class="bd-rb-dd bd-RepositoryBrowser-fileContainer-dropDownList-move">Move<span class="bd-rb-dd-icon"></span></div>
+           {{/isGeneratedContentFolder}}
+           <div class="bd-rb-dd bd-RepositoryBrowser-fileContainer-dropDownList-delete">Delete<span class="bd-rb-dd-icon"></span></div>
+           <!-- <div class="bd-rb-dd bd-RepositoryBrowser-fileContainer-dropDownList-preview">Preview<span class="bd-rb-dd-icon"></span></div> -->
+        {{/isAdmin}}
+    </div>
+    {{/editMode}}
+</div>
+{{/filelist}}
+{{/fileExists}}

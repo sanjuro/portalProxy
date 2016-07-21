@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:g="http://www.backbase.com/2008/gadget" xml:lang="en">
+
+<head>
+    <!-- Gadget Implementation -->
+    <title>Catalog Browser</title>
+    <!--<link rel="icon" type="image/png" href="favicon.png" />-->
+    <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+    <meta name="author" content="Backbase" />
+    <meta name="keywords" content="gadget" />
+    <meta name="copyright" content="Copyright 2003-2009 Backbase" />
+    <meta name="description" content="Catalog gadget for end user use" />
+
+
+    <g:preferences>
+        <g:preference name="catalogBrowserTemplate" label="Template" type="select-one" default="$(contextRoot)/static/backbase.com.2012.sabre/widgets/CatalogBrowser/catalogTemplates/BBStyleTemplate.html">
+            <g:enumeration label="Blank Background" value="$(contextRoot)/static/backbase.com.2012.sabre/widgets/CatalogBrowser/catalogTemplates/blankTemplate.html" />
+            <g:enumeration label="BackBase Background" value="$(contextRoot)/static/backbase.com.2012.sabre/widgets/CatalogBrowser/catalogTemplates/BBStyleTemplate.html" />
+        </g:preference>
+        <g:preference name="title" label="Title" type="text" />
+        <g:preference name="widgetChrome" label="Widget Chrome" type="select-one" default="$(contextRoot)/static/backbase.com.2012.aurora/html/chromes/widget_default.html">
+            <g:enumeration value="$(contextRoot)/static/backbase.com.2012.aurora/html/chromes/widget_none.html" label="No Chrome" />
+            <g:enumeration value="$(contextRoot)/static/backbase.com.2012.aurora/html/chromes/widget_default.html" label="Default Chrome" />
+        </g:preference>
+    </g:preferences>
+
+</head>
+
+<body g:onload="requireWidget(__WIDGET__, 'backbase.com.2012.sabre/widgets/CatalogBrowser/scripts/app');">
+
+    <div class="pageDesignerWrapper bp-ui-dragCancel">
+        <div class="pageDesignerToolbarWrapper bd-fullWidthBorderBox"></div>
+        <div class="tb-tags-list"></div>
+        <div class="pageDesignerItemWrapper"></div>
+    </div>
+</body>
+
+</html>

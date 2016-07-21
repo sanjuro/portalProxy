@@ -1,0 +1,43 @@
+<form class="portal-userPreferencesForm-{{status}}">
+<!-- Copyright � 2011 Backbase B.V. -->
+	<div class="bd-PreferenceEditor">
+		<div class="bd-columnHeader bd-tabLabels" pagename="{{pageName}}">
+			<div class="bd-tabLabel bd-tab1 bd-activeTab" for=".bd-tab1">Settings</div>
+			{{#showPermissionAndTargeting}}
+			<div class="bd-tabLabel bd-tab2" for=".bd-tab2">Permissions</div>
+			{{/showPermissionAndTargeting}}
+		</div>
+		<div class="bd-tabs">
+			<div class="bd-tab bd-tab1 bd-activeTab">
+				<div id="PreferenceEditorContent">
+					<div class="widget-preferences-list">
+						<table>
+							<tbody class="portalManagerPreferenceFieldView">
+								<tr class="fieldsGoAfterMe">
+									<td colspan="3"></td>
+								</tr>
+								<tr class="fieldsGoBeforeMe">
+									<td colspan="3"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="bd-buttons">
+						<button
+							class="portal-userPreferencesForm-okButton bd-button bd-gradient-green bd-roundcorner-5"
+							onclick="return false;">Save</button>or
+						<button
+							class="portal-userPreferencesForm-cancelButton bd-buttonText"
+							onclick="return false;">Cancel</button>
+					</div>
+				</div>
+			</div>
+			{{#showPermissionAndTargeting}}
+			<div class="bd-tab bd-tab2">
+				<div id="editWidgetTabs_Permissions" class="editWidgetTabs_Permissions bd-permissionForm">
+				</div>
+			</div>
+			{{/showPermissionAndTargeting}}
+		</div>
+	</div>
+</form>

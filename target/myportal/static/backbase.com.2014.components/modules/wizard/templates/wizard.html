@@ -1,0 +1,6 @@
+<div>
+    <ul class="breadcrumb">
+        <li data-ng-repeat="step in steps" data-ng-class="{active: step.current}" data-ng-click="goTo(step)" data-ng-bind-html="step.title"></li>
+    </ul>
+    <div class="steps-content" data-ng-transclude=""></div>
+</div>

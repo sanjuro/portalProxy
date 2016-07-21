@@ -1,0 +1,2196 @@
+-- for publishing
+update items set publicationStatus='NOT_PUBLISHED' where publicationStatus is null;
+
+-- set the value of uuid to id
+update items set uuid=convert(nvarchar,id)
+
+-- Add Link to the acl_class
+insert into acl_class (class) values ('com.backbase.portal.foundation.domain.model.Link')
+
+-- Portal manager import data changes
+
+-- 1) General
+-- Add behaviors property to all pages
+insert into property_definition
+(
+  name
+, internalvalue
+, type
+, item_id
+)
+select
+  'behaviors'
+, 'be.perspective.Manager be.portalClientExt.PortalManagerPreferencesForm'
+, 'string'
+, ID
+from  items
+where type = 'PAGE'
+and  state = 'INSTANTIATED'
+;
+
+-- Create link-default template
+INSERT INTO ITEMS
+(
+  DISCRIMINATOR
+, CONTEXTITEMNAME
+, CREATEDBY
+, CREATEDTIMESTAMP
+, ITEMHANDLERBEANNAME
+, LASTMODIFIEDBY
+, LASTMODIFIEDTIMESTAMP
+, LASTPUBLICATIONTIMESTAMP
+, NAME
+, PARENTITEMNAME
+, STATE
+, SUBTYPE
+, TRANSFORMERBEANNAME
+, TYPE
+, USERID
+, EXTENDEDITEM_ID
+, TEMPLATE_ID
+, LOCKED
+, HIDDEN
+, PUBLICATIONSTATUS
+, NEXTPUBLISHACTION
+, UUID
+)
+values(
+  'Template'
+, '[BBHOST]'
+, 1
+, getdate()
+, 'linkInstanceHandler'
+, 1
+, getdate()
+, null
+, 'link-default'
+, null
+, 'DEPLOYED'
+, 'LINK'
+, null
+, 'TEMPLATE'
+, null
+, null
+, null
+, 0
+, 0
+, 'NOT_PUBLISHED'
+, null
+, -1
+)
+;
+
+-- Add properties to link-default template
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'title'
+, 'Link Default Template'
+, 'string'
+, null
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND NAME = 'link-default'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'Web'
+, 'link'
+, 'string'
+, null
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND NAME = 'link-default'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'DefaultDevice'
+, 'Web'
+, 'string'
+, null
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND NAME = 'link-default'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'BundleName'
+, 'default'
+, 'string'
+, null
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND NAME = 'link-default'
+;
+
+-- Delete empty Title properties from dashboard. (They also have a title property with a value.)
+delete from property_definition
+where name = 'Title'
+and internalValue= ''
+and item_id in (select id from items where contextItemName = 'dashboard');
+
+update property_definition set name = 'title' where name='Title';
+
+update property_definition set name = 'thumbnailUrl' where name='thumbnail-url';
+
+update property_definition
+set internalValue='Dashboard'
+where item_id in (select id from items where name = 'dashboardPageTemplate')
+and name = 'title';
+
+
+-- Update this property for all items but NOT for items named SpringBoardContainer and PortalLauncherContainer
+update property_definition set name = 'numberOfColumns'
+where name='number-columns'
+and item_id not in (select id from items where name in ('SpringBoardContainer','PortalLauncherContainer'));
+
+update property_definition
+set internalValue = '$(contextRoot)/static/dashboard/templates/html/portals/portalMgmtView.html'
+where internalValue = 'portals/portalMgmtView';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/dashboard/templates/html/groupMgmntView.html'
+where internalValue = 'groupMgmntView';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/html/chromes/widget_none.html'
+where internalValue = '$(contextRoot)/static/dashboard/templates/html/widgetChrome/noWidgetChrome.html';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/html/chromes/widget_default.html'
+where internalValue = '$(contextRoot)/static/dashboard/templates/html/widgetChrome/defaultWidgetChrome.html';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/html/chromes/widget_default.html'
+where internalValue = '$(contextRoot)/static/dashboard/templates/html/widgetChrome/defaultWidgetChrome.html';
+
+-- 2) Sabre
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.sabre/widgets/CatalogBrowser/index.html'
+where internalValue = 'static/dashboard/widgets/CatalogBrowser/index.html';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.sabre/media/icons/icons-pmwidgets_catalog.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/icons/icons-pmwidgets_catalog.png';
+
+-- 3) ICE
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2011.ice/widgets/ContentViewer/index.html'
+where internalValue = 'static/dashboard/widgets/ContentViewer/index.html';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2011.ice/media/icons/icons-pmwidgets_image.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/icons/icons-pmwidgets_image.png';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2011.ice/widgets/ContentEditor/index.html'
+where internalValue = 'static/dashboard/widgets/ContentEditor/index.html';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2011.ice/media/icons/icons-pmwidgets_richtext.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/icons/icons-pmwidgets_richtext.png';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2011.ice/widgets/AdvanceContentTemplate/index.html'
+where internalValue = 'static/dashboard/widgets/AdvanceContentTemplate/index.html';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2011.ice/media/icons/icons-pmwidgets_textimage.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/icons/icons-pmwidgets_textimage.png';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2011.ice/html/ContentManager/ContentManagerView.html'
+where internalValue = 'ContentManager/ContentManagerView';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2011.ice/widgets/ContentManager/ContentManager.css'
+where internalValue = '$(contextRoot)/static/dashboard/widgets/ContentManager/ContentManager.css';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2011.ice/widgets/ContentManager/ContentManager.js'
+where internalValue = '$(contextRoot)/static/dashboard/widgets/ContentManager/ContentManager.js';
+
+update property_definition
+set name = 'contentPath'
+where name = 'ContentPath'
+;
+
+-- 4) Aurora
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/media/layout_icons/pagedesigner-layouts-icons_02.png'
+where internalValue = ' $(contextRoot)/static/dashboard/media/layout_icons/pagedesigner-layouts-icons_02.png';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/media/layout_icons/pagedesigner-layouts-icons_02.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/layout_icons/pagedesigner-layouts-icons_02.png';
+
+-- Migrate template ColumnLayoutTemplate to Column_table
+delete from property_definition
+where item_id in (select id from items where name = 'ColumnLayoutTemplate' and contextItemName = '[BBHOST]')
+and   name in ('title', 'RenderAtServer') ;
+
+update property_definition
+set internalValue = 'containers/column_table'
+where item_id in (select id from items where name = 'ColumnLayoutTemplate' and contextItemName = '[BBHOST]')
+and   name = 'Web';
+
+update property_definition
+set internalValue = 'backbase.com.2012.aurora'
+where item_id in (select id from items where name = 'ColumnLayoutTemplate' and contextItemName = '[BBHOST]')
+and   name = 'BundleName';
+
+update property_definition set internalValue = 'Column_table' where internalValue = 'ColumnLayoutTemplate' and name = 'TemplateName';
+
+update items set name = 'Column_table' where name = 'ColumnLayoutTemplate' and CONTEXTITEMNAME = '[BBHOST]';
+
+update property_definition set internalValue = 'Two Column' where internalValue = '2 Column Layout';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/media/layout_icons/pagedesigner-layouts-icons_02-2.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/layout_icons/pagedesigner-layouts-icons_02-2.png';
+
+
+-- Migrate template ColumnLayout12Template to Column_table
+update property_definition set internalValue = 'Column_table' where internalValue = 'ColumnLayout12Template' and name = 'TemplateName';
+
+update items
+set   template_id = (select id from items where name = 'Column_table' and CONTEXTITEMNAME = '[BBHOST]')
+where template_id = (select id from items where name = 'ColumnLayout12Template' and CONTEXTITEMNAME = '[BBHOST]')
+;
+
+delete from property_definition
+where item_id in (select id from items where name = 'ColumnLayout12Template' and CONTEXTITEMNAME = '[BBHOST]');
+
+delete from items where name = 'ColumnLayout12Template' and CONTEXTITEMNAME = '[BBHOST]';
+
+update property_definition set internalValue = 'Two Column 1:2 Ratio' where internalValue = '1:2 Column Layout';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/media/layout_icons/pagedesigner-layouts-icons_03.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/layout_icons/pagedesigner-layouts-icons_03.png';
+
+update property_definition set internalValue = 'Three Column' where internalValue = '3 Column Layout';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/media/layout_icons/pagedesigner-layouts-icons_border.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/layout_icons/pagedesigner-layouts-icons_border.png';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/media/layout_icons/pagedesigner-layouts-icons_border-3-1.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/layout_icons/pagedesigner-layouts-icons_border-3-1.png';
+
+-- Migrate BorderLayoutTemplate template to Border_table
+delete from property_definition
+where item_id in (select id from items where name = 'BorderLayoutTemplate' and contextItemName = '[BBHOST]')
+and   name in ('title', 'RenderAtServer') ;
+
+update property_definition
+set internalValue = 'containers/border_table'
+where item_id in (select id from items where name = 'BorderLayoutTemplate' and contextItemName = '[BBHOST]')
+and   name = 'Web';
+
+update property_definition
+set internalValue = 'backbase.com.2012.aurora'
+where item_id in (select id from items where name = 'BorderLayoutTemplate' and contextItemName = '[BBHOST]')
+and   name = 'BundleName';
+
+update property_definition set internalValue = 'Border_table' where internalValue = 'BorderLayoutTemplate' and name = 'TemplateName';
+
+update items set name = 'Border_table' where name = 'BorderLayoutTemplate' and CONTEXTITEMNAME = '[BBHOST]';
+
+update property_definition set internalValue = 'Border' where internalValue = 'Border Layout';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/media/layout_icons/pagedesigner-layouts-icons_border.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/layout_icons/pagedesigner-layouts-icons_border.png';
+
+-- Migrate BorderLayout2Template template to Border_table
+update property_definition set internalValue = 'Border_table' where internalValue = 'BorderLayout2Template' and name = 'TemplateName';
+
+update property_definition set internalValue = 'Border 1:3:1 Ratio' where internalValue = '1:3:1 Border Layout';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/media/layout_icons/pagedesigner-layouts-icons_wrap.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/layout_icons/pagedesigner-layouts-icons_wrap.png';
+
+update items
+set   template_id = (select id from items where name = 'Border_table' and CONTEXTITEMNAME = '[BBHOST]')
+where template_id = (select id from items where name = 'BorderLayout2Template' and CONTEXTITEMNAME = '[BBHOST]')
+;
+
+delete from property_definition
+where item_id in (select id from items where name = 'BorderLayout2Template' and CONTEXTITEMNAME = '[BBHOST]');
+
+delete from items where name = 'BorderLayout2Template' and CONTEXTITEMNAME = '[BBHOST]';
+
+
+-- Migrate template WrapLineLayoutTemplate to Wrap_Line_float
+update property_definition
+set internalValue='containers/wrap_line_float'
+where item_id in (select id from items where name = 'WrapLineLayoutTemplate')
+and name = 'Web';
+
+update property_definition
+set internalValue='backbase.com.2012.aurora'
+where item_id in (select id from items where name = 'WrapLineLayoutTemplate')
+and name = 'BundleName';
+
+update property_definition set internalValue = 'Wrap_Line_float' where internalValue = 'WrapLineLayoutTemplate' and name = 'TemplateName';
+
+update items set name = 'Wrap_Line_float' where name = 'WrapLineLayoutTemplate' and CONTEXTITEMNAME = '[BBHOST]';
+
+update property_definition set internalValue = 'Wrap Line' where internalValue = 'Wrap Line Layout';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/media/icons/icons-pmwidgets_bbwidget.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/icons/icons-pmwidgets_bbwidget.png';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/widgets/standardExample/index.html'
+where internalValue = 'static/backbaseExample/index.html';
+
+-- Migrate template SSRBackbaseWidgetTemplate to Standard_Widget
+update property_definition
+set internalValue='widgets/standard_widget'
+where item_id in (select id from items where name = 'SSRBackbaseWidgetTemplate')
+and name = 'Web';
+
+update property_definition
+set internalValue='backbase.com.2012.aurora'
+where item_id in (select id from items where name = 'SSRBackbaseWidgetTemplate')
+and name = 'BundleName';
+
+update property_definition
+set internalValue='widgets/standard_widget'
+where item_id in (select id from items where name = 'SSRBackbaseWidgetTemplate')
+and name = 'Smartphone';
+
+update property_definition
+set internalValue='widgets/standard_widget'
+where item_id in (select id from items where name = 'SSRBackbaseWidgetTemplate')
+and name = 'Tablet';
+
+
+update property_definition set internalValue = 'Standard_Widget' where internalValue = 'SSRBackbaseWidgetTemplate' and name = 'TemplateName';
+
+update items set name = 'Standard_Widget' where name = 'SSRBackbaseWidgetTemplate' and CONTEXTITEMNAME = '[BBHOST]';
+
+update property_definition set internalValue = 'Backbase Sample Widget' where internalValue = 'Backbase Widget Example';
+
+update property_definition set internalValue = 'initial value' where internalValue = 'Test data for Widget';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/media/icons/icons-pmwidgets_w3c.png'
+where internalValue = '$(contextRoot)/static/dashboard/media/icons/icons-pmwidgets_w3c.png';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.aurora/widgets/w3cExample/index.html'
+where internalValue = '$(contextRoot)/static/w3cExample/index.html';
+
+-- Migrate SSRW3CWidgetTemplate template to W3C_Widget
+update property_definition
+set internalValue='widgets/w3c_widget'
+where item_id in (select id from items where name = 'SSRW3CWidgetTemplate')
+and name = 'Web';
+
+update property_definition
+set internalValue='backbase.com.2012.aurora'
+where item_id in (select id from items where name = 'SSRW3CWidgetTemplate')
+and name = 'BundleName';
+
+update property_definition
+set internalValue='widgets/w3c_widget'
+where item_id in (select id from items where name = 'SSRW3CWidgetTemplate')
+and name = 'Smartphone';
+
+update property_definition
+set internalValue='widgets/w3c_widget'
+where item_id in (select id from items where name = 'SSRW3CWidgetTemplate')
+and name = 'Tablet';
+
+
+update property_definition set internalValue = 'W3C_Widget' where internalValue = 'SSRW3CWidgetTemplate' and name = 'TemplateName';
+
+update items set name = 'W3C_Widget' where name = 'SSRW3CWidgetTemplate' and CONTEXTITEMNAME = '[BBHOST]';
+
+update property_definition set internalValue = 'W3C Sample Widget' where internalValue = 'W3C Widget Example';
+
+-- Migrate template bbTemplate to bbSmartTemplate
+update property_definition
+set internalValue='pages/bbTemplate'
+where item_id in (select id from items where name = 'bbTemplate')
+and name = 'Web';
+
+update property_definition
+set internalValue='backbase.com.2012.sabre'
+where item_id in (select id from items where name = 'bbTemplate')
+and name = 'BundleName';
+
+
+update property_definition
+set label = null
+where item_id in (select id from items where name = 'bbTemplate')
+and name = 'thumbnail';
+
+update property_definition
+set internalValue='Backbase (Smart)'
+where item_id in (select id from items where name = 'bbTemplate')
+and name = 'title';
+
+update property_definition
+set internalValue='pages/bbMobileTemplate'
+where item_id in (select id from items where name = 'bbTemplate')
+and name = 'Smartphone';
+
+update property_definition
+set internalValue='pages/bbTabletTemplate'
+where item_id in (select id from items where name = 'bbTemplate')
+and name = 'Tablet';
+
+update property_definition set internalValue = 'bbSmartTemplate' where internalValue = 'bbTemplate' and name = 'TemplateName';
+
+update items set name = 'bbSmartTemplate' where name = 'bbTemplate' and CONTEXTITEMNAME = '[BBHOST]';
+
+
+
+update property_definition
+set internalValue = '$(contextRoot)/static/Explorer/portal-explorer.css'
+where internalValue = '$(contextRoot)/static/dashboard/widgets/Explorer/portal-explorer.css';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/Explorer/widget.js'
+where internalValue = '$(contextRoot)/static/dashboard/widgets/Explorer/widget.js';
+
+
+-- Migrate template blankTemplate to Page_Default
+update property_definition
+set label = null
+,   name  = 'thumbnailUrl'
+,   internalValue = '$(contextRoot)/static/dashboard/media/bb_bg_pattern.png'
+where item_id in (select id from items where name = 'blankTemplate')
+and name = 'thumbnail';
+
+update property_definition
+set internalValue = 'Page Default'
+where item_id in (select id from items where name = 'blankTemplate')
+and name = 'title';
+
+update property_definition
+set internalValue = 'backbase.com.2012.aurora'
+where item_id in (select id from items where name = 'blankTemplate')
+and name = 'BundleName';
+
+update property_definition
+set internalValue = 'pages/page_default'
+where item_id in (select id from items where name = 'blankTemplate')
+and name = 'Web';
+
+update property_definition set internalValue = 'Page_Default' where internalValue = 'blankTemplate' and name = 'TemplateName';
+
+update items set name = 'Page_Default' where name = 'blankTemplate' and CONTEXTITEMNAME = '[BBHOST]';
+
+
+
+-- Migrate template ssrBlankTemplate to Page_Default
+
+update property_definition set internalValue = 'Page_Default' where internalValue = 'ssrBlankTemplate' and name = 'TemplateName';
+
+update items
+set   template_id = (select id from items where name = 'Page_Default' and CONTEXTITEMNAME = '[BBHOST]')
+where template_id = (select id from items where name = 'ssrBlankTemplate' and CONTEXTITEMNAME = '[BBHOST]')
+;
+
+delete from property_definition
+where item_id in (select id from items where name = 'ssrBlankTemplate' and CONTEXTITEMNAME = '[BBHOST]');
+
+delete from items where name = 'ssrBlankTemplate' and CONTEXTITEMNAME = '[BBHOST]';
+
+
+-- 4) Nexus
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.nexus/widgets/PageMgmtTree/pagemanagement.js'
+where internalValue = '$(contextRoot)/static/dashboard/widgets/PageMgmt/pagemanagement.js';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.nexus/widgets/PageMgmtTree/html/pages/pageMgmtTreeView.html'
+where internalValue = 'pages/pageMgmtView';
+
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2012.nexus/widgets/PageMgmtTree/pagemanagement.css'
+where internalValue = '$(contextRoot)/static/dashboard/widgets/PageMgmt/pagemanagement.css';
+
+update property_definition
+set internalValue = 'PageMgmtTree'
+where internalValue = 'PageMgmt';
+
+-- Migrate W3CWidgetExample to Standard_W3C_Sample
+-- Add properties version
+-- Update properties description, title, WidgetChrome
+-- Delete properties client-template, custom, RenderAtServer, template
+-- Delete w3c tag
+-- Rename server scope item
+INSERT INTO PROPERTY_DEFINITION
+( NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'version'
+, '1.0'
+, 'string'
+, 'Version'
+, null
+, ID
+FROM  ITEMS
+WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+;
+
+
+update property_definition
+set   internalValue = 'w3c example widget'
+,     label = 'Description'
+,     name = 'description'
+where item_id in (SELECT
+                  ID
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+                  )
+and   name = 'Description'
+;
+
+update property_definition
+set   viewhint = 'select-one,user,designModeOnly'
+where item_id in (SELECT
+                  ID
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+                  )
+and   name = 'widgetChrome'
+;
+
+update property_definition
+set   label = 'Title'
+,     viewhint = 'text-input,user'
+where item_id in (SELECT
+                  ID
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+                  )
+and   name = 'title'
+;
+
+delete from property_definition
+where name in ('client-template', 'custom', 'RenderAtServer', 'template')
+and   item_id in (select id
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample'))
+;
+
+delete from item_tags
+where tag_id in (select id from tags where name = 'w3c')
+and   item_id in (SELECT
+                  ID
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'W3CWidgetExample')
+                  )
+;
+
+update items set name = 'Standard_W3C_Sample' where name = 'W3CWidgetExample' and CONTEXTITEMNAME = '[BBHOST]';
+
+-- Migrate backbaseTestWidget to Standard_Widget_Sample
+-- Update properties Data, src, productKey, title, WidgetChrome
+-- Delete properties client-template, RenderAtServer, template
+-- Delete backbase tag
+-- Rename server scope item
+update property_definition
+set   label = 'Test property'
+,     viewhint = 'text-input,user'
+where item_id in (SELECT
+                  ID
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  )
+and   name = 'Data'
+;
+
+update property_definition
+set   label = ''
+where item_id in (SELECT
+                  ID
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  )
+and   name = 'src'
+;
+
+update property_definition
+set   label = 'Title'
+,     viewhint = 'text-input,user'
+where item_id in (SELECT
+                  ID
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  )
+and   name = 'title'
+;
+
+update property_definition
+set   viewhint = 'select-one,user,designModeOnly'
+where item_id in (SELECT
+                  ID
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  )
+and   name = 'widgetChrome'
+;
+
+delete from property_definition
+where name in ('client-template', 'RenderAtServer', 'template')
+and   item_id in (select id
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget'))
+;
+
+delete from item_tags
+where tag_id in (select id from tags where name = 'backbase')
+and   item_id in (SELECT
+                  ID
+                  FROM  ITEMS
+                  WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'backbaseTestWidget')
+                  )
+;
+
+update items set name = 'Standard_Widget_Sample' where name = 'backbaseTestWidget' and CONTEXTITEMNAME = '[BBHOST]';
+
+
+if exists (select 1 from sysobjects where name='insert_property')
+    drop procedure insert_property;
+go
+
+create procedure insert_property
+(
+    @itemId numeric(19,0),
+    @label nvarchar(255),
+    @viewHint nvarchar(255),
+    @name nvarchar(255),
+    @type nvarchar(255),
+    @value nvarchar(756)
+)
+as
+begin
+    declare
+        @property_id numeric(19,0)
+    -- Insert property definition
+    insert into property_definition (label,viewHint,type,name,internalValue,versioning,item_id,user_id)
+    select top 1 @label,@viewHint,@type,@name,@value,versioning,item_id,user_id
+    from property_definition where item_id=@itemId
+    select @property_id=@@identity
+    -- Insert acl security
+    insert into acl_object_identity (object_id_class,object_id_identity,parent_object,owner_sid,entries_inheriting)
+    select top 1 b.object_id_class,@property_id,b.parent_object,b.owner_sid,b.entries_inheriting
+    from acl_object_identity a,acl_object_identity b
+    where a.object_id_identity=@itemId and b.parent_object=a.id
+end
+go
+
+if exists (select 1 from sysobjects where name='property_adder')
+    drop procedure property_adder;
+go
+
+create procedure property_adder
+(
+    @itemName nvarchar(255),
+    @label nvarchar(255),
+    @viewHint nvarchar(255),
+    @propertyName nvarchar(255),
+    @propertyType nvarchar(255),
+    @propertyValue nvarchar(756)
+)
+as
+begin
+    declare @serverItemId numeric(19,0)
+    declare @portalItemId numeric(19,0)
+    declare @instanceItemId numeric(19,0)
+    declare @personalItemId numeric(19,0)
+    -- Insert property for server catalog item
+    select @serverItemId=id from items where name=@itemName and contextItemName= '[BBHOST]'
+    if (@@rowcount=1)
+    begin
+        execute insert_property @serverItemId,@label,@viewHint,@propertyName,@propertyType,@propertyValue
+        -- Insert property for portal catalog item
+        select @portalItemId=0
+        while(1=1)
+        begin
+            select top 1 @portalItemId=id from items where extendedItem_id=@serverItemId and state='ASSIGNED' and id>@portalItemId
+            if (@@rowcount=0)
+                break
+            execute insert_property @portalItemId,@label,@viewHint,@propertyName,@propertyType,@propertyValue
+        end
+        -- Insert property for portal instances
+        select @instanceItemId=0
+        while(1=1)
+        begin
+            select top 1 @instanceItemId=id from items where extendedItem_id=@portalItemId and state='INSTANTIATED' and id>@instanceItemId
+            if (@@rowcount=0)
+                break
+            execute insert_property @instanceItemId,@label,@viewHint,@propertyName,@propertyType,@propertyValue
+            -- Insert property for personalized items
+            select @personalItemId=0
+            while(1=1)
+            begin
+                select top 1 @personalItemId=id from items where extendedItem_id=@instanceItemId and state='PERSONALIZED' and id>@personalItemId
+                if (@@rowcount=0)
+                    break
+                execute insert_property @personalItemId,@label,@viewHint,@propertyName,@propertyType,@propertyValue
+            end
+        end
+    end
+end
+go
+
+execute property_adder '2ColumnLayout',null,null,'columnWidths','string','50%,50%'
+execute property_adder '2ColumnLayout-1-2',null,null,'columnWidths','string','33%,67%'
+execute property_adder '3ColumnLayout',null,null,'columnWidths','string','33%,34%,33%'
+execute property_adder 'BorderLayout',null,null,'columnWidths','string','33%,34%,33%'
+execute property_adder 'BorderLayout2',null,null,'columnWidths','string','20%,60%,20%'
+execute property_adder 'Standard_W3C_Sample','Product Key','text-input,user','productKey','string','111-222'
+execute property_adder 'Standard_W3C_Sample','Author',null,'author','string','Backbase'
+
+-- Add a default Link tree for existing Portals
+-- Steps
+-- Create root link for main navigation menu
+-- Add properties on root link for main navigation menu
+-- - TemplateName	link-default
+-- - Description	empty
+-- - title			Main Navigation
+-- - itemType		menuHeader
+-- - Order			10
+-- Create root link for not in menu
+-- Add properties on root link for not in navigation menu
+-- - TemplateName	link-default
+-- - Description	empty
+-- - title			Not in Navigation
+-- - itemType		menuHeader
+-- - Order			20
+-- Create a Link item for every page. (use the page name in the link name for easy reference)
+-- Add properties on each page Link
+-- - TemplateName	link-default
+-- - Description	emmpty
+-- - title			the page title
+-- - itemType		page
+-- - Order			increment (or use e.g. item id of the page)
+-- - ItemRef		the page name
+-- Secure new Links and new Properties.
+--  The security of the referencing item will be copied.
+
+if exists (select 1 from sysobjects where name='create_links_for')
+    drop procedure create_links_for;
+go
+
+create procedure create_links_for
+(
+    @name nvarchar(255)
+)
+as
+begin
+    INSERT INTO items
+    (
+      discriminator
+    , contextItemName
+    , createdBy
+    , createdTimestamp
+    , itemHandlerBeanName
+    , lastModifiedBy
+    , lastModifiedTimestamp
+    , lastPublicationTimestamp
+    , name
+    , parentItemName
+    , state
+    , subType
+    , transformerBeanName
+    , type
+    , userId
+    , extendedItem_id
+    , template_id
+    , locked
+    , hidden
+    , publicationStatus
+    , nextPublishAction
+    , uuid
+    )
+    SELECT
+      'Link'
+    , name
+    , 1
+    , getdate()
+    , 'linkInstanceHandler'
+    , 1
+    , getdate()
+    , null
+    , @name
+    , name
+    , 'INSTANTIATED'
+    , null
+    , null
+    , 'LINK'
+    , null
+    , null
+    , (select id from items where contextItemName = '[BBHOST]' and name = 'link-default')
+    , 0
+    , 0
+    , 'NOT_PUBLISHED'
+    , null
+    , '-1'
+    FROM items
+    WHERE type = 'PORTAL'
+end
+go
+
+if exists (select 1 from sysobjects where name='insert_prop_for')
+    drop procedure insert_prop_for;
+go
+
+create procedure insert_prop_for
+(
+    @itemName nvarchar(255),
+    @itemType nvarchar(255),
+    @propertyName nvarchar(255),
+    @propertyValue nvarchar(756),
+    @propertyType nvarchar(255)
+)
+as
+begin
+    INSERT INTO property_definition(name,internalValue,type,item_id)
+    select @propertyName,@propertyValue,@propertyType, id
+    from items
+    where name LIKE @itemName
+    and @itemType in ('',type)
+end
+go
+
+if exists (select 1 from sysobjects where name='insert_props_for')
+    drop procedure insert_props_for;
+go
+create procedure insert_props_for
+(
+    @itemName nvarchar(255),
+    @itemType nvarchar(255),
+    @title nvarchar(255),
+    @orderParam nvarchar(2)
+)
+as
+begin
+    execute insert_prop_for @itemName,@itemType,'title',@title,'string'
+    execute insert_prop_for @itemName,@itemType,'TemplateName','link-default','string'
+    execute insert_prop_for @itemName,@itemType,'Order',@orderParam,'string'
+    execute insert_prop_for @itemName,@itemType,'Description',null,'string'
+    execute insert_prop_for @itemName,@itemType,'itemType','menuHeader','string'
+end
+go
+
+-- Create root link for main navigation menu
+execute create_links_for 'navroot_mainmenu'
+
+-- Add properties on root link for main navigation menu
+execute insert_props_for 'navroot_mainmenu','','Main Navigation','10'
+
+-- Create root link for not in menu
+execute create_links_for 'navroot_notinmenu'
+
+-- Add properties on root link for not in navigation menu
+execute insert_props_for 'navroot_notinmenu','','Not in Navigation','20'
+
+-- Create a Link item for every page.
+INSERT INTO ITEMS
+(
+  discriminator
+, contextItemName
+, createdBy
+, createdTimestamp
+, itemHandlerBeanName
+, lastModifiedBy
+, lastModifiedTimestamp
+, lastPublicationTimestamp
+, name
+, parentItemName
+, state
+, subType
+, transformerBeanName
+, type
+, userId
+, extendedItem_id
+, template_id
+, locked
+, hidden
+, publicationStatus
+, nextPublishAction
+, uuid
+)
+select
+ 'Link'
+, contextItemName
+, 1
+, getdate()
+, 'linkInstanceHandler'
+, 1
+, getdate()
+, null
+, 'link_' + name
+, 'navroot_mainmenu'
+, 'INSTANTIATED'
+, null
+, null
+, 'LINK'
+, null
+, null
+, (select id from items where contextItemName = '[BBHOST]' and name = 'link-default')
+, 0
+, 0
+, 'NOT_PUBLISHED'
+, null
+, '-1'
+from items
+where type = 'PAGE'
+and   state = 'INSTANTIATED'
+;
+
+-- Add properties on each page Link
+INSERT INTO property_definition(name,internalValue,type,item_id)
+SELECT
+  'title'
+, (select internalvalue
+   from    property_definition pdn
+   ,       items ite
+   where ite.id = pdn.item_id
+   and   ite.name = right(ite0.name,len(ite0.name)-5)
+   and   ite.contextItemName = ite0.contextItemName
+   and   lower(pdn.name) = 'title'
+  )
+, 'string'
+, ID
+FROM   items ite0
+WHERE type = 'LINK'
+AND name LIKE 'link%'
+;
+
+execute insert_prop_for 'link%','LINK','TemplateName','link-default','string'
+execute insert_prop_for 'link%','LINK','Description',null,'string'
+execute insert_prop_for 'link%','LINK','itemType','page','string'
+
+INSERT INTO property_definition(name,internalValue,type,item_id)
+SELECT
+  'Order'
+, id
+, 'string'
+, id
+FROM   items
+WHERE type = 'LINK'
+AND name LIKE 'link%'
+;
+
+INSERT INTO property_definition(name,internalValue,type,item_id)
+SELECT
+  'ItemRef'
+, right(name,len(name)-5)
+, 'string'
+, id
+FROM   items
+WHERE type = 'LINK'
+AND   name LIKE 'link%'
+;
+
+-- Secure new Links
+-- Create ACL_OBJECT_IDENTITY entries for the root links
+insert into acl_object_identity
+(
+  object_id_class
+, object_id_identity
+, parent_object
+, owner_sid
+, entries_inheriting
+)
+select
+       (select id from acl_class where class = 'com.backbase.portal.foundation.domain.model.Link')
+,      ite.id
+,      (select obj.id
+       from acl_object_identity obj
+       ,    items ite2
+       where obj.object_id_identity = ite2.id
+       and   obj.object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.model.Portal')
+       and   ite2.type = 'PORTAL'
+       and   ite2.name = ite.contextItemName
+       )
+,      (select id from acl_sid where sid = 'admin')
+,      1
+from   items ite
+where  ite.name not like 'link%'
+and    ite.type = 'LINK'
+;
+
+-- Create ACL_OBJECT_IDENTITY entries for the pages
+insert into acl_object_identity
+(
+  object_id_class
+, object_id_identity
+, parent_object
+, owner_sid
+, entries_inheriting
+)
+select
+       (select id from acl_class where class = 'com.backbase.portal.foundation.domain.model.Link')
+,      (select ite2.id
+        from items ite1
+        ,    items ite2
+        where ite1.id = object_id_identity
+        and   ite1.contextItemName = ite2.contextItemName
+        and   ite2.name = 'link_' + ite1.name
+       )
+,      parent_object
+,      owner_sid
+,      entries_inheriting
+from   acl_object_identity obj
+,      acl_class cls
+where  obj.object_id_identity in (select id
+                              from items
+                              where type = 'PAGE'
+                              and   state = 'INSTANTIATED'
+                             )
+and    obj.object_id_class = cls.id
+and    cls.class = 'com.backbase.portal.foundation.domain.model.Page'
+;
+
+-- Copy ACL_ENTRY records in case security is not inherited from the Portal anymore.
+insert into acl_entry
+(
+  acl_object_identity
+, ace_order
+, sid
+, mask
+, granting
+, audit_success
+, audit_failure
+)
+select
+  (select obj_link.id
+   from   acl_object_identity obj_page
+   ,      acl_class cls_page
+   ,      items ite_page
+   ,      acl_object_identity obj_link
+   ,      acl_class cls_link
+   ,      items ite_link
+   where 1=1
+   and    obj_page.object_id_class = cls_page.id
+   and    cls_page.class = 'com.backbase.portal.foundation.domain.model.Page'
+   and    obj_link.object_id_class = cls_link.id
+   and    cls_link.class = 'com.backbase.portal.foundation.domain.model.Link'
+   and    obj_page.object_id_identity = ite_page.id
+   and    obj_link.object_id_identity = ite_link.id
+   and    ite_link.name = 'link_' + ite_page.name
+   and    ite_link.contextItemName = ite_page.contextItemName
+   and    obj_page.id = obj.id
+   )
+, ace.ace_order
+, ace.sid
+, ace.mask
+, ace.granting
+, ace.audit_success
+, ace.audit_failure
+from   acl_entry ace
+,      acl_object_identity obj
+,      acl_class cls
+where  ace.acl_object_identity = obj.id
+and    object_id_identity in (select id
+                              from items
+                              where type = 'PAGE'
+                              and   state = 'INSTANTIATED'
+                             )
+and    obj.object_id_class = cls.id
+and    cls.class = 'com.backbase.portal.foundation.domain.model.Page'
+;
+
+
+-- Secure new Link properties (will inherit from the Link item).
+insert into acl_object_identity
+(
+  object_id_class
+, object_id_identity
+, parent_object
+, owner_sid
+, entries_inheriting
+)
+select
+       (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+,      pdn.id
+,      (select id
+        from acl_object_identity
+        where object_id_identity = ite.id
+        and   object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.model.Link')
+       )
+,      (select owner_sid
+        from acl_object_identity
+        where object_id_identity = ite.id
+        and   object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.model.Link')
+       )
+,      1
+from   acl_object_identity obj
+,      acl_class           cls
+,      items               ite
+,      property_definition pdn
+where  obj.object_id_identity = ite.id
+and    obj.object_id_class = cls.id
+and    cls.class = 'com.backbase.portal.foundation.domain.model.Link'
+and    ite.id = pdn.item_id
+and    ite.type = 'LINK'
+go
+
+
+-- More import data changes
+-- Rename of containers and fix the remaining properties.
+
+-- Rename container BorderLayout to Border_Layout
+-- add property padding
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'padding'
+, '5'
+, 'string'
+, 'Padding'
+, 'user,designModeOnly'
+, ID
+FROM  ITEMS
+WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'BorderLayout')
+or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'BorderLayout')
+;
+
+-- delete properties RenderAtServer, client-template
+delete from PROPERTY_DEFINITION
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'BorderLayout')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'BorderLayout'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and name in ('RenderAtServer','client-template')
+;
+
+update items set name = 'Border_Layout' where name = 'BorderLayout' and CONTEXTITEMNAME = '[BBHOST]';
+
+-- Rename container 2ColumnLayout to Two_Column_Layout
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'padding'
+, '5'
+, 'string'
+, 'Padding'
+, 'user,designModeOnly'
+, ID
+FROM  ITEMS
+WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '2ColumnLayout')
+or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '2ColumnLayout')
+;
+
+-- delete properties RenderAtServer, client-template
+delete from PROPERTY_DEFINITION
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '2ColumnLayout')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = '2ColumnLayout'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and name in ('RenderAtServer','client-template')
+;
+
+update items set name = 'Two_Column_Layout' where name = '2ColumnLayout' and CONTEXTITEMNAME = '[BBHOST]';
+
+-- Rename container 2ColumnLayout-1-2 to Two_Column_Layout_1_2_Ratio
+-- add property numberOfColumns, padding
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'padding'
+, '5'
+, 'string'
+, 'Padding'
+, 'user,designModeOnly'
+, ID
+FROM  ITEMS
+WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '2ColumnLayout-1-2')
+or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '2ColumnLayout-1-2')
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'numberOfColumns'
+, '2'
+, 'string'
+, 'Number of Columns'
+, 'user,designModeOnly'
+, ID
+FROM  ITEMS
+WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '2ColumnLayout-1-2')
+or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '2ColumnLayout-1-2')
+;
+
+-- delete properties RenderAtServer, client-template
+delete from PROPERTY_DEFINITION
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '2ColumnLayout-1-2')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = '2ColumnLayout-1-2'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and name in ('RenderAtServer','client-template')
+;
+
+-- update columnWidths add the viewhint
+update PROPERTY_DEFINITION
+set    viewHint= 'user,designModeOnly'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '2ColumnLayout-1-2')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = '2ColumnLayout-1-2'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and name = 'columnWidths'
+;
+
+update items set name = 'Two_Column_Layout_1_2_Ratio' where name = '2ColumnLayout-1-2' and CONTEXTITEMNAME = '[BBHOST]';
+
+
+-- Rename container 3ColumnLayout to Three_Column_Layout
+-- add property padding
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'padding'
+, '5'
+, 'string'
+, 'Padding'
+, 'user,designModeOnly'
+, ID
+FROM  ITEMS
+WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '3ColumnLayout')
+or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '3ColumnLayout')
+;
+
+-- delete properties RenderAtServer, client-template
+delete from PROPERTY_DEFINITION
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '3ColumnLayout')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = '3ColumnLayout'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and name in ('RenderAtServer','client-template')
+;
+
+-- update property numberOfColumns add label and viewhint
+update PROPERTY_DEFINITION
+set    viewHint= 'user,designModeOnly'
+,      label = 'Number of Columns'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '3ColumnLayout')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = '3ColumnLayout'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and name = 'numberOfColumns'
+;
+
+-- update property columnWidths add label and viewhint
+update PROPERTY_DEFINITION
+set    viewHint= 'user,designModeOnly'
+,      label = 'Column Widths'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = '3ColumnLayout')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = '3ColumnLayout'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and name = 'columnWidths'
+;
+
+update items set name = 'Three_Column_Layout' where name = '3ColumnLayout' and CONTEXTITEMNAME = '[BBHOST]';
+
+
+-- Rename container BorderLayout2 ???
+-- add property padding
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'padding'
+, '5'
+, 'string'
+, 'Padding'
+, 'user,designModeOnly'
+, ID
+FROM  ITEMS
+WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'BorderLayout2')
+or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'BorderLayout2')
+;
+-- delete properties RenderAtServer, client-template
+delete from PROPERTY_DEFINITION
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'BorderLayout2')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'BorderLayout2'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and name in ('RenderAtServer','client-template')
+;
+
+
+
+
+-- Rename container WrapLineLayout to Wrap_Line_Layout
+-- delete properties RenderAtServer, client-template and numberOfColumns
+delete from PROPERTY_DEFINITION
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'WrapLineLayout')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'WrapLineLayout'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and name in ('RenderAtServer','client-template', 'numberOfColumns')
+;
+
+update items set name = 'Wrap_Line_Layout' where name = 'WrapLineLayout' and CONTEXTITEMNAME = '[BBHOST]';
+
+-- Migrate dashboard portal
+-- Add property DefaultDevice
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'DefaultDevice'
+, 'Web'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'dashboard'
+;
+-- Add special page properties LoginPage, LogoutPage, ErrorPage, AccessDeniedPage, AuthenticationFailurePage  to the dashboard portal
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'LoginPage'
+, '/login/loginDashboard.jsp'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'dashboard'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'LogoutPage'
+, '/login/loginDashboard.jsp?login_error=logout'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'dashboard'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'ErrorPage'
+, '/login/error.jsp'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'dashboard'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'AccessDeniedPage'
+, '/login/loginDashboard.jsp?login_error=accessdenied'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'dashboard'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'AuthenticationFailurePage'
+, '/login/loginDashboard.jsp?login_error=failure'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'dashboard'
+;
+
+-- Add special page properties for all other portals
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'LoginPage'
+, '/login/login.jsp'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME != 'dashboard' and discriminator = 'Portal'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'LogoutPage'
+, '/login/logout.jsp'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME != 'dashboard' and discriminator = 'Portal'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'ErrorPage'
+, '/login/error.jsp'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME != 'dashboard' and discriminator = 'Portal'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'AccessDeniedPage'
+, '/login/login.jsp?login_error=accessdenied'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME != 'dashboard' and discriminator = 'Portal'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, ITEM_ID
+)
+SELECT
+  'AuthenticationFailurePage'
+, '/login/login.jsp?login_error=failure'
+, 'string'
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = '[BBHOST]' AND   NAME != 'dashboard' and discriminator = 'Portal'
+;
+
+
+-- Add PublishApp widget to dashboard
+INSERT INTO ITEMS
+(
+  DISCRIMINATOR
+, CONTEXTITEMNAME
+, CREATEDBY
+, CREATEDTIMESTAMP
+, ITEMHANDLERBEANNAME
+, LASTMODIFIEDBY
+, LASTMODIFIEDTIMESTAMP
+, LASTPUBLICATIONTIMESTAMP
+, NAME
+, PARENTITEMNAME
+, STATE
+, SUBTYPE
+, TRANSFORMERBEANNAME
+, TYPE
+, USERID
+, EXTENDEDITEM_ID
+, TEMPLATE_ID
+, LOCKED
+, HIDDEN
+, PUBLICATIONSTATUS
+, NEXTPUBLISHACTION
+, UUID
+)
+values(
+  'Widget'
+, 'dashboard'
+, 1
+, GETDATE()
+, 'widgetInstanceHandler'
+, 1
+, GETDATE()
+, null
+, 'PublishApp'
+, 'PortalLauncherContainer'
+, 'INSTANTIATED'
+, null
+, null
+, 'WIDGET'
+, null
+, null
+, (select id from items where CONTEXTITEMNAME = '[BBHOST]' and name = 'widget-default')
+, 0
+, 0
+, 'NOT_PUBLISHED'
+, null
+, -1
+)
+;
+
+-- Add properties to PublishApp widget
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'template'
+, 'dashboard'
+, 'string'
+, null
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = 'dashboard' AND NAME = 'PublishApp'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'client-template'
+, 'widget'
+, 'string'
+, null
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = 'dashboard' AND NAME = 'PublishApp'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'htmlTemplate'
+, '$(contextRoot)/static/backbase.com.2012.tango/widgets/PublishApp/publishapp.html'
+, 'string'
+, null
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = 'dashboard' AND NAME = 'PublishApp'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'stylesheetResources'
+, '$(contextRoot)/static/backbase.com.2012.tango/widgets/PublishApp/publishapp.css'
+, 'string'
+, 'Stylesheet Resources'
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = 'dashboard' AND NAME = 'PublishApp'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'javascriptResources'
+, '$(contextRoot)/static/backbase.com.2012.tango/widgets/PublishApp/publishapp.js'
+, 'string'
+, 'Javascript Resources'
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = 'dashboard' AND NAME = 'PublishApp'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'title'
+, 'Publishing'
+, 'string'
+, null
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = 'dashboard' AND NAME = 'PublishApp'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'area'
+, '1'
+, 'string'
+, 'Area'
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = 'dashboard' AND NAME = 'PublishApp'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'order'
+, '3'
+, 'double'
+, 'Order'
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = 'dashboard' AND NAME = 'PublishApp'
+;
+
+INSERT INTO PROPERTY_DEFINITION
+(
+  NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'name'
+, 'PublishApp'
+, 'string'
+, null
+, null
+, ID
+FROM  ITEMS
+WHERE CONTEXTITEMNAME = 'dashboard' AND NAME = 'PublishApp'
+;
+
+-- Secure PublishApp
+insert into acl_object_identity
+(
+  OBJECT_ID_CLASS
+, OBJECT_ID_IDENTITY
+, PARENT_OBJECT
+, OWNER_SID
+, ENTRIES_INHERITING
+)
+select(select id from acl_class where class = 'com.backbase.portal.foundation.domain.model.Widget')
+,      ite.id
+,      (select obj.id
+       from acl_object_identity obj
+       ,    items ite2
+       where OBJ.OBJECT_ID_IDENTITY = ite2.id
+       and   obj.object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.model.Container')
+       and   ITE2.NAME = 'PortalLauncherContainer'
+       and   ITE2.CONTEXTITEMNAME = 'dashboard'
+       )
+,      (select id from acl_sid where sid = 'admin')
+,      1
+from   items ite
+where  ite.name = 'PublishApp'
+and    ite.CONTEXTITEMNAME = 'dashboard'
+;
+
+
+-- Insert ACL for every unsecured property. Property will inherit security from its item.
+insert into acl_object_identity
+(
+  OBJECT_ID_CLASS
+, OBJECT_ID_IDENTITY
+, PARENT_OBJECT
+, OWNER_SID
+, ENTRIES_INHERITING
+)
+select (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+,      pdn.id
+,      (select id
+        from acl_object_identity
+        where OBJECT_ID_IDENTITY = ite.id
+        and   object_id_class = (select id from acl_class where class = cls.class)
+       )
+,      (select owner_sid
+        from acl_object_identity
+        where OBJECT_ID_IDENTITY = ite.id
+        and   object_id_class = (select id from acl_class where class = cls.class)
+       )
+,      1
+from   acl_object_identity obj
+,      acl_class           cls
+,      items               ite
+,      property_definition pdn
+where  OBJ.OBJECT_ID_IDENTITY = ite.id
+and    obj.object_id_class = cls.id
+and    cls.class =  concat('com.backbase.portal.foundation.domain.model.', ite.discriminator)
+and    ite.id = PDN.ITEM_ID
+and    pdn.id not in (select object_id_identity
+                      from   acl_object_identity
+                      where  object_id_class in (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+                    )
+;
+
+-- Script to add tags.
+-- Tags are added to
+-- - server catalog
+-- - portal catalog
+-- - instances
+-- - customizations
+
+if exists (select 1 from sysobjects where name='add_tag')
+    drop procedure add_tag;
+go
+
+-- Procedure to add an tag reference to the TAGS table if it does not exist.
+CREATE PROCEDURE add_tag
+(
+    @pContextItemName nvarchar(255),
+    @pTagName nvarchar(255),
+    @pTagType nvarchar(255)
+)
+AS
+BEGIN
+    DECLARE @tagId numeric(19,0)
+
+    select @tagId=id
+    from   tags
+	where  contextItemName = @pContextItemName
+	and    name  = @pTagName
+	and    type  = @pTagType
+	;
+
+    IF (@@rowcount=0)
+	BEGIN
+        insert into tags
+        ( contextItemName
+        , name
+        , type
+        )
+        values
+        ( @pContextItemName
+        , @pTagName
+        , @pTagType
+        )
+    END
+END
+go
+
+if exists (select 1 from sysobjects where name='add_item_tag')
+    drop procedure add_item_tag;
+go
+
+-- Procedure to add an item tag reference to the ITEM_TAGS table if it does not exist.
+CREATE PROCEDURE add_item_tag
+(
+    @pItemId numeric(19,0),
+    @pTagId numeric(19,0)
+)
+AS
+BEGIN
+    DECLARE @itemTagId numeric(19,0)
+
+    select @itemTagId=id
+    from   item_tags
+	where  item_id = @pItemId
+	and    tag_id  = @pTagId
+	;
+
+    IF (@@rowcount=0)
+	BEGIN
+        insert into item_tags
+        ( item_id
+        , tag_id
+        , blacklist
+        )
+        values
+        ( @pItemId
+        , @pTagId
+        , 0
+        )
+    END
+END
+go
+
+if exists (select 1 from sysobjects where name='add_tag_to_item')
+    drop procedure add_tag_to_item;
+go
+
+-- Procedure to add an tag to the TAGS table if it does not exist.
+-- This procedure will also add the tag to the item mentioned and to all its extensions.
+CREATE PROCEDURE add_tag_to_item
+(
+    @pItemName nvarchar(255),
+    @pTagName nvarchar(255),
+    @pTagType nvarchar(255)
+)
+AS
+BEGIN
+    DECLARE @serverItemId numeric(19,0)
+    DECLARE @tagId numeric(19,0)
+	DECLARE @portalName nvarchar(255)
+    DECLARE @portalItemId numeric(19,0)
+    DECLARE @instanceItemId numeric(19,0)
+    DECLARE @personalItemId numeric(19,0)
+
+	-- Add tag to server scope
+	execute add_tag '[BBHOST]', @pTagName, @pTagType;
+    -- Insert item_tag for server catalog item
+    select @serverItemId=id from items where name=@pItemName and contextItemName= '[BBHOST]'
+    if (@@rowcount=1)
+    begin
+        select @tagId=id from tags where name=@pTagName and type = @pTagType and contextItemName= '[BBHOST]'
+        execute add_item_tag @serverItemId, @tagId;
+
+        -- Insert tag for portal catalog item
+        select @portalItemId=0
+        while(1=1)
+        begin
+            select top 1 @portalItemId=id, @portalName=contextItemName from items where extendedItem_id=@serverItemId and state='ASSIGNED' and id>@portalItemId
+            if (@@rowcount=0)
+                break
+            execute add_tag @portalName, @pTagName, @pTagType
+            select @tagId=id from tags where name=@pTagName and type = @pTagType and contextItemName= @portalName
+            execute add_item_tag @portalItemId, @tagId
+
+            -- Insert tag for portal instances
+            select @instanceItemId=0
+            while(1=1)
+            begin
+                select top 1 @instanceItemId=id from items where extendedItem_id=@portalItemId and state='INSTANTIATED' and id>@instanceItemId
+                if (@@rowcount=0)
+                    break
+                execute add_item_tag @instanceItemId, @tagId
+                -- Insert property for personalized items
+                select @personalItemId=0
+                while(1=1)
+                begin
+                    select top 1  @personalItemId=id from items where extendedItem_id=@instanceItemId and state='PERSONALIZED' and id>@personalItemId
+                        if (@@rowcount=0)
+                            break
+                    execute add_item_tag @personalItemId, @tagId
+                end
+            end
+        end
+    end
+END
+go
+
+-- Example: execute add_tag_to_item 'portal-default','tag_adder_test','regular'
+execute add_tag_to_item 'Border_Layout','fluid','regular'
+execute add_tag_to_item 'Border_Layout','three column','regular'
+execute add_tag_to_item 'Border_Layout','three row','regular'
+execute add_tag_to_item 'CatalogBrowser','standard','regular'
+execute add_tag_to_item 'Page_Default','mobile','regular'
+execute add_tag_to_item 'Page_Default','smart','regular'
+execute add_tag_to_item 'Page_Default','tablet','regular'
+execute add_tag_to_item 'Page_Default','web','regular'
+execute add_tag_to_item 'Three_Column_Layout','fluid','regular'
+execute add_tag_to_item 'Three_Column_Layout','three column','regular'
+execute add_tag_to_item 'Two_Column_Layout','fluid','regular'
+execute add_tag_to_item 'Two_Column_Layout','two column','regular'
+execute add_tag_to_item 'Two_Column_Layout_1_2_Ratio','fluid','regular'
+execute add_tag_to_item 'Two_Column_Layout_1_2_Ratio','two column','regular'
+execute add_tag_to_item 'Wrap_Line_Layout','fluid','regular'
+execute add_tag_to_item 'Wrap_Line_Layout','one column','regular'
+execute add_tag_to_item 'Wrap_Line_Layout','wrap','regular'
+execute add_tag_to_item 'bbSmartTemplate','smart','regular'
+execute add_tag_to_item 'dashboardPageTemplate','web','regular'
+execute add_tag_to_item 'Standard_W3C_Sample','standard','regular'
+execute add_tag_to_item 'Standard_Widget_Sample','standard','regular'
+
+update items set uuid = convert(nvarchar,id) where uuid='-1';
+
+
+-- Cleanup of stored procedures
+drop procedure property_adder
+go
+drop procedure insert_property
+go
+drop procedure add_tag_to_item
+go
+drop procedure add_item_tag
+go
+drop procedure add_tag
+go
+
+-- Modify template on ContentViewerWidget, ContentEditorWidget, AdvancedContentTemplate and CatalogBrowser.
+-- Was widget-default, should become Standard_Widget
+update items
+set template_id = (select id from items where name = 'Standard_Widget' and CONTEXTITEMNAME = '[BBHOST]')
+where  (name like 'ContentViewerWidget%'
+   or name like 'ContentEditorWidget%'
+   or name like 'AdvancedContentTemplate%'
+   or name like 'CatalogBrowser%'
+)
+and template_id = (select id from items where name = 'widget-default' and CONTEXTITEMNAME = '[BBHOST]')
+;
+
+update property_definition
+set internalValue = 'Standard_Widget'
+where item_id in (
+select id from items
+where  (name like 'ContentViewerWidget%'
+   or name like 'ContentEditorWidget%'
+   or name like 'AdvancedContentTemplate%'
+   or name like 'CatalogBrowser%'
+))
+and name = 'TemplateName'
+and internalValue = 'widget-default'
+;
+
+
+-- Fixed issues on Image and Text widget
+update property_definition
+set internalValue = '$(contextRoot)/static/backbase.com.2011.ice/html/ContentTemplate/AdvancedImageText.html'
+where internalValue = '$(contextRoot)/static/dashboard/templates/html/ContentTemplate/AdvancedImageText.html'
+;
+
+delete from property_definition
+where item_id in (select id from items where name like 'AdvancedContentTemplate%' and discriminator = 'Widget')
+and  name in ('RenderAtServer', 'client-template', 'template')
+;
+
+
+update property_definition
+set viewhint = concat(viewhint,',user')
+where viewhint is not null and viewhint not like '%user%'
+and   item_id in (select id from items
+                  where name like 'AdvancedContentTemplate%'
+                  or name like 'Border_Layout%'
+                  or name like 'CatalogBrowser%'
+                  or name like 'ContentEditorWidget%'
+                  or name like 'ContentViewerWidget%'
+                  or name like 'Standard_Widget_Sample%'
+                  or name like 'Standard_W3C_Sample%'
+                  or name like 'Three_Column_Layout%'
+                  or name like 'Two_Column_Layout%'
+                  or name like 'Two_Column_Layout_1_2_Ratio%'
+)
+;

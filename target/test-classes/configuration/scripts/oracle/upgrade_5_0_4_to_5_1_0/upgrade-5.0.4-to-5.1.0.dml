@@ -1,0 +1,107 @@
+update items
+set createdBy = 1, lastmodifiedby = 1
+where createdBy is null
+;
+
+update property_definition
+set internalValue = 'backbase'
+where name = 'template'
+and internalValue = 'bb4'
+;
+
+update property_definition
+set internalValue = '$(contextRoot)/static/dashboard/templates/html/' || internalValue || '.html'
+where name = 'widgetChrome'
+;
+
+
+DECLARE
+  -- Cursor to select the items to process
+  CURSOR C_ITEM
+  IS
+  SELECT ID
+  ,      CONTEXTITEMNAME
+  ,      TAG
+  FROM   ITEMS
+  WHERE  TAG IS NOT NULL
+  ;
+
+  TYPE STR2TBLTYPE IS TABLE OF VARCHAR2(4000);
+
+  L_ITEMS_TAGS STR2TBLTYPE := STR2TBLTYPE();
+  LN_TAG_ID NUMBER;
+  
+  FUNCTION STR2TBL(P_STR VARCHAR2, P_DELIM VARCHAR2 DEFAULT ',')
+  RETURN STR2TBLTYPE
+  AS
+     L_STR VARCHAR2(4000);
+     L_N   NUMBER;
+     L_DATA STR2TBLTYPE := STR2TBLTYPE();
+  BEGIN
+      L_STR := P_STR || P_DELIM;
+      LOOP
+          L_N := INSTR( L_STR, P_DELIM );
+          EXIT WHEN (NVL(L_N,0) = 0);
+          L_DATA.EXTEND;
+          L_DATA(L_DATA.COUNT) := LTRIM(RTRIM(SUBSTR(L_STR,1,L_N-1)));
+          L_STR := SUBSTR( L_STR, L_N+1 );
+      END LOOP;
+      RETURN L_DATA;
+  END;
+
+BEGIN
+  -- Open item cursor
+  FOR R_ITEM IN C_ITEM
+  LOOP
+    -- Split the tag column
+    L_ITEMS_TAGS := STR2TBL(R_ITEM.TAG); 
+    -- Loop over tags
+    FOR ID IN L_ITEMS_TAGS.FIRST..L_ITEMS_TAGS.LAST
+    LOOP
+      -- Check if the tag exists
+      BEGIN
+        SELECT ID
+        INTO   LN_TAG_ID
+        FROM   TAGS
+        WHERE  NAME = L_ITEMS_TAGS(ID)
+        AND    CONTEXTITEMNAME = R_ITEM.CONTEXTITEMNAME
+        ;
+      EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+          -- If not create tag record
+          SELECT HIBERNATE_SEQUENCE.NEXTVAL
+          INTO   LN_TAG_ID
+          FROM DUAL
+          ;
+          
+          INSERT INTO TAGS
+          ( ID
+          , NAME
+          , TYPE
+          ,CONTEXTITEMNAME
+          )
+          VALUES
+          ( LN_TAG_ID
+          , L_ITEMS_TAGS(ID)
+          , 'regular'
+          , R_ITEM.CONTEXTITEMNAME
+          );
+      END;
+      
+      -- Insert item tag record
+      INSERT INTO ITEM_TAGS
+      ( ID
+      , ITEM_ID
+      , TAG_ID
+      )
+      VALUES
+      ( HIBERNATE_SEQUENCE.NEXTVAL
+      , R_ITEM.ID
+      , LN_TAG_ID
+      );
+    END LOOP;
+  END LOOP;
+
+  COMMIT;
+END;
+/

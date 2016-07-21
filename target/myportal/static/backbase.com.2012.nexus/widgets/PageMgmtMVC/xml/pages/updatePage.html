@@ -1,0 +1,39 @@
+<page>
+<!-- Copyright © 2011 Backbase B.V. -->
+    <type>{{itemType}}</type>
+    {{^updatePageOnly}}<extendedItemName>{{extendedPage}}</extendedItemName>{{/updatePageOnly}}
+    <properties>
+        {{#pageTitle}}
+            <property name="title">
+                <value>{{pageTitle}}</value>
+            </property>
+        {{/pageTitle}}
+        {{#pageTemplate}}
+            <property name="TemplateName">
+                <value>{{pageTemplate}}</value>
+            </property>
+        {{/pageTemplate}}
+        <property name="client-template" label="Client Template">
+            <value>page</value>
+        </property>
+        <property name="bundleName">
+            <value>dashboard</value>
+        </property>
+        <property name="modifiedBy">
+            <value>{{modifiedBy}}</value>
+        </property>
+        {{#exposedPageProperties}}
+            <property name="{{name}}"{{#label}} label="{{label}}"{{/label}}{{#viewHint}} viewHint="{{viewHint}}"{{/viewHint}}{{#markedForDeletion}} markedForDeletion="true"{{/markedForDeletion}} manageable="{{manageable}}">
+                    <value{{#type}} type="{{type}}"{{/type}}>{{value}}</value>
+            </property>
+        {{/exposedPageProperties}}
+    </properties>
+    {{#hasTags}}
+        <tags>
+            {{#tags}}{{#value}}
+            <tag{{#type}} type="{{type}}"{{/type}} manageable="{{manageable}}"{{#blacklist}} blacklist="{{blacklist}}"{{/blacklist}}>{{value}}</tag>
+            {{/value}}{{/tags}}
+        </tags>
+    {{/hasTags}}
+    {{^hasTags}}<tags/>{{/hasTags}}
+</page>

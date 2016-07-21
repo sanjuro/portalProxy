@@ -1,0 +1,22 @@
+<div class="bd-widgetEditContainer bd-containerEditBar bd-has-{{iconCount}}-icons">
+	<!-- Copyright � 2011 Backbase B.V. -->
+	{{#icons}}<div class="bd-editbar bd-gradient{{#Drag}} bp-ui-dragGrip{{/Drag}}">
+		<!-- <a class="bd-editbarIcon bd-editOrClose-icon" title="open edit menu"></a> -->
+		<div class="bd-editbarInner">
+			{{#Drag}}<span class="bd-editbarIcon bd-icon-dragbar" title="Drag to reposition widget"></span>{{/Drag}}
+			{{^Drag}}<span class="bd-editbarIcon bd-icon-empty"></span>{{/Drag}}
+			<div class="bd-editbarTitle">{{pref.TemplateName.value}}</div>
+			<div class="bd-editbarRight">
+				{{#Divider}}<span class="bd-editbarIcon bd-icon-divider"></span>{{/Divider}}
+				{{#Edit}}<a class="bd-editbarIcon bd-icon-edit" title="Edit Details (e)"{{^Permission}} data-action="widget-preferences"{{/Permission}}></a>{{/Edit}}
+				<!--a class="bd-editbarIcon bd-icon-globe"></a>
+							<a class="bd-editbarIcon bd-icon-info" title="Layout Usage Info"></a-->
+				{{#Permission}}<a class="bd-editbarIcon bd-icon-permissions" title="Permissions (a)"></a>{{/Permission}}
+				{{#TCont}}<a class="bd-editbarIcon bd-icon-targeting" title="Targeting (t)"></a>{{/TCont}}
+				<!--{{#admin}}<a class="bd-editbarIcon bd-icon-lock" title="lock this item"></a>{{/admin}}-->
+				{{#Trash}}<a class="bd-editbarIcon bd-icon-trash" title="Delete Container (Alt+backspace)"></a>{{/Trash}}
+			</div>
+		</div>
+	</div>{{/icons}}
+	<div class="bd-widgetPlaceholder">{{{widgetHTMLContent}}}</div>
+</div>

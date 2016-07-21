@@ -1,0 +1,227 @@
+-- Add sid for role_user and role_manager
+-- The inserts might fail on a unique constraint. That is ok. That means the records are already there.
+insert into acl_sid
+( sid
+, principal
+)
+values
+( 'role_user'
+, 0
+)
+;
+
+insert into acl_sid
+( sid
+, principal
+)
+values
+( 'role_manager'
+, 0
+)
+;
+
+
+-- Set permisssion on properties of server catalog items
+
+-- Get the rights for items that are inheriting from Portal Foundation
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)select obj3.id
+,      ace.ace_order
+,      ace.sid
+,      ace.mask
+,      ace.granting
+,      ace.audit_success
+,      ace.audit_failure
+from   acl_entry           ace
+,      acl_object_identity obj
+,      acl_object_identity obj2
+,      acl_object_identity obj3
+,      acl_class           cls
+,      items               ite
+where  cls.id = obj2.object_id_class
+and    cls.class like 'com.backbase.portal.foundation.domain.model%'
+and    obj.id = ace.acl_object_identity
+and    obj.id = obj2.parent_object
+and    obj2.id = obj3.parent_object
+and    obj3.object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+and    obj2.entries_inheriting = 1
+and    obj3.entries_inheriting = 1
+and    obj2.object_id_identity = ite.id
+and    ite.contextItemName = '[BBHOST]'
+and    ite.discriminator not in ('Template', 'Portal', 'PortalFoundation')
+;
+
+-- Get the rights from items that are not inheriting from Portal Foundation
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)select obj3.id
+,      ace.ace_order
+,      ace.sid
+,      ace.mask
+,      ace.granting
+,      ace.audit_success
+,      ace.audit_failure
+from   acl_entry           ace
+,      acl_object_identity obj2
+,      acl_object_identity obj3
+,      acl_class           cls
+,      items               ite
+where  cls.id = obj2.object_id_class
+and    cls.class like 'com.backbase.portal.foundation.domain.model%'
+and    obj2.id = ace.acl_object_identity
+and    obj2.id = obj3.parent_object
+and    obj3.object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+and    obj2.entries_inheriting = 0
+and    obj3.entries_inheriting = 1
+and    obj2.object_id_identity = ite.id
+and    ite.contextItemName = '[BBHOST]'
+and    ite.discriminator not in ('Template', 'Portal', 'PortalFoundation')
+;
+
+-- All server catalog items except Templates should get CONTRIBUTOR rights for role_manager.
+-- area and order should get CONTRIBUTOR rights for role_user.
+
+-- Add READ rights for role_manager
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select obj.id
+,      (select max(ace_order) from acl_entry where acl_object_identity = obj.id) + 1
+,      (select id from acl_sid where sid = 'role_manager')
+,      1
+,      1
+,      0
+,      0
+from   acl_object_identity obj
+,      acl_class           cls
+,      property_definition pdn
+,      items               ite
+where  cls.id = obj.object_id_class
+and    cls.class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition'
+and    obj.object_id_identity = pdn.id
+and    pdn.item_id = ite.id
+and    ite.contextItemName = '[BBHOST]'
+and    ite.discriminator not in ('Template', 'Portal', 'PortalFoundation')
+;
+
+-- Add WRITE rights for role_manager
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select obj.id
+,      (select max(ace_order) from acl_entry where acl_object_identity = obj.id) + 1
+,      (select id from acl_sid where sid = 'role_manager')
+,      2
+,      1
+,      0
+,      0
+from   acl_object_identity obj
+,      acl_class           cls
+,      property_definition pdn
+,      items               ite
+where  cls.id = obj.object_id_class
+and    cls.class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition'
+and    obj.object_id_identity = pdn.id
+and    pdn.item_id = ite.id
+and    ite.contextItemName = '[BBHOST]'
+and    ite.discriminator not in ('Template', 'Portal', 'PortalFoundation')
+;
+
+
+-- Add READ rights for role_user
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select obj.id
+,      (select max(ace_order) from acl_entry where acl_object_identity = obj.id) + 1
+,      (select id from acl_sid where sid = 'role_user')
+,      1
+,      1
+,      0
+,      0
+from   acl_object_identity obj
+,      acl_class           cls
+,      property_definition pdn
+,      items               ite
+where  cls.id = obj.object_id_class
+and    cls.class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition'
+and    obj.object_id_identity = pdn.id
+and    pdn.item_id = ite.id
+and    ite.contextItemName = '[BBHOST]'
+and    ite.discriminator not in ('Template', 'Portal', 'PortalFoundation')
+and    pdn.name in ('area', 'order')
+;
+
+-- Add WRITE rights for role_user
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select obj.id
+,      (select max(ace_order) from acl_entry where acl_object_identity = obj.id) + 1
+,      (select id from acl_sid where sid = 'role_user')
+,      2
+,      1
+,      0
+,      0
+from   acl_object_identity obj
+,      acl_class           cls
+,      property_definition pdn
+,      items               ite
+where  cls.id = obj.object_id_class
+and    cls.class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition'
+and    obj.object_id_identity = pdn.id
+and    pdn.item_id = ite.id
+and    ite.contextItemName = '[BBHOST]'
+and    ite.discriminator not in ('Template', 'Portal', 'PortalFoundation')
+and    pdn.name in ('area', 'order')
+;
+
+-- Modify the acl_object_identity records from inheriting to not-inheriting
+update acl_object_identity
+set    entries_inheriting = 0
+where  object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+and    object_id_identity in (select pdn.id
+                              from   property_definition pdn
+                              ,      items               ite
+                              where  pdn.item_id = ite.id
+                              and    ite.contextItemName = '[BBHOST]'
+                              and    ite.discriminator not in ('Template', 'Portal', 'PortalFoundation')
+                            )
+;

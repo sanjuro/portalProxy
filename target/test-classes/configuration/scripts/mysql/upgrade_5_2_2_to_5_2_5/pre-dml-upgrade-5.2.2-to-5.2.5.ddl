@@ -1,0 +1,1 @@
+alter table items add page_id bigint;

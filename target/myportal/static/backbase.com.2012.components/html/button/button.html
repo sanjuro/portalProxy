@@ -1,0 +1,13 @@
+<a class="bc-button bc-roundcorner-3
+    {{#shadow}}bc-shadow{{/shadow}}
+    {{#cls}}{{cls}} {{/cls}}
+    {{#className}}{{className}} {{/className}}
+    {{#noshadow}}bc-noshadow {{/noshadow}}
+    {{#textbutton}}bc-roundcorner-0 {{/textbutton}}
+    bc-{{type}}
+    bc-{{^disabled}}{{color}}{{/disabled}}{{#disabled}}grey-disabled{{/disabled}}"
+    data-cid="bc-btn-{{type}}-{{uid}}">{{label}}
+    {{#dashboardclose}}<span class="bc-icn bc-x-black"></span>{{/dashboardclose}}
+    {{#sortButton}}<span class="bi bi-pm-sort-{{#defaultSort}}{{defaultSort}}{{/defaultSort}}{{^defaultSort}}asc{{/defaultSort}}"></span>{{/sortButton}}
+    {{#additem}}<span class="bi bi-s bi-pm-plus"></span>{{/additem}}
+</a>

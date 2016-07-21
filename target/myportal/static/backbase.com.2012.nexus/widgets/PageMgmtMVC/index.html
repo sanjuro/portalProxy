@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:g="http://www.backbase.com/2008/gadget" xml:lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+        <meta name="author" content="Backbase" />
+        <meta name="keywords" content="widget" />
+        <meta name="description" content="Page Management" />
+
+        <title>Page management</title>
+        <link rel="stylesheet" type="text/css" href="pagemanagement.css" />
+        <script type="text/javascript" src="pagemanagement.js"></script>
+    </head>
+    <body g:onload="requireWidget('#widget-page-management', 'backbase.com.2012.nexus/widgets/PageMgmtMVC/scripts/app');" class="z-migration-widget Maximized" style="overflow:visible">
+        <div class="portal-widget portal-item bd-widget-page-management bd-portal-layout-toggle-wrapper" id="widget-page-management">
+            <div class="bd-pageMgmtTree">
+                <div class="bd-pageContainer">
+
+                        <div class="bd-pageScrollContainer">
+                        <div class="bd-pagesListContainer">
+
+                            <div class="bd-columnEditor bd-pageMgmtActionBar">
+                                <table class="bd-toggleContainer">
+                                    <tr>
+                                        <td class="bd-pm-view-toggle"></td>
+                                        <td style="text-align:left"></td>
+                                    </tr>
+                                </table>
+                                <table class="bd-searchContainer">
+                                    <tr>
+                                        <td class="bd-pm-action-publish" data-ng-controller="launchPublishWizardCtrl" data-ng-show="showButton"></td>
+                                        <td class="bd-pm-search">
+                                            <div class="bd-pm-search-container"></div>
+                                            <div class="bd-ap-search-container"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="bd-pub-notifications">
+                                <div class="bd-pub-messagesContainer">
+                                    <p class="bd-pub-messageInProgress bd-pub-messages-count">
+                                        <span class="bd-pub-notification-message"></span>
+                                        <span class="bd-pub-notification-expand">view status</span>
+                                        <!-- <span class="bd-pub-notification-close" title="dismiss all notifications"></span> -->
+                                    </p>
+                                    <div class="bd-pub-messageInProgress-scroll"></div>
+                                </div>
+                                <ul class="bd-pub-notification-actions">
+                                    <li class="bd-pub-notification-action bd-pub-notification-action-details">View details</li>
+                                    <li class="bd-pub-notification-action bd-pub-notification-action-refresh">Refresh status</li>
+                                    <li class="bd-pub-notification-action bd-pub-notification-action-remark bd-pub-notification-action-inactive">Remark for publishing</li>
+                                    <li class="bd-pub-notification-action bd-pub-notification-action-remove bd-pub-notification-close">Remove from list</li>
+                                    <li class="bd-pub-notification-action bd-pub-notification-action-publishapp launchPublishApp">View all publish activity</li>
+                                </ul>
+                            </div>
+
+                            <div class="bd-addPageButtons bc-float-right"></div>
+
+                            <div class="bd-portalPagesListViewport"></div>
+
+                            <div class="bd-assetsPicker-viewport" style="display:none;"></div>
+
+                        </div>
+                        <div class="bd-pageSettingsContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

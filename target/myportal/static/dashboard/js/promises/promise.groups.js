@@ -1,0 +1,1 @@
+(function(){var a=this._baseUrl;this.groups=function(d,e,b){var c={url:a+"/groups",data:d};return this._makeRequest(c)}}).apply(be.promise);

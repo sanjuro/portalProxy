@@ -1,0 +1,114 @@
+<form id="updatePageForm" class="bc-default-form bc-pages-form bd-settingsPanel bd-pageSettingForm bd-alias-form">
+    <input name="portalName" type="hidden" value="{{portalName}}" />
+    <div class="bc-form-top">
+        <h4 class="bc-formheading"><span class="bc-form-title bc-ellipsis"><span class="bd-alias-icon bd-nav-icon"></span>{{linkTitle}}</span></h4>
+    </div>
+    <div class="bc-form-body bd-scrollbar">
+        <ul class="bc-g">
+            <li class="bc-1"><div class="bc-i"><h3 class="bc-no-margin-top">Menu</h3></div></li>
+        </ul>
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">Menu Label</div></li>
+            <li class="bc-2-3"><div class="bc-i bc-ellipsis">{{linkTitle}}</div></li>
+        </ul>
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">Friendly URL</div></li>
+            <li class="bc-2-3">
+                <div class="bc-i bc-ellipsis">
+                {{#hasFriUrl}}
+                <a href="{{urlRoot}}{{contextRoot}}/{{linkUrl}}" target="_blank" class="ellipsis bd-pageNameLink">{{contextRoot}}/{{linkUrl}}</a>
+                {{/hasFriUrl}}
+                {{^hasFriUrl}}
+                <div>none</div>
+                {{/hasFriUrl}}
+                </div>
+            </li>
+        </ul>
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">Hierarchical URL</div></li>
+            <li class="bc-2-3">
+                <div class="bc-i bc-ellipsis">
+                    <a href="{{contextRoot}}/{{generatedUrl}}" target="_blank" class="ellipsis bd-pageNameLink">{{contextRoot}}/{{generatedUrl}}</a>
+                </div>
+            </li>
+        </ul>
+        {{#defaultStateUrl}}
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">Default state URL</div></li>
+            <li class="bc-2-3">
+                <div class="bc-i bc-ellipsis bd-urlTemplate">
+                    <a href="{{contextRoot}}/{{generatedUrl}}//{{defaultStateUrl}}" target="_blank" class="ellipsis">{{contextRoot}}/{{generatedUrl}}//{{defaultStateUrl}}</a>
+                </div>
+            </li>
+        </ul>
+        {{/defaultStateUrl}}
+        {{#exposedLinkProperties.regularPro}}
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">{{label}}</div></li>
+            <li class="bc-2-3"><div class="bc-i bc-ellipsis" viewHint="{{viewHint}}">{{#value}}{{value}}{{/value}}</div></li>
+        </ul>
+        {{/exposedLinkProperties.regularPro}}
+        <ul class="bc-g">
+            <li class="bc-1"><div class="bc-i"><h3>Parent Page Information</h3></div></li>
+        </ul>
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">Page Title</div></li>
+            <li class="bc-2-3"><div class="bc-i bc-ellipsis">{{pageTitle}}</div></li>
+        </ul>
+        {{#hasMasterPageFeature}}
+        {{^isMasterPage}}
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">Master Page</div></li>
+            <li class="bc-2-3"><div class="bc-i bc-ellipsis">{{masterPage}}</div></li>
+        </ul>
+        {{/isMasterPage}}
+        {{/hasMasterPageFeature}}
+
+        {{#pageTemplate}}
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">Page Template</div></li>
+            <li class="bc-2-3"><div class="bc-i bc-ellipsis">{{pageTemplate}}</div></li>
+        </ul>
+        {{/pageTemplate}}
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">Tags</div></li>
+            <li class="bc-2-3"><div class="bc-i bc-ellipsis">{{tags}}</div></li>
+        </ul>
+
+        {{#cusTags}}
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i bc-capitalize">{{key}}</div></li>
+            <li class="bc-2-3"><div class="bc-i bc-ellipsis">{{value}}</div></li>
+        </ul>
+        {{/cusTags}}
+
+        {{#exposedPageProperties.regularPro}}
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">{{label}}</div></li>
+            <li class="bc-2-3"><div class="bc-i bc-ellipsis" viewHint="{{viewHint}}">{{#value}}{{value}}{{/value}}</div></li>
+        </ul>
+        {{/exposedPageProperties.regularPro}}
+        {{#exposedPageProperties.inheritedPro}}
+        <ul class="bc-g">
+            <li class="bc-1-3"><div class="bc-i">{{label}}</div></li>
+            <li class="bc-2-3"><div class="bc-i bc-ellipsis" viewHint="{{viewHint}}">{{#value}}{{value}}{{/value}}</div></li>
+        </ul>
+        {{/exposedPageProperties.inheritedPro}}
+    </div>
+
+    <div class="bd-buttons{{buttonsClass}}">
+        <div class="bd-buttons-inner">
+        {{#canEdit}}
+        <button class="bd-publish-button bd-settings-publishButton bd-button bd-roundcorner-3">&nbsp;<span></span></button>
+        <button class="bd-cancelUnpublish-button bd-settings-publishButton bd-button bd-roundcorner-3">&nbsp;<span></span></button>
+        <button class="bd-unpublish-button bd-settings-publishButton bd-button bd-roundcorner-3">&nbsp;<span></span></button>
+        <!-- <button class="bd-publish-button-hidden bd-settings-publishButton bd-button bd-roundcorner-3">&nbsp;<span></span></button> -->
+        <button class="bd-cancelPublish-button bd-settings-publishButton bd-button bd-roundcorner-3">&nbsp;<span></span></button>
+        {{^hideEditButtons}}
+        <button class="bd-editPageSettings bd-button bd-roundcorner-3" pagename="{{pageName}}">Edit</button>
+        {{/hideEditButtons}}
+        {{/canEdit}}
+        <!-- <button class="bd-cancelAndClose bd-buttonText">Close</button> -->
+        </div>
+    </div>
+</form>

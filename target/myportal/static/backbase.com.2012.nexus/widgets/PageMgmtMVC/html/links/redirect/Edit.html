@@ -1,0 +1,123 @@
+<div class="bd-settingsPanel">
+    <form id="manageExternalLinkForm" class="bc-default-form bc-pages-form bd-pageEditingForm">
+        <!-- Copyright � 2011 Backbase B.V. -->
+        {{#linkParentName}}
+            <input name="linkParentName" type="hidden" value="{{linkParentName}}" />
+        {{/linkParentName}}
+        {{#linkName}}
+            <input name="name" type="hidden" value="{{linkName}}" />
+        {{/linkName}}
+        <div class="bc-form-top">
+            <h4 class="bc-formheading"><span class="bc-form-title bc-ellipsis"><span class="bd-redirect-icon bd-nav-icon"></span>{{linkTitle}}</span></h4>
+        </div>
+        <div class="bc-form-body bd-scrollbar">
+            <ul class="bc-g">
+                <li class="bc-1-3 bd-form-label">
+                    <div class="bc-g">
+                        <div class="bc-7-8"><div class="bc-i">Menu Label</div></div>
+                        <div class="bc-1-8">
+                            <div class="bc-i">
+                                <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                    <span class="bc-align-left" style="width: 336px">
+                                        <p>Title of the redirect visible in CXP Manager.</p>
+                                        <a href="{bbDocUrl}/{bbDocVersion}/navigation_example.html" class="bc-doc-link" target="_blank">Learn more...</a>
+                                    </span>
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="bc-2-3">
+                    <div class="bc-i bc-ellipsis">
+                        <input id="linkTitle" name="linkTitle" type="text" size="45" maxlength="150" value="{{linkTitle}}" class="field field-wide required bd-titleInput" minlength="2" />
+                    </div>
+                </li>
+            </ul>
+            <ul class="bc-g">
+                <li class="bc-1-3 bd-form-label">
+                    <div class="bc-g">
+                        <div class="bc-7-8"><div class="bc-i">URL</div></div>
+                        <div class="bc-1-8">
+                            <div class="bc-i">
+                                <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                    <span class="bc-align-left" style="width: 336px">
+                                        <p>The source URL that triggers this redirect. For example, the hierarchical URL or friendly URL of a deleted page.</p>
+                                        <a href="{bbDocUrl}/{bbDocVersion}/navigation_example.html" class="bc-doc-link" target="_blank">Learn more...</a>
+                                    </span>
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="bc-2-3">
+                    <div class="bc-i bc-ellipsis">
+                        <input id="Url" name="Url" type="text" size="45" maxlength="150" value="{{Url}}" class="field field-wide required" minlength="2" />
+                    </div>
+                </li>
+            </ul>
+            <ul class="bc-g">
+                <li class="bc-1"><div class="bc-i"><h3 class="bc-no-margin-top">Redirect</h3></div></li>
+            </ul>
+            <ul class="bc-g">
+                <li class="bc-1-3 bd-form-label">
+                    <div class="bc-g">
+                        <div class="bc-7-8"><div class="bc-i">Method</div></div>
+                        <div class="bc-1-8">
+                            <div class="bc-i">
+                                <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                    <span class="bc-align-left" style="width: 336px">
+                                        <p>The HTTP status code of this redirection.</p>
+                                        <!--  <a href="{bbDocUrl}/{bbDocVersion}/navigation_example.html" class="bc-doc-link" target="_blank">Learn more...</a> -->
+                                    </span>
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="bc-2-3"><div class="bc-i bc-ellipsis" data-redirectionMethod="{{redirectionMethod}}">
+                    <div class="bd-redirectDropDown"></div>
+                </li>
+            </ul>
+            <ul class="bc-g">
+                <li class="bc-1-3 bd-form-label">
+                    <div class="bc-g">
+                        <div class="bc-7-8"><div class="bc-i">Target Page</div></div>
+                        <div class="bc-1-8">
+                            <div class="bc-i">
+                                <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                    <span class="bc-align-left" style="width: 336px">
+                                        <p>The target of this redirect. You can only set the target during creation of a redirect. To set the target, point your mouse to the item you want as target, open the contextual menu and click on Add redirect.</p>
+                                        <!--  <a href="{bbDocUrl}/{bbDocVersion}/navigation_example.html" class="bc-doc-link" target="_blank">Learn more...</a> -->
+                                    </span>
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="bc-2-3">
+                    <div class="bc-i bc-ellipsis bd-pageMnt-redirect-targetPage">
+                        <input id="targetPage" name="targetPage" type="hidden" size="45" maxlength="150" value="{{targetPage}}" class="field field-wide" minlength="2" />
+                        {{targetPageTitle}}
+                    </div>
+                </li>
+            </ul>
+            {{#exposedLinkProperties.regularPro}}
+            <ul class="bc-g">
+                <li class="bc-1-3"><div class="bc-i">{{label}}</div></li>
+                <li class="bc-2-3">
+                    <div class="bc-i bc-ellipsis">
+                        <input name="{{name}}" class="bd-link-{{name}} bd-exposedLinkProperty" type="hidden" value="{{#value}}{{value}}{{/value}}" />
+                        <input id="{{name}}Input" data-for=".bd-link-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" />
+                    </div>
+                </li>
+            </ul>
+            {{/exposedLinkProperties.regularPro}}
+        </div>
+        <div class="bd-buttons">
+            <div class="bd-buttons-inner">
+            <button class="bd-saveButton bd-button bd-green bd-roundcorner-3" type="submit">Save</button>
+            <button class="bd-cancelEdit bd-buttonText">Cancel</button>
+           </div>
+        </div>
+    </form>
+</DIV>

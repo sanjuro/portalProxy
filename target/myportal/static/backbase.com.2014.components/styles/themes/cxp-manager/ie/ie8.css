@@ -1,0 +1,19 @@
+.dropdown .dropdown-menu {
+    display: none;
+}
+
+.dropdown.open .dropdown-menu {
+    display: block;
+}
+
+.navbar-left {
+    float: left !important;
+}
+.navbar-right {
+    float: right !important;
+}
+
+.z-cm-preview-wrapper .z-cm-preview-wrapper-inner img {
+    max-width: 300px !important;
+    max-height: 300px !important;
+}

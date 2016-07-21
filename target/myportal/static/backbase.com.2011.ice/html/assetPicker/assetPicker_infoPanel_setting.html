@@ -1,0 +1,32 @@
+<form class="bc-default-form bc-pages-form ">
+    <!-- Copyright � 2011 Backbase B.V. -->
+    <div class="bc-form-top">
+        <h4 class="bc-formheading"><span class="bc-form-title bc-ellipsis">{{fileName}}</span></h4>
+    </div>
+    <div class="bc-form-body bd-scrollbar bd-AP-preview-wrapper">
+        <div class="bd-AP-iframe-container">
+            <iframe class="bd-AP-iframe-preview" frameborder="no"></iframe>
+            <div class="bd-AP-iframe-preview-cover"><div class="bd-AP-can-not-preview-msg">This file type can not be previewed.</div></div>
+        </div>
+        <div class="bd-AP-file-metaData-container">
+
+        </div>
+    </div>
+
+    <div class="bd-buttons{{buttonsClass}}">
+        <div class="bd-buttons-inner">
+        {{#canEdit}}
+        <button class="bd-publish-button bd-settings-publishButton bd-button bd-roundcorner-3">&nbsp;<span></span></button>
+        <button class="bd-cancelUnpublish-button bd-settings-publishButton bd-button bd-roundcorner-3">&nbsp;<span></span></button>
+        <button class="bd-unpublish-button bd-settings-publishButton bd-button bd-roundcorner-3">&nbsp;<span></span></button>
+        <!-- <button class="bd-publish-button-hidden bd-settings-publishButton bd-button gradient-grey bd-roundcorner-3">&nbsp;<span></span></button> -->
+        <button class="bd-cancelPublish-button bd-settings-publishButton bd-button bd-roundcorner-3">&nbsp;<span></span></button>
+
+        {{^hideEditButtons}}
+        <button class="bd-editPageSettings bd-button bd-roundcorner-3" pagename="{{pageName}}">Edit</button>
+        {{/hideEditButtons}}
+        {{/canEdit}}
+        <!-- <button class="bd-cancelAndClose bd-buttonText">Close</button> -->
+        </div>
+    </div>
+</form>

@@ -1,0 +1,17 @@
+<div class="bd-dm-edit-bar bd-widgetEditContainer{{#drag}} bp-ui-dragGrip{{/drag}}{{#isFromMasterPage}} bd-dm-mp-item{{/isFromMasterPage}}" title="{{titleTag}}">
+    <div class="bd-dm-item-name">{{title}}</div>
+    <div class="bd-dropdown-icon"></div>
+    <div class="bd-dm-buttons">
+        {{#features}}
+        {{#Revert}}<div class="bd-dm-button bd-editbarIcon bd-icon-revert" title="Revert to default">Revert</div>{{/Revert}}
+        {{#Manageable}}<div class="bd-{{ManageableType}}{{^ManageableValue}}-not{{/ManageableValue}}-manageable bd-dm-button bd-editbarIcon" title="Toggle manageability of {{ManageableType}}">Manageable</div>{{/Manageable}}
+        {{#Edit}}<div class="bd-dm-button bd-editbarIcon bd-icon-edit" title="Settings (s)"{{^Permission}} data-action="widget-preferences"{{/Permission}}>Settings</div>{{/Edit}}
+        {{#Permission}}<div class="bd-dm-button bd-editbarIcon bd-icon-permissions" title="Permissions (a)">Permissions</div>{{/Permission}}
+        {{#TCont}}<div class="bd-dm-button bd-editbarIcon bd-icon-targeting" title="Targeting (t)">Targeting</div>{{/TCont}}
+        {{#Trash}}<div class="bd-dm-button bd-editbarIcon bd-icon-trash" title="Delete (Alt+backspace)">Delete</div>{{/Trash}}
+        {{#TrashDisabled}}<div class="bd-dm-button bd-editbarIcon bd-icon-trash-disabled" title="Cannot delete published master page items">Delete</div>{{/TrashDisabled}}
+        {{/features}}
+        {{#customFeatures}}<div title="{{title}}"{{#dataAction}} data-action="{{dataAction}}"{{/dataAction}} class="bd-dm-button bd-custom-button bd-{{className}}-Icon"></div>{{/customFeatures}}
+    </div>
+    <div class="bd-dm-overlay"></div>
+</div>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container>
+    <name>{{containerName}}</name>
+    <contextItemName>{{portalName}}</contextItemName>
+    <extendedItemName>{{extendedContainer}}</extendedItemName>
+    <parentItemName>{{masterPageName}}</parentItemName>
+    <manageable>true</manageable>
+    <properties>
+        <property name="area">
+            <value type="string">{{area}}</value>
+        </property>
+        <property name="order">
+            <value type="double">{{order}}</value>
+        </property>
+    </properties>
+</container>

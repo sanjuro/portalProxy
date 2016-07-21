@@ -1,0 +1,547 @@
+-- Script to add tags.
+-- Tags are added to
+-- - server catalog
+-- - portal catalog
+-- - instances
+-- - customizations
+
+-- Procedure to add an tag reference to the TAGS table if it does not exist.
+CREATE OR REPLACE PROCEDURE add_tag
+(
+    pContextItemName nvarchar2,
+    pTagName nvarchar2,
+    pTagType nvarchar2
+)
+IS
+    tagId number;
+BEGIN
+    select id into tagId
+    from   tags
+    where  contextItemName = pContextItemName
+    and    name  = pTagName
+    and    type  = pTagType
+    ;
+
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+    insert into tags
+    ( id
+    , contextItemName
+    , name
+    , type
+    )
+    values
+    ( hibernate_sequence.nextVal
+    , pContextItemName
+    , pTagName
+    , pTagType
+    );
+END;
+/
+
+-- Procedure to add an item tag reference to the ITEM_TAGS table if it does not exist.
+CREATE OR REPLACE PROCEDURE add_item_tag
+(
+    pItemId number,
+    pTagId number
+)
+IS
+    itemTagId number;
+BEGIN
+    select id into itemTagId
+    from   item_tags
+    where  item_id = pItemId
+    and    tag_id  = pTagId
+    ;
+
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+    insert into item_tags
+    ( id
+    , item_id
+    , tag_id
+    , blacklist
+    )
+    values
+    ( hibernate_sequence.nextVal
+    , pItemId
+    , pTagId
+    , 0
+    );
+END;
+/
+
+-- Procedure to add an tag to the TAGS table if it does not exist.
+-- This procedure will also add the tag to the item mentioned and to all its extensions.
+CREATE OR REPLACE PROCEDURE add_tag_to_item
+(
+    pItemName nvarchar2,
+    pTagName nvarchar2,
+    pTagType nvarchar2
+)
+IS
+    serverItemId number;
+    tagId number;
+    portalName nvarchar2(255);
+    portalItemId number;
+    instanceItemId number;
+    personalItemId number;
+    toContinue boolean;
+BEGIN
+    -- Add tag to server scope
+    add_tag('[BBHOST]', pTagName, pTagType);
+    -- Insert item_tag for server catalog item
+    select id into serverItemId from items where name=pItemName and contextItemName= '[BBHOST]';
+    select id into tagId from tags where name=pTagName and type = pTagType and contextItemName= '[BBHOST]';
+    add_item_tag(serverItemId,tagId);
+
+    -- Insert tag for portal catalog item
+    toContinue := true;
+    portalItemId := 0;
+    while toContinue
+    loop
+        begin
+            select id, contextItemName into portalItemId, portalName from items where extendedItem_id=serverItemId and state='ASSIGNED' and id>portalItemId and rownum=1;
+            add_tag(portalName, pTagName, pTagType);
+            select id into tagId from tags where name=pTagName and type = pTagType and contextItemName= portalName;
+            add_item_tag (portalItemId,tagId);
+
+            -- Insert tag for portal instances
+            instanceItemId := 0;
+            while toContinue
+            loop
+                begin
+                    select id into instanceItemId from items where extendedItem_id=portalItemId and state='INSTANTIATED' and id>instanceItemId and rownum=1;
+                    add_item_tag(instanceItemId,tagId);
+                    -- Insert property for personalized items
+                    personalItemId := 0;
+                    while toContinue
+                    loop
+                        begin
+                            select id into personalItemId from items where extendedItem_id=instanceItemId and state='PERSONALIZED' and id>personalItemId and rownum=1;
+                            add_item_tag(personalItemId,tagId);
+                        EXCEPTION
+                        WHEN NO_DATA_FOUND THEN
+                            toContinue:= false;
+                        END;
+                    end loop;
+                    toContinue:= true;
+                EXCEPTION
+                WHEN NO_DATA_FOUND THEN
+                    toContinue:= false;
+                END;
+            end loop;
+            toContinue:= true;
+        EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            toContinue:= false;
+        END;
+    end loop;
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+    toContinue:= false;
+END;
+/
+
+
+-- Migrate Link item references from name to uuid.
+update property_definition ref
+set    ref.internalvalue = (select item.uuid
+                            from   items link
+                            ,      items item
+                            where  ref.name             = 'ItemRef'
+                            and    ref.item_id          = link.id
+                            and    link.type            = 'LINK'
+                            and    link.contextitemname = item.contextitemname
+                            and    item.name            = ref.internalvalue
+                           )
+where exists               (select '1'
+                            from   items link
+                            ,      items item
+                            where  ref.name             = 'ItemRef'
+                            and    ref.item_id          = link.id
+                            and    link.type            = 'LINK'
+                            and    link.contextitemname = item.contextitemname
+                            and    item.name            = ref.internalvalue
+                           )
+;
+
+
+-- --> Changes on Standard_Widget_Sample
+-- Added tag backbase
+exec add_tag_to_item('Standard_Widget_Sample','backbase','regular');
+
+-- --> Changes on Standard_W3C_Sample
+-- Added tag backbase
+exec add_tag_to_item('Standard_W3C_Sample','backbase','regular');
+
+-- --> Changes on CatalogBrowser
+-- Added tag backbase
+exec add_tag_to_item('CatalogBrowser','backbase','regular');
+
+-- --> Changes on TabLayoutContainer
+-- Removed tag layout
+delete from   item_tags
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'TabLayoutContainer')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'TabLayoutContainer'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and   tag_id in (select id
+                 from tags
+                 where name = 'layout'
+                )
+;
+
+-- Updated property title
+update property_definition
+set    internalvalue = 'Horizontal Tab'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'TabLayoutContainer')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'TabLayoutContainer'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and   name = 'title'
+;
+
+-- Updated property TemplateName
+update property_definition
+set    internalvalue = 'HTab'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'TabLayoutContainer')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'TabLayoutContainer'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and   name = 'TemplateName'
+;
+
+-- Modified property selectedChild: Added label and viewHint
+update property_definition
+set    viewhint = 'text-input,designModeOnly,user'
+,      label = 'Default tab'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'TabLayoutContainer')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'TabLayoutContainer'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and   name = 'selectedChild'
+;
+
+-- Modified property hideTab: Changed type from string to boolean default value false.
+update property_definition
+set    type = 'boolean'
+,      internalvalue = 'false'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'TabLayoutContainer')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'TabLayoutContainer'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and   name = 'hideTab'
+;
+
+-- Removed property defaultTab
+delete from property_definition
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'TabLayoutContainer')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'TabLayoutContainer'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and name in ('defaultTab')
+;
+
+-- --> Change TabLayoutContainer to HTabLayoutContainer (rename of server catalog item)
+update items set name = 'HTabLayoutContainer' where name = 'TabLayoutContainer' and CONTEXTITEMNAME = '[BBHOST]';
+
+-- --> Change Tab container template
+-- Update property Web
+-- Change name from Tab to HTab
+update property_definition
+set    internalvalue = 'containers/bbHTabContainerLayout'
+where  item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'Tab')
+and name = 'Web'
+;
+
+update items set name = 'HTab' where name = 'Tab' and CONTEXTITEMNAME = '[BBHOST]';
+
+
+-- --> Changes on AdvancedNav widget
+-- Modified property navTemplate: value (location of the template) changed
+update property_definition
+set    internalvalue = '$(contextRoot)/static/backbase.com.2012.nexus/widgets/AdvancedNav/navTemplate/genericDropdownMenu/mustache_top_level.html'
+where  internalvalue='$(contextRoot)/static/backbase.com.2012.nexus/widgets/AdvancedNav/navTemplate/BBStyleTemplate/mustache_top_level.html'
+;
+
+-- Added tag backbase
+exec add_tag_to_item('AdvancedNav','backbase','regular');
+
+-- --> Changes on SectionNav widget
+-- Modified property navDepth: value changed from 2 to 1
+update property_definition
+set    internalvalue = '1'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'SectionNav')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'SectionNav'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and   name = 'navDepth'
+and   internalvalue = '2'
+;
+
+-- Added tag backbase
+exec add_tag_to_item('SectionNav','backbase','regular');
+
+
+-- remove sys2sys acl from portalfoundation item
+delete from acl_entry
+where sid = (select id from acl_sid where sid = 'group_sys2sys')
+and   acl_object_identity = (select obj.id
+                             from   acl_object_identity obj
+                             ,      items ite
+                             ,      acl_class cls
+                             where  cls.id = obj.object_id_class
+                             and    ite.id = obj.object_id_identity
+                             and    cls.class = 'com.backbase.portal.foundation.domain.model.PortalFoundation')
+;
+
+
+-- Fix hierarchical links on urls
+-- Add sectionName property containing the link name
+-- Add generatedUrl property based on the link hierarchy and the sectionName value.
+insert into property_definition
+( id
+, name
+, internalValue
+, type
+, item_id
+)
+select
+   hibernate_sequence.nextVal
+, 'sectionName'
+,  lower(replace(translate(replace(pdn.internalValue, ' ', '-'), '~!@#$%^&*()+`=[]{};'':",./<>?', ' '), ' ', ''))
+, 'string'
+, ite.id
+from  items ite
+,     property_definition pdn
+where ite.id = pdn.item_id
+and   ite.type = 'LINK'
+and   pdn.name = 'title'
+;
+
+create or replace procedure fix_dup_section_name
+is
+   ln_counter number;
+
+   ln_link_id number;
+   lv_link_section_name varchar2(768);
+   lv_link_parent_item_name varchar2(255);
+   lv_link_context_item_name varchar2(255);
+
+   ln_link_dup_id number;
+
+  cursor c_dup_link is
+          select ite1.id
+          ,      pdn1.internalValue
+          ,      ite1.parentItemName
+          ,      ite1.contextItemName
+          from   items ite1
+          ,      property_definition pdn1
+          ,      items ite2
+          ,      property_definition pdn2
+          where  ite1.id = pdn1.item_id
+          and    ite1.type = 'LINK'
+          and    ite1.parentItemName != ite1.contextItemName
+          and    pdn1.name = 'sectionName'
+          and    ite2.id = pdn2.item_id
+          and    ite2.type = 'LINK'
+          and    ite2.parentItemName != ite2.contextItemName
+          and    pdn2.name = 'sectionName'
+          and    ite1.contextItemName = ite2.contextItemName
+          and    ite1.parentItemName = ite2.parentItemName
+          and    ite1.id != ite2.id
+          and    pdn1.internalValue = pdn2.internalValue
+          ;
+
+  cursor c_dup_link2 is
+          select ite1.id
+          from   items ite1
+          ,      property_definition pdn1
+          where  ite1.id = pdn1.item_id
+          and    ite1.type = 'LINK'
+          and    ite1.id != ln_link_id
+          and    pdn1.name = 'sectionName'
+          and    pdn1.internalValue = lv_link_section_name
+          and    ite1.parentItemName = lv_link_parent_item_name
+          and    ite1.contextItemName = lv_link_context_item_name
+          ;
+
+
+begin
+   OPEN c_dup_link;
+   LOOP
+      FETCH c_dup_link INTO ln_link_id, lv_link_section_name, lv_link_parent_item_name, lv_link_context_item_name;
+      EXIT WHEN c_dup_link%NOTFOUND;
+
+      ln_counter := 1;
+      OPEN c_dup_link2;
+      LOOP
+        FETCH c_dup_link2 INTO ln_link_dup_id;
+        EXIT WHEN c_dup_link2%NOTFOUND;
+
+         -- Update the duplicate section name
+         update property_definition
+             set    internalValue = lv_link_section_name || '-' || ln_counter
+         where  item_id = ln_link_dup_id
+         and    name = 'sectionName'
+         ;
+
+         ln_counter := ln_counter + 1;
+      END LOOP;
+
+     CLOSE c_dup_link2;
+     -- Close the cursor to refresh the result
+     CLOSE c_dup_link;
+     OPEN c_dup_link;
+   END LOOP;
+
+   CLOSE c_dup_link;
+end;
+/
+
+exec fix_dup_section_name;
+
+create or replace procedure fix_generated_url
+is
+cursor c_link is
+select ite.id
+,      pdn.internalValue
+,      ite.parentItemName
+,      ite.contextItemName
+from   items ite
+,      property_definition pdn
+where  ite.id = pdn.item_id
+and    ite.type = 'LINK'
+and    ite.parentItemName != ite.contextItemName
+and    pdn.name = 'sectionName'
+;
+
+lv_generated_url varchar2(1000);
+lb_parent_found boolean;
+lv_parent_item_name varchar2(255);
+lv_link_parent_item_name varchar2(255);
+lv_link_parent_section_name varchar2(768);
+
+begin
+   for r_link in c_link
+   loop
+     lb_parent_found := true;
+     lv_generated_url := r_link.internalValue;
+     lv_link_parent_item_name := r_link.parentItemName;
+     while lb_parent_found
+     loop
+       begin
+         select ite.parentItemName, pdn.internalValue
+         into   lv_parent_item_name, lv_link_parent_section_name
+         from   items ite
+         ,      property_definition pdn
+         where  ite.id = pdn.item_id
+         and    ite.name = lv_link_parent_item_name
+         and    ite.parentItemName != ite.contextItemName
+         and    ite.contextItemName = r_link.contextItemName
+         and    pdn.name = 'sectionName'
+         ;
+
+         lv_generated_url := lv_link_parent_section_name || '/' || lv_generated_url;
+         lv_link_parent_item_name := lv_parent_item_name;
+       exception
+         when no_data_found then
+           lb_parent_found := false;
+       end;
+
+     end loop;
+
+     lv_generated_url := r_link.contextItemName || '/' || lv_generated_url;
+
+     insert into property_definition
+     ( id
+     , name
+     , internalValue
+     , type
+     , item_id
+     )
+     values
+     ( hibernate_sequence.nextVal
+     , 'generatedUrl'
+     , lv_generated_url
+     , 'string'
+     , r_link.id
+     );
+   end loop;
+
+end;
+/
+
+exec fix_generated_url;
+
+-- Insert ACL for every unsecured property. Property will inherit security from its item.
+insert into acl_object_identity
+(
+  OBJECT_ID_CLASS
+, OBJECT_ID_IDENTITY
+, PARENT_OBJECT
+, OWNER_SID
+, ENTRIES_INHERITING
+)
+select (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+,      pdn.id
+,      (select id
+        from acl_object_identity
+        where OBJECT_ID_IDENTITY = ite.id
+        and   object_id_class = (select id from acl_class where class = cls.class)
+       )
+,      (select owner_sid
+        from acl_object_identity
+        where OBJECT_ID_IDENTITY = ite.id
+        and   object_id_class = (select id from acl_class where class = cls.class)
+       )
+,      1
+from   acl_object_identity obj
+,      acl_class           cls
+,      items               ite
+,      property_definition pdn
+where  OBJ.OBJECT_ID_IDENTITY = ite.id
+and    obj.object_id_class = cls.id
+and    cls.class =  concat('com.backbase.portal.foundation.domain.model.', ite.discriminator)
+and    ite.id = PDN.ITEM_ID
+and    pdn.id not in (select object_id_identity
+                      from   acl_object_identity
+                      where  object_id_class in (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+                    )
+;

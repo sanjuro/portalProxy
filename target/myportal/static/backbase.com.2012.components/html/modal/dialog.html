@@ -1,0 +1,15 @@
+<div class="bc-modal bc-modal-dark bc-modal-dialog bc-roundcorner-8 {{cls}}" data-cid="bc-confirm-{{uid}}">
+    {{#closeIcon}}<a class="bc-modal-close bc-close bc-icn bc-x-white" data-cid="bc-confirm-close-{{uid}}"></a>{{/closeIcon}}
+    <ul class="bc-g">
+        <li class="bc-u">
+            <div class="bc-i">
+                {{#status}}<div class="bc-modal-icon-{{status}}"></div>{{/status}}
+                <div class='bc-modal-content'>
+                    <p class="bc-h6{{#status}} with-icon{{/status}}">{{title}}</p>
+                    <p class="bc-confirm-msg">{{{message}}}</p>
+                    <span class="bc-button-row"></span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

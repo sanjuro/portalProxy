@@ -1,0 +1,26 @@
+BEGIN ATOMIC
+DECLARE sys2sys_user_id INTEGER;
+DECLARE sys2sys_group_id INTEGER;
+DECLARE sid_sys2sys_group INTEGER;
+DECLARE item_id INTEGER;
+DECLARE oid INTEGER;
+
+    SET (sys2sys_user_id) = (hibernate_sequence.nextVal);
+    SET (sys2sys_group_id) = (hibernate_sequence.nextVal);
+    INSERT INTO users (username,password,enabled,id) VALUES ('sys2sys','ac2e9f96dc73314df3e7c554751ed8e4d0b962428fcdbf1252cdaa452a8cc9a9',1,sys2sys_user_id);
+    INSERT INTO groups (name, role, description,id) VALUES ('sys2sys','SYS2SYS','System to System Group',sys2sys_group_id);
+    INSERT INTO users_groups (users_id, groups_id) VALUES (sys2sys_user_id,sys2sys_group_id);
+
+    INSERT INTO acl_sid (principal, sid) VALUES (1,'sys2sys');
+    INSERT INTO acl_sid (principal, sid) VALUES (0,'group_sys2sys');
+    SET (sid_sys2sys_group) = (select id from acl_sid where sid = 'group_sys2sys');
+
+    SET (oid)  = (SELECT obj.id FROM acl_object_identity obj, acl_class cls WHERE obj.object_id_class = cls.id and cls.class = 'com.backbase.portal.foundation.domain.model.PortalFoundation');
+
+    INSERT INTO acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES (oid,6,sid_sys2sys_group,1,1,0,0);
+    INSERT INTO acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES (oid,7,sid_sys2sys_group,2,1,0,0);
+    INSERT INTO acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES (oid,8,sid_sys2sys_group,4,1,0,0);
+    INSERT INTO acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES (oid,9,sid_sys2sys_group,8,1,0,0);
+    INSERT INTO acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES (oid,10,sid_sys2sys_group,16,1,0,0);
+
+END@

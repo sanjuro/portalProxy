@@ -1,0 +1,19 @@
+<ul class="bc-content-versions">
+    {{#versions}}
+    <li class="bc-g">
+        <div class="bc-4-5 bc-ellipsis" style="padding-left: 30px">
+            <div class="bc-i">
+                {{#preview}}<span class="bd-versions-number" style="margin-left:-30px; margin-right: 6px;">{{versionNumber}}</span>{{/preview}} {{modifiedDate}} by {{modifiedBy}}
+            </div>
+        </div>
+        <div class="bc-1-5">
+            <div class="bc-i">
+                {{#preview}}
+                <a data-url="{{url}}" data-version="{{versionLabel}}" title="Preview" class="bd-versions-preview bd-versions-button bd-button bd-gradient-grey bd-roundcorner-3"></a>
+                <a data-path="{{path}}" data-version="{{versionLabel}}" title="Restore" class="bd-versions-restore bd-versions-button bd-button bd-gradient-grey bd-roundcorner-3"></a>
+                {{/preview}}
+            </div>
+        </div>
+    </li>
+    {{/versions}}
+</ul>

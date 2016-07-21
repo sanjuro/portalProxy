@@ -1,0 +1,17 @@
+<select id="pageTemplateSelect" style="display:none;" name="pageTemplate">
+    {{#options}}
+        <option value="{{tempname}}" {{#sel}}selected{{/sel}}>"{{title}}"</option>
+    {{/options}}
+</select>
+
+<div class="bd-dropdowncheckbox bd-button bd-roundcorner-5">
+    <div id="pageTemplateSelectLabel" class="bd-label">{{pageTemplate}}</div>
+    <div class="bd-dropdown bd-roundcorner-8 bd-shadow bd-templates" forlabel="pageTemplateSelectLabel" for="pageTemplateSelect">
+    {{#options}}
+        <a class="bd-template bd-template-{{tempname}} {{#sel}}bd-templateSelected{{/sel}}" value="{{tempname}}" title="{{tempname}}">
+            <span class="bd-template-image"{{#thumbnailUrl}} style="background-image:url({{thumbnailUrl}})"{{/thumbnailUrl}}></span>
+            <span class="bd-template-label">{{title}}</span>
+        </a>
+    {{/options}}
+    </div>
+</div>

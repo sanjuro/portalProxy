@@ -1,0 +1,22 @@
+-- All rows with name-'Order'/'order' will be updated
+update property_definition set name = 'order' where name='Order';
+
+update property_definition set type='double' where name='order';
+
+-- Set manageable flag on Master Page items
+update items
+set    manageable = 1
+where  state = 'ASSIGNED'
+and    page_id is not null
+and    (discriminator = 'Page' or name like 'Manageable_Area%')
+and    manageable is null
+;
+
+update items
+set    manageable = 0
+where  state = 'ASSIGNED'
+and    page_id is not null
+and    discriminator != 'Page'
+and    name not like 'Manageable_Area%'
+and    manageable is null
+;

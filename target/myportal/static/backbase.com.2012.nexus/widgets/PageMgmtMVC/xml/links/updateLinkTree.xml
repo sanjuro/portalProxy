@@ -1,0 +1,19 @@
+<link>
+    <name>{{linkName}}</name>
+    <parentItemName>{{parentItemName}}</parentItemName>
+    <properties>
+        <property name="order">
+            <value type="double">{{order}}</value>
+        </property>
+    </properties>
+    {{#hasTags}}
+    <tags>
+    {{#tags}}
+        {{#value}}{{#type}}<tag type="{{type}}">{{value}}</tag>{{/type}}{{^type}}<tag>{{value}}</tag>{{/type}}{{/value}}
+    {{/tags}}
+    </tags>
+    {{/hasTags}}
+    {{^hasTags}}
+    <tags />
+    {{/hasTags}}
+</link>

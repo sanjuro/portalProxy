@@ -1,0 +1,1 @@
+(function(){var a=this._baseUrl;this.templates=function(d,e,b){var c={url:a+"/templates",data:d};return this._makeRequest(c)}}).apply(be.promise);

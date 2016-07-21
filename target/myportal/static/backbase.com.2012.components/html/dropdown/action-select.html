@@ -1,0 +1,13 @@
+{{^buttonOnly}}
+<button class="bc-button bc-action-button bc-roundcorner-left-3" data-cid="bc-dd-{{#type}}{{type}}-{{/type}}{{uid}}">
+    <span class="bi bi-s bi-pm-plus"></span>
+</button>
+<ul class="bc-selectbox bc-action-select {{#slideup}}bc-slideup {{/slideup}}bc-button bc-roundcorner-right-3">
+    <li class="bc-dd-arrow"><span class="bc-icn bc-triangle"></span></li>
+</ul>
+{{/buttonOnly}}
+{{#buttonOnly}}
+<ul data-cid="bc-dd-{{#type}}{{type}}-{{/type}}{{uid}}" class="bc-selectbox bc-action-select bc-action-select-buttonOnly {{#slideup}}bc-slideup {{/slideup}}bc-button bc-gradient-grey bc-roundcorner-3 {{#customeClass}}{{customeClass}}{{/customeClass}}">
+    <li class="bc-dd-arrow"><span class="bc-icn bc-triangle"></span></li>
+</ul>
+{{/buttonOnly}}

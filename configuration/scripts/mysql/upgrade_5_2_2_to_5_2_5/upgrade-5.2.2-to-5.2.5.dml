@@ -1,0 +1,59 @@
+-- Script to populate the page_id field for all 'INSTANTIATED' items
+-- Switch delimiter to create stored procedures
+DELIMITER $$
+
+-- Procedure to go through all items whose parentItemName is set to the name of the items that have their page_id set.
+-- Update all instantiated pages to set their page_id to value of the id field.
+DROP PROCEDURE IF EXISTS populate_page_id $$
+
+CREATE PROCEDURE populate_page_id ()
+BEGIN	
+   DECLARE ln_page_id bigint;
+   DECLARE lv_parent_item_name varchar(255);
+
+  DECLARE done INT DEFAULT FALSE;
+
+   DECLARE c_page_id CURSOR FOR
+   select parent.page_id
+   ,      parent.name
+   from   items child
+   ,      items parent
+   where  child.parentItemName = parent.name
+   and    child.contextItemName = parent.contextItemName  
+   and    parent.page_id is not null   
+   and    child.page_id is null   
+   ;
+   
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+   
+  update items
+	set page_id = id
+	where  discriminator = 'Page'
+	and    state = 'INSTANTIATED'
+	;
+
+   OPEN c_page_id;
+   read_loop: loop
+      SET done = false;
+      FETCH NEXT FROM c_page_id INTO ln_page_id, lv_parent_item_name;
+
+      IF done THEN
+        LEAVE read_loop;
+      END IF;
+    
+        update items
+        set page_id = ln_page_id
+        where page_id is null
+        and parentItemName = lv_parent_item_name
+        ;
+
+     CLOSE c_page_id;
+     OPEN c_page_id;
+   end loop;
+   CLOSE c_page_id;
+   
+END; $$
+
+DELIMITER ;
+
+call populate_page_id();

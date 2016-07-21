@@ -1,0 +1,100 @@
+update item_tags a inner join tags t on (t.id = a.tag_id) inner join (select * from tags group by name, type, contextItemName having count(id)>1) dup on (t.name = dup.name and t.type = dup.type and t.contextItemName = dup.contextItemName) inner join item_tags it on (it.tag_id = t.id) set a.tag_id = dup.id;
+delete from tags where id not in (select tag_id from item_tags);
+
+-- Include item type removal
+-- 1) Remove acl_entries for property definitions of include-default
+delete from acl_entry where acl_object_identity in
+(
+	select id from acl_object_identity
+	where
+		object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+		and object_id_identity in (select id from property_definition where item_id=(select id from items where name = "include-default"))
+);
+
+-- 2) Remove object identities for properties of include-default
+delete from acl_object_identity
+where
+	object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+	and object_id_identity in (select id from property_definition where item_id=(select id from items where name = "include-default"));
+
+-- 3) Remove acl_entries for include-default template
+delete from acl_entry where acl_object_identity in
+(
+	select id from acl_object_identity
+	where
+		object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.model.Template')
+		and object_id_identity in (select id from items where name = "include-default")
+);
+
+-- 4) Remove object identities for include-default
+delete from acl_object_identity
+where
+	object_id_class = (select id from acl_class where class = 'com.backbase.portal.foundation.domain.model.Template')
+	and object_id_identity in (select id from items where name = "include-default");
+
+-- 5) Remove properties of include-default 
+delete from property_definition where item_id=(select id from items where name = "include-default");
+
+-- 6) Remove include-default
+delete from items where name = "include-default";
+
+-- 7) Remove include acl_class
+delete from acl_class where class = 'com.backbase.portal.foundation.domain.model.Include';
+-- End include item type removal
+
+
+-- start removal of duplicated tags ignoring case
+
+-- create temporary table (avoid usage of function on group by which is vendor specific)
+CREATE TABLE temp_tags (
+  id bigint NOT NULL,
+  name varchar(255) NOT NULL,
+  upper_name varchar(255) NOT NULL,
+  type varchar(255) NOT NULL,
+  contextItemName varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+
+-- Copy tags
+insert into temp_tags (select id, name, upper(name), type, contextItemName from tags);
+
+-- update item_tags records which use dupicated tags 
+update item_tags ittag set ittag.tag_id = 
+(
+	select tt.id from tags t inner join	(select upper_name, min(id) as id from temp_tags where upper_name in
+	(select upper_name from temp_tags t GROUP BY t.upper_name, t.CONTEXTITEMNAME, t.TYPE Having COUNT(*) > 1)
+	group by upper_name
+) tt on tt.upper_name = upper(t.name) where t.id = ittag.tag_id) where exists 
+(
+	select tt.id from tags t inner join (select upper_name, min(id) as id from temp_tags where upper_name in 
+  	(select upper_name from temp_tags t GROUP BY t.upper_name, t.CONTEXTITEMNAME, t.TYPE Having COUNT(*) > 1)
+	group by upper_name
+)
+tt on tt.upper_name = upper(t.name) where t.id = ittag.tag_id
+);
+
+-- removes duplicated records
+delete it1 from item_tags it1, item_tags it2 where it1.id < it2.id and it1.item_id = it2.item_id and it1.tag_id = it2.tag_id;
+
+-- deletes obsolete tags
+delete from tags where id not in (select tag_id from item_tags);
+
+-- drop temp table
+drop table temp_tags;
+-- end removal of duplicated tags ignoring case
+
+-- insert ACL for ContentType
+insert into acl_class (class) values ('com.backbase.portal.foundation.domain.model.ContentType');
+-- insert ACL for ContentRepository
+insert into acl_class (class) values ('com.backbase.portal.foundation.domain.model.ContentRepository');
+-- insert ACL for Feature
+insert into acl_class (class) values ('com.backbase.portal.foundation.domain.model.Feature');
+
+UPDATE items a
+set a.parentItemName = NULL
+WHERE a.discriminator = 'Page'
+      AND a.state = 'ASSIGNED'
+      AND a.contextItemName <> 'dashboard';
+
+update items set lastModifiedTimestamp = CURRENT_TIMESTAMP where publicationStatus = 'PUBLISHED';

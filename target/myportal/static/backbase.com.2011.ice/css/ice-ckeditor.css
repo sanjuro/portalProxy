@@ -1,0 +1,319 @@
+/**
+ * Copyright � 2013 Backbase B.V.
+ */
+
+/*
+css for the ckeditor
+
+The CSS file(s) to be used to apply style to the ckeditor in the design mode.
+*/
+
+html.bd-cke-dock-enabled  body.bd-ckeditor-docked {
+    margin-top: 43px;
+}
+
+html.bd-cke-dock-enabled .bd-ckeditor-docked div.bd-ckeditor-container {
+      position: fixed;
+      height: auto;
+      width: auto;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 9999;
+}
+
+.bd-ckeditor-container > .cke {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+}
+
+.bd-ckeditor-container > .bd-ckeditor-fixed-width{
+    max-width: 800px;
+}
+
+/***********************************************************************************************************************
+* BackBase Modification part.
+* These ckeditor default styles will be overwritten
+************************************************************************************************************************/
+
+
+.bd-designMode-true .cke_dialog_body {
+    background: #ccc;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif;
+}
+/* The dialog title. */
+.bd-designMode-true .cke_dialog_body .cke_dialog_title
+{
+    background-color: #ccc;
+    font-size: 13px;
+    height: 14px;
+    padding: 10px 0 8px 10px;
+    line-height: 14px;
+    overflow: visible;
+    background-image: none;
+    border: none;
+    color: black;
+    box-shadow: none;
+    text-shadow: none;
+    filter: none;
+}
+
+/* The close button at the top of the dialog. */
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_close_button
+{
+  background-image: url('../../backbase.com.2012.components/media/mini-icons3.png');
+  background-position: -160px -120px;
+  top: 10px;
+}
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_contents{
+    background-color: #eee;
+}
+/* The main tabs container. */
+.bd-designMode-true .cke_dialog_body a.cke_dialog_tab
+{
+    text-align: center;
+    line-height: 1.4em;
+
+    height: 21px;
+    float: left;
+    padding: 7px 14px 0;
+    margin-top: -5px;
+    border-style: solid;
+    border-color: #ccc;
+    border-width: 0;
+    margin:-2px 0 0 1px;
+    cursor: pointer;
+    background:#40403f;
+    color:#fff;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif;
+
+    /* rounded corners */
+    -moz-border-radius: 5px 5px 0px 0px;
+    -webkit-border-radius: 5px 5px 0px 0px;
+    -ms-border-radius: 5px 5px 0px 0px;
+    border-radius: 5px 5px 0px 0px;
+    filter:none;
+}
+
+.bd-designMode-true .cke_dialog_body a.cke_dialog_tab_selected
+{
+    padding: 8px 14px 2px;
+    margin-top: -5px;
+
+    /* gradient */
+    background-color: #ffffff; /* Old browsers */
+    background-image: -moz-linear-gradient(top, #ffffff 0%, #eeeeee 100%); /* FF3.6+ */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+    background-image: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+    background-image: -o-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Opera11.10+ */
+    background-image: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* IE10+ */
+    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 );  IE6-9 */
+    background-image: linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* W3C */
+    color: #508F11;
+}
+
+
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_labeled_label{
+    xwidth: 40% !important;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    line-height: 24px;
+}
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_labeled_content{
+    xwidth: 60% !important;
+    position: relative;
+}
+/*
+Styles for other dialog element types.
+*/
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_input_select
+{
+    padding:0;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    margin:0;
+    box-shadow: none;
+    border-radius: 5px;
+    vertical-align:middle;
+    background-color: #CCC;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    overflow: hidden;
+    height: auto;
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #eaeaea 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eaeaea)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* IE10+ */
+    background: linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* W3C */
+}
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_labeled_content > .cke_dialog_ui_input_select:after{
+    background: url('../../dashboard/media/arrow-down.gif') no-repeat;
+    width: 9px;
+    height: 5px;
+    content: "";
+    display: inline;
+    pointer-events:none;
+    position: absolute;
+    right: 10px;
+    top: 13px;
+    z-index: 1;
+}
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_input_select select{
+    vertical-align:middle;
+    display: inline-block;
+    width: 100% !important;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    color: #444;
+    border: 0 none;
+    z-index: 0;
+    padding : 2px 5px;
+}
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_input_select:before{
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #eaeaea 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eaeaea)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* IE10+ */
+    background: linear-gradient(top, #ffffff 0%,#eaeaea 100%); /* W3C */
+    border-radius: 5px;
+    content: " ";
+    height: 20px;
+    margin-top: -10px;
+    pointer-events: none;
+    position: absolute;
+    right: 1px;
+    top: 50%;
+    width: 25px;
+    z-index: 1;
+}
+.bd-designMode-true.mozilla .cke_dialog_body .cke_dialog_ui_input_select option:focus,
+.bd-designMode-true.mozilla .cke_dialog_body .cke_dialog_ui_input_select:focus,
+.bd-designMode-true.webkit .cke_dialog_body .cke_dialog_ui_input_select:focus{
+    border: none !important;
+    outline: 0 none !important;
+}
+.bd-designMode-true.mozilla .cke_dialog_body .cke_dialog_ui_input_select option::-moz-focus-inner,
+.bd-designMode-true.mozilla .cke_dialog_body .cke_dialog_ui_input_select::-moz-focus-inner
+{
+    border: none !important;
+    outline: 0 none !important;
+}
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_input_select option{
+    padding: 0 5px;
+}
+.bd-designMode-true.webkit .cke_dialog_body .cke_dialog_ui_input_select select{
+    padding: 0 5px;
+    margin: -1px 0;
+}
+
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_vbox_child{
+    line-height: 24px;
+}
+.bd-designMode-true .cke_dialog_body input.cke_dialog_ui_input_text,
+.bd-designMode-true .cke_dialog_body input.cke_dialog_ui_input_password,
+.bd-designMode-true .cke_dialog_body textarea.cke_dialog_ui_input_textarea
+{
+    box-shadow: none;
+    border-width: 1px 1px 1px 4px;
+}
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_select .cke_dialog_ui_labeled_label{
+    vertical-align: top;
+}
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_select,
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_text{
+    width: 100% !important;
+}
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_footer_buttons{
+    display: block;
+}
+
+.bd-designMode-true .cke_dialog_body a.cke_dialog_ui_button_ok{
+    width: 45px;
+    border-radius: 3px;
+    background: #75b505; /* Old browsers */
+    background: -moz-linear-gradient(top,  #75b505 0%, #539000 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#75b505), color-stop(100%,#539000)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #75b505 0%,#539000 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #75b505 0%,#539000 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #75b505 0%,#539000 100%); /* IE10+ */
+    background: linear-gradient(top,  #75b505 0%,#539000 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#75b505', endColorstr='#539000',GradientType=0 ); /* IE6-8 */
+    border: 1px solid #6CA521;
+    font-weight: bold;
+    color: #fff;
+    -webkit-box-shadow: 0px 1px 1px 0px #ffffff;
+    -moz-box-shadow: 0px 1px 1px 0px #ffffff;
+    box-shadow: 0px 1px 1px 0px #ffffff;
+}
+
+.bd-designMode-true .cke_dialog_body a.cke_dialog_ui_button_ok:hover {
+    background: #75B505;
+}
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_button{
+    cursor: pointer;
+}
+
+.bd-designMode-true .cke_dialog_body a.cke_dialog_ui_button_cancel{
+    background: none;
+    border: 0px none #ccc;
+    box-shadow: none;
+    filter:none;
+}
+
+.bd-designMode-true .cke_dialog_body a.cke_dialog_ui_button_cancel .cke_dialog_ui_button{
+    border-bottom: 1px solid #999999;
+    text-transform: uppercase;
+}
+
+.bd-designMode-true .cke_dialog_body .cke_dialog_ui_button span{
+    font-size: 11px;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif;
+}
+
+.bd-designMode-true .cke_dialog_background_cover{
+    background-color: #000000 !important;
+}
+
+/* (items below - tokenized autocomplete search field related - moved to components.css) */
+/* Managed links. Icons overwrites */
+/* Managed links. Toggle control */
+/* managed link auto complete */
+
+.cke_reset_all *,
+.cke_reset_all :after,
+.cke_reset_all :before {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.token-input-list li.token-input-token, ul.token-input-list li input {
+    max-width: 324px;
+}
+li.token-input-input-token{
+    width: 100%;
+}
+.cke_dialog_body label.error{
+    display: block;
+    color: red;
+    padding: 5px;
+}

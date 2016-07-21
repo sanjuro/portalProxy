@@ -1,0 +1,13 @@
+<div class="btn-group dropdown bb-checkbox-multiselect" data-cid="{{cid}}">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-ng-disabled="!(options && options.length)">
+        {{label ? label : 'Multi Select'}} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li data-ng-repeat="opt in options" data-ng-click="click($event, opt)" role="presentation">
+            <a href="#" class="dropdown-menu-item" role="menuitem">
+                <span data-bb-checkbox="" data-checked="opt.checked" data-value="opt.value" data-name="opt.name"></span>
+                {{opt.text}}
+            </a>
+        </li>
+    </ul>
+</div>

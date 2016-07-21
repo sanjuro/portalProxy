@@ -1,0 +1,56 @@
+<div class="pageDetails">
+    <div class="bd-columnEditor">
+        <h2><span>Settings for</span> {{pageTitle}}</h2>
+        <div class="spacer"></div>
+    </div>
+
+    <form id="updatePageForm">
+        <fieldset>
+
+            <input name="portalName" type="hidden" value="{{portalName}}" />
+            <input name="pageSetting_portalName" type="hidden" value="{{portalName}}" />
+            <table class="table-form">
+                <tr>
+                    <td class="td-label required"><label for="pageTitle">Page Title</label></td>
+                    <td class="td-field">
+                        <input id="pageTitle" name="pageTitle" type="text" size="45" oldvalue="{{pageTitleFormatted}}"
+                        class="field field-wide required bd-titleInput" minlength="2" maxlength="150" value="{{pageTitle}}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-label required"><label for="newPageName">URL</label></td>
+                    <td class="td-field">
+                        <input id="pageName" name="pageName" type="hidden" value="{{pageName}}" maxlength="150" />
+                        <p class="bd-editableContainer">{{contextRoot}}/portals/{{portalName}}/pages/<span class="bd-editable bd-nameEditable" for="newPageName" title="Click to change page name">{{pageName}}</span><input type="button" class="bd-button bd-buttonEditable bd-roundcorner-3" value="Edit"/></p>
+                        <input id="newPageName" name="newPageName" type="text" size="45" value="{{pageName}}" class="required bd-invisible" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-label"><label for="pageName">Page Template</label></td>
+                    <td class="td-field"><div class="templatesList"></div></td>
+                </tr>
+                <tr>
+                    <td class="td-label"><label for="Tags">Tags <span class="bd-optionalLabel">(optional)</span></label></td>
+                    <td class="td-field">
+                        <input name="pageTags" class="bd-pageTags" type="hidden" value="{{tags}}" />
+                        <input id="pageTagsInput" data-for=".bd-pageTags" type="text" class="input-wide" size="20" maxlength="200" value="{{tags}}" />
+                    </td>
+                </tr>
+                {{#exposedProperties}}
+                <tr>
+                    <td class="td-label"><label for="{{name}}">{{label}}</label></td>
+                    <td class="td-field">
+                        <input name="{{name}}" class="bd-{{name}} bd-exposedProperty" type="hidden" value="{{value}}" />
+                        <input id="{{name}}Input" data-for=".bd-{{name}}" type="text" class="input-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{value}}" viewHint="{{viewHint}}" />
+                    </td>
+                </tr>
+                {{/exposedProperties}}
+            </table>
+            <div class="bd-buttons">
+                <button class="bd-updatePage bd-button bd-green bd-roundcorner-3" name="default" type="submit">Save</button>
+                or
+                <button class="bd-pageSettingsTemplate bd-buttonText" pagename="{{pageName}}">Cancel</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

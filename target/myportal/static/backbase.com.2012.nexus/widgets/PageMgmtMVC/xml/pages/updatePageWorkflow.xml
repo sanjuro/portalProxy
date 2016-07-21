@@ -1,0 +1,10 @@
+<page>
+<!-- Copyright © 2011 Backbase B.V. -->
+  <name>{{pageName}}</name>
+  <type>page</type>
+  <properties>
+    <property name="modifiedBy">
+      <value>{{modifiedBy}}</value>
+    </property>
+  </properties>
+</page>

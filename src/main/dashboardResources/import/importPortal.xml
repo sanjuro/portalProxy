@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<backbase-portal-import>
+    <!-- USER AND GROUPS -->
+    <groups>
+        <file>backbase.com.2014.zenith/usergroups/groups.xml</file>
+    </groups>
+    <users>
+        <file>backbase.com.2014.zenith/usergroups/users.xml</file>
+    </users>
+    <!-- TEMPLATES -->
+    <!--  default templates from portal server -->
+    <templates>
+        <file>../defaultImportData/templates.xml</file>
+    </templates>
+    <!-- Aurora -->
+    <templates>
+        <file>backbase.com.2012.aurora/template-widgets.xml</file>
+        <rights-file>backbase.com.2014.zenith/rights/adminManagerRights.xml</rights-file>
+    </templates>
+    <templates>
+        <file>backbase.com.2012.aurora/template-containers.xml</file>
+        <rights-file>backbase.com.2014.zenith/rights/adminManagerRights.xml</rights-file>
+    </templates>
+    <!-- Aurora 2013 -->
+    <templates>
+        <file>backbase.com.2013.aurora/template-containers.xml</file>
+        <rights-file>backbase.com.2014.zenith/rights/adminManagerRights.xml</rights-file>
+    </templates>
+    <templates>
+        <file>backbase.com.2013.aurora/template-pages.xml</file>
+        <rights-file>backbase.com.2014.zenith/rights/adminManagerDesignerRights.xml</rights-file>
+    </templates>
+    <!-- Darts -->
+    <templates>
+        <file>backbase.com.2012.darts/template-containers.xml</file>
+        <rights-file>backbase.com.2014.zenith/rights/adminManagerRights.xml</rights-file>
+    </templates>
+    <!-- Zenith -->
+    <templates>
+        <file>backbase.com.2014.zenith/template-pages.xml</file>
+        <rights-file>backbase.com.2014.zenith/rights/adminManagerDesignerRights.xml</rights-file>
+    </templates>
+    <templates>
+        <file>backbase.com.2014.zenith/template-containers.xml</file>
+        <rights-file>backbase.com.2014.zenith/rights/adminManagerRights.xml</rights-file>
+    </templates>
+    <!-- ENTERPRISE CATALOG -->
+    <!-- Aurora 2013 -->
+    <pages>
+        <file>backbase.com.2013.aurora/server-catalog-pages.xml</file>
+        <rights-file>backbase.com.2014.zenith/rights/MasterPageDesigner-pagerights.xml</rights-file>
+    </pages>
+    <!-- Aurora 2013 -->
+    <containers>
+        <file>backbase.com.2013.aurora/catalog-containers-adminDesignerOnly.xml</file>
+    </containers>
+    <!-- Darts -->
+    <containers>
+        <file>backbase.com.2012.darts/catalog-containers.xml</file>
+    </containers>
+    <!-- Zenith -->
+    <catalog>
+        <file>backbase.com.2014.zenith/enterprise-catalog-pages.xml</file>
+    </catalog>
+    <catalog>
+        <file>backbase.com.2014.zenith/enterprise-catalog-containers.xml</file>
+    </catalog>
+    <catalog>
+        <file>backbase.com.2014.zenith/enterprise-catalog-widgets.xml</file>
+    </catalog>
+    <!-- CONTENT REPOSITORY -->
+    <catalog>
+        <file>backbase.com.2014.zenith/content-repository.xml</file>
+        <rights-file>backbase.com.2014.zenith/rights/adminManagerRights.xml</rights-file>
+    </catalog>
+
+    <!--  CXP MANAGER -->
+    <portal-import>
+        <name>dashboard</name>
+        <file>backbase.com.2014.zenith/dashboard.xml</file>
+        <rights-file>backbase.com.2014.zenith/rights/ManagerConsumerRights.xml</rights-file>
+        <!-- CATALOG -->
+        <catalog>
+            <file>backbase.com.2014.zenith/portal-catalog-pages.xml</file>
+        </catalog>
+        <catalog>
+            <file>backbase.com.2014.zenith/portal-catalog-containers.xml</file>
+        </catalog>
+        <catalog>
+            <file>backbase.com.2014.zenith/portal-catalog-widgets.xml</file>
+        </catalog>
+        <!-- PAGE INSTANCES -->
+        <pages>
+            <file>backbase.com.2014.zenith/pages/index.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_audit_trail.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_content.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_enterprise_catalog.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_explorer.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_groups.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_page_management.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_portal_catalog.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_portal_content.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_portal_details.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_portal_publishing.xml</file>
+        </pages>
+        <pages>
+            <file>backbase.com.2014.zenith/pages/page_zenith_publishing.xml</file>
+        </pages>
+        <!-- LINKS -->
+        <links>
+            <file>backbase.com.2014.zenith/links-instance.xml</file>
+        </links>
+        <links>
+            <file>backbase.com.2014.zenith/links-instance-admin-only.xml</file>
+            <rights-file>backbase.com.2014.zenith/rights/adminOnlyRights.xml</rights-file>
+        </links>
+        <links>
+            <file>backbase.com.2014.zenith/links-instance-masterpages.xml</file>
+            <rights-file>backbase.com.2014.zenith/rights/masterPageDesigner.xml</rights-file>
+        </links>
+    </portal-import>
+</backbase-portal-import>

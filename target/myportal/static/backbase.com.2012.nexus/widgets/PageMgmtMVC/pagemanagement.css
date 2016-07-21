@@ -1,0 +1,2452 @@
+/**
+ * PAGE MANAGEMENT
+ */
+
+.Maximized .bd-widget-PageMgmtMVC {
+	padding: 0;
+/* 	background-image: url('../../../../static/backbase.com.2011.ice/media/repo_browser/loading_icon_32.png'); */
+    background-position: 60% center;
+    background-repeat:no-repeat;
+    background-color:#ddd
+}
+
+.bd-pageMgmtTree ul, .bd-pageMgmtTree li, .bd-pageMgmtTree a {
+	-ms-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+
+.bd-pageMgmtTree .bd-mainTitle {
+	padding: 9px 0 8px 10px;
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; /* IE, WebKit (Safari, Chrome), Firefox 7, Opera 11 */
+	border-bottom: 1px dotted #ccc;
+}
+.bd-addPageButtons {
+	margin-top: 3px;
+	position: relative;
+}
+.bd-portal-layout-toggle-wrapper .bd-addPageButtons {
+	margin-top: 7px;
+}
+.bd-tdPagesContainer .bd-columnheader {
+	margin: 0;
+}
+
+.bd-pageMgmtTree {
+	height: 100%;
+
+	/* to make dnd over iframe */
+	position: relative;
+	z-index: 0;
+    border-right: 1px solid #fff;
+}
+
+.bd-mainTable {
+	width: 100%;
+	height: 100%;
+	border-collapse: collapse;
+}
+.bd-tdPagesContainer, .bd-tdIframeContainer {
+	vertical-align: top;
+}
+.bd-tdPagesContainer {
+	padding: 2px 0 0 0;
+}
+
+
+.bd-pageContainer {
+	/*position: absolute;*/
+	z-index: 10;
+    /*min-width: 296px;*/
+    /*max-width: 75%;*/
+	height: 100%;
+	background-color: #eee;
+	/*margin-top: -2px;*/
+	/*margin-bottom: 0px;*/
+
+	border-right:2px solid #fff;
+}
+.bd-pageContainerClosed {
+    background: transparent;
+    border: 0;
+    padding-right: 5px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.bd-pageContainer.bd-closing,
+.bd-pageContainer.bd-opening,
+.bd-pageContainer.bd-pageContainerClosed{
+    min-width: 0;
+}
+
+.bd-pageContainerClosed .bd-mainTitle,
+.bd-pageContainerClosed .bd-pageScrollContainer {
+    display: none;
+}
+
+.bd-pageScrollContainer {
+	height: 100%;
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+.bd-iframeContainer{
+	width: 100%;
+	height: 100%;
+	border: 0px;
+	position: relative;
+	z-index: 0;
+}
+.pageDesignerSelectedPage{
+    background-color: gray;
+}
+
+
+#bd-iframeOverlay {
+	   /* for ie8 */
+    background: transparent;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C000000,endColorstr=#4C000000)"; /* IE8 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C000000,endColorstr=#4C000000);   /* IE6 & 7 */
+    zoom: 1;
+     /* for ie8 */
+
+	width: 100%;
+	height: 100%;
+	border: 0px;
+	position: absolute;
+	z-index: 1;
+	background-color: rgba(0,0,0,.3);
+	border-radius: 3px;
+	top: 0;
+	left: 0;
+}
+.bd-overlay-icon{
+    background-image: url(../../media/icons-for-non-page-menu-items.png);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    left: 50%;
+    /*margin-left: 110px;*/
+    margin-top: -90px;
+    top: 50%;
+}
+#bd-iframeOverlay .bd-overlay-icon-divider{background-position: 0 0;}
+#bd-iframeOverlay .bd-overlay-icon-redirect{background-position: 0 -80px;}
+#bd-iframeOverlay .bd-overlay-icon-externalLink{background-position: 0 -160px;}
+#bd-iframeOverlay .bd-overlay-icon-menuHeader{background-position: 0 -240px;}
+/*
+.bd-page-locked #bd-iframeOverlay {
+	background-image: url(media/pageTree/padlock_closed_icon.png);
+}
+*/
+
+.bd-framespinner {
+	background-image: url(../../media/framespinner.gif);
+	width:32px;
+	height:32px;
+	position:absolute;
+	top:50%;
+	margin-top:-16px
+}
+
+#bd-iframeOverlay p {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	/*width: 500px;*/
+	margin-left: -36px;
+	line-height: 1.5em;
+	text-align: center;
+	color: #eee;
+}
+#bd-iframeOverlay a {
+	border-bottom: 1px dashed #fff;
+	color: #fff;
+	cursor: pointer;
+}
+
+
+/* titleContainer */
+
+.bd-titleContainer h2 {
+	color: #444;
+	text-transform: uppercase;
+	font-size: 15px;
+	margin: 0;
+	padding-top: 15px;
+	white-space: nowrap;
+}
+
+
+	.bd-sliderClosed {
+		display: none;
+	}
+	.bd-noPages .sliderOpen {
+		display: block;
+	}
+	.bd-pagesLayoutWide .sliderOpen {
+		display: block;
+	}
+
+
+
+/* Top Buttons */
+
+
+.bd-pageMgmtActionBar {
+	margin: 0;
+	min-height: 80px;
+	height: auto;
+	padding: 8px 6px;
+	border-top: 1px solid #F8F9F9;
+    background-color: #E6E6E6;
+}
+.bd-pageMgmtActionBar {
+	padding: 4px 6px 6px;
+}
+.bd-pageMgmtActionBar table.bd-toggleContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid #fff;
+}
+.bd-pageMgmtActionBar table.bd-searchContainer {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid #fff;
+}
+.bd-pageMgmtActionBar td{
+    vertical-align: middle;
+}
+.bd-pageMntAddBtn .bd-icon {
+	background: url(../media/plus.gif) no-repeat right center;
+}
+.bd-pageMntAddBtn .bd-dropdown {
+	left: auto;
+	right: -10px;
+}
+
+
+
+/* pages filter */
+
+.bd-pageMgmtFilterBar {
+	position: relative;
+	display: none;
+}
+
+.bd-pub-notification-inProgress .bd-pageMgmtFilterBar {
+	margin-top: 36px;
+}
+.bd-pub-notification-inProgress .bd-addPageButtons {
+	margin-top: 42px;
+}
+.bd-pageFilter, .bd-pageMgmtFilter {
+	width: 210px;
+}
+.bd-pageMgmtFilter {
+	border: 0px solid;
+	width: 0px;
+	padding-left: 30px;
+	position: relative;
+	z-index: 100;
+	height: 25px;
+	/*background: #EEE;*/
+}
+
+.bd-pageFilter-OnBlur {
+	overflow: hidden;
+}
+
+.bd-pageMgmtFilter .token-input-list {
+	display: none;
+}
+
+.bd-pageMgmtFilter .bd-icon {
+	cursor: pointer;
+	background: url("../../../backbase.com.2012.components/media/mini-icons3.png") no-repeat -200px -60px;
+	position: absolute;
+	top: 8px;
+	left: 13px;
+	width: 20px;
+	height: 17px;
+	border: 0px solid;
+}
+.bd-pageMgmtFilter .bd-closeFilter-icon{
+	cursor: pointer;
+	position: absolute;
+    background: url('media/pageTree/icon_close_dialog.png') 0 0 no-repeat;
+	top: 6px;
+	right: 4px;
+	width: 17px;
+	height: 17px;
+	display: none;
+}
+
+.bd-pageMgmtFilter ul.token-input-list-filter{
+	background-image: none;
+	background-position: 0 0;
+}
+
+.bd-pageMgmtFilterActive {
+	width: 206px;
+	/*margin-right: 80px;*/
+	padding-top: 2px;
+	padding-left: 7px;
+}
+.bd-pageMgmtFilterActive .token-input-list {
+	display: block;
+	height: 23px;
+}
+.bd-pageMgmtFilterActive .token-input-list-active {
+	height: auto !important;
+}
+.bd-pageMgmtFilterActive .bd-closeFilter-icon {
+	display: block;
+}
+
+.bd-pageMgmtFilterActive .token-input-token {
+	max-width: 40px !important;
+}
+
+.bd-pageMgmtFilterActive .bd-icon{
+	display: block;
+	left: 13px;
+}
+.bd-pageMgmtTree .bd-pagesListContainer {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	/*min-width: 296px;*/
+    /*max-width: 100%;*/
+	top: 0;
+	bottom: 0;
+	left: 0;
+    /*overflow: auto;*/
+    background: #F2F2F2;
+    /*transition: width .1s ease;*/
+    z-index: 2;
+    /*cursor:col-resize;*/
+    float: left;
+}
+.bd-pageMgmtTree .bd-pagesListContainer:hover:after{
+    content: '';
+    display: block;
+    height: 100%;
+    width: 4px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.bd-pageMgmtTree .bd-pagesListContainer.bd-resizing{
+    transition: none;
+}
+.bd-pageContainer.bd-pagesLayoutWide{
+    max-width:800px;
+}
+/*.bd-pageMgmtTree .bd-pagesLayoutWide .bd-pagesListContainer {
+    cursor: auto;
+    width: 296px;
+}
+*/
+.bd-pageMgmtTree .bd-pageMntAddBtn {
+	position: absolute;
+	right: 0px;
+	top: 2px;
+	z-index: 1;
+}
+
+
+/* Accordion */
+
+.bd-pagesListContainer .jstree-no-dots {
+	position: absolute;
+	top: 74px;
+	bottom: 0;
+	border: 0px solid;
+	width: 100%;
+	height: auto;
+    margin-bottom: -4px;
+    overflow:hidden;
+}
+
+.z-migration-widget .bd-pagesListContainer .jstree-no-dots {
+	top: 80px;
+}
+.bd-pagesListContainer .jstree-no-dots li {
+	height: auto;
+	max-height: none;
+}
+.bd-pagesListContainer .jstree-no-dots > li {
+	/*border-top: 1px dotted #CCC;*/
+}
+.bd-pagesListContainer .jstree-no-dots > li  > ins {
+	display: none;
+}
+.bd-tree-scrollbar {
+	overflow: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+/*
+.bd-tree-scrollbar .jstree-leaf:first-child a {
+	margin-top:10px!important;
+}
+.bd-tree-scrollbar .jstree-last a {
+	margin-bottom:10px!important;
+	border-bottom:0 none;
+}
+*/
+
+/* Divider */
+.bd-portalPagesListViewport .jstree-no-dots .bd-divider {
+	padding-right: 60px;
+    text-indent:-999em;
+}
+
+.bd-portalPagesListViewport .no-links {
+	text-align: center;
+	padding-top: 10px;
+}
+
+.bd-portalPagesListViewport .bd-divider .jstree-icon {
+	border-top: 2px solid;
+	display: block!important;
+	background: none;
+	width: 80%;
+	margin-top: 7px;
+	margin-left: 20px;
+	height: 0;
+	position: static;
+}
+.bd-plusAddPage {
+	border-right:0 none;
+	cursor:pointer;
+	position:absolute;
+	z-index:999;
+	width:36px;
+	line-height:20px;
+	height:23px;
+	text-align:center;
+	padding:0;
+	font-size:20px;
+	right:25px;
+	top:2px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-radius: 5px 0px 0px 5px;
+	border-radius: 5px 0px 0px 5px;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+.bd-plusAddMasterPage{
+    cursor: pointer;
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    right: 10px;
+    top: 9px;
+    background-color: #e6e6e6;
+    border-color: #CCC;
+    padding-top: 3px;
+}
+/*.bd-plusAddMasterPage .bc-plus{
+	left:10px;
+	top:5px;
+	position:absolute;
+}*/
+
+.ie8 .bd-pageMgmtTree .bd-plusAddMasterPage .bc-plus{
+	left:11px;
+	xtop:-6px;
+	position:absolute;
+}
+
+.ie8 .bd-pageMgmtTree .bc-action-button .bc-icn {
+	left:4px !important;
+	xtop:1px !important;
+}
+
+/* pagesTree */
+
+.bd-tdPagesContainer .spacer {
+	width: 298px;
+}
+
+
+.bd-portalPagesListViewport ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+}
+
+.bd-pageMgmtTree .bd-portalPagesListViewport li {
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+
+
+.bd-portalPagesListViewport li:hover {
+	/*background: #f8f9f9 url(../../media/pages/draggrippy.png) 0 50% no-repeat;
+	background: #f8f9f9;*/
+}
+
+
+
+.bd-portalPagesListViewport .bd-tree-pageIcon {
+	height: 17px;
+    width:  20px;
+    top: 5px;
+	overflow: hidden;
+	display:block;
+	position: absolute;
+}
+
+.bd-portalPagesListViewport .bd-tree-pageTraffic {
+	left: 6px;
+	top: 6px;
+}
+
+.bd-pageVersionsList .bd-tree-pageTraffic {
+	display: inline-block;
+    height: 17px;
+    width: 20px;
+    vertical-align:top;
+}
+
+
+.bd-pageVersionsList .bd-tree-pageTraffic {
+	position:relative;
+	top:2px;
+	margin-right:2px;
+}
+
+.bd-pageVersionsList .bd-tree-pageTraffic,
+.bd-tree-page .bd-tree-pageTraffic {
+   background: url("../../../backbase.com.2012.components/media/mini-icons3.png") no-repeat -120px -20px;
+   margin: 4px -4px 2px 8px;
+   width: 10px;
+   height: 10px;
+   border-radius: 10px;
+}
+.bd-tree-page .bd-tree-pageTraffic{ /* hide the traffic light at initialize */
+    background-position: 999em 999em;
+}
+
+/* icon traffic light states */
+.bd-tree-page-publishedHasChanges .bd-tree-pageTraffic {
+    /*background-position: -120px -60px;*/
+    background-position: 999em 999em;
+    background-color: #EB7D17;
+}
+.bd-tree-page-published .bd-tree-pageTraffic {
+    /*background-position: -120px -80px;*/
+    background-position: 999em 999em;
+    background-color: #76B812;
+}
+.bd-tree-pageTraffic .bd-tree-pageTraffic {
+    /*background-position: -120px -20px;*/
+    background-position: 999em 999em;
+    background-color: #CCCCCC;
+}
+
+
+.bd-tree-page-pub-state-none .bd-tree-pageTraffic {
+    background-position: 999em 999em;
+}
+.bd-tree-page-masterpage-block .bd-tree-pageTraffic,
+.bd-tree-page-masterpage-block.bd-tree-page-pub-state-none .bd-tree-pageTraffic {
+    background-position: 999em 999em;
+    background-color: #C12121;
+}
+
+.bd-portalPagesListViewport .bd-tree-page-lock .bd-tree-pageTraffic{
+    width: 20px;
+    height: 20px;
+    background-position: -120px -100px;
+    margin: 2px -4px 2px 8px;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+/* icon eye states */
+.bd-portalPagesListViewport .bd-tree-pageDetailsLink {
+    right: 0px;
+    cursor: pointer;
+    display: none;
+    top: 7px;
+    color: #444;
+}
+.bd-portalPagesListViewport .bd-tree-page:hover .bd-tree-pageDetailsLink {
+	display: block;
+}
+
+.bd-pagesLayoutWide  .bd-tree-pageCurrent .bd-tree-pageDetailsLink:before {
+	content: "\E035";
+}
+
+/* no longer used i think... */
+.bd-suitcase-red .bd-tree-publishingIcon {background-position: -19px -120px}
+.bd-suitcase-green .bd-tree-publishingIcon {background-position: -19px -140px}
+
+/* publish icon states  */
+.bd-tree-publishingIcon {
+    background  : url("../../../backbase.com.2012.components/media/mini-icons3.png") no-repeat 999em 999em;
+    right       : 20px;
+    cursor      : pointer;
+}
+.bd-pub-disabled .bd-tree-publishingIcon {
+    background-position: 999em 999em!important;
+    visibility: hidden;
+}
+
+.bd-pub-marked-for-publish > .bd-tree-publishingIcon{
+    background-position: -55px -35px;
+}
+.bd-pub-marked-for-unpublish > .bd-tree-publishingIcon{
+    background-position: -55px -155px;
+}
+.bd-pub-marked-for-unpublish{
+    text-decoration: line-through!important;
+}
+
+/* unpublish invite */
+.bd-tree-page-published > .bd-tree-publishingIcon:hover,
+    /* published, not marked for publish: unpublish invite */
+.bd-tree-page-publishedHasChanges.bd-pub-marked-for-publish > .bd-tree-publishingIcon:hover,
+    /* changed, marked for publish: unpublish invite */
+.bd-tree-page-pub-state-none.bd-pub-marked-for-publish > .bd-tree-publishingIcon:hover {
+    /* not published, marked for publish: unpublish invite */
+    background-position: -55px -135px;
+}
+
+/* publish invite */
+.bd-tree-page-pub-state-none > .bd-tree-publishingIcon:hover,
+    /* not published not marked for publish: publish invite */
+.bd-tree-pageTraffic > .bd-tree-publishingIcon:hover,
+    /* link not published + page published: publish invite */
+.bd-tree-page-publishedHasChanges > .bd-tree-publishingIcon:hover,
+    /* changed not marked for publish: publish invite */
+.bd-tree-page-published.bd-pub-marked-for-unpublish > .bd-tree-publishingIcon:hover,
+    /* published, marked for unpublish: publish invite */
+.bd-tree-page-published.bd-pub-nextAction-publish > .bd-tree-publishingIcon:hover,
+    /* published masterpage with published pages */
+.bd-tree-page-pub-state-none.bd-pub-marked-for-unpublish > .bd-tree-publishingIcon:hover {
+    /* no publish state, marked for unpublish: publish invite */
+    background-position: -55px -15px;
+}
+
+/* remove invite */
+.bd-tree-page-publishedHasChanges.bd-pub-marked-for-unpublish > .bd-tree-publishingIcon:hover,
+    /* changed marked for unpublish: remove invite */
+.bd-tree-page-pub-state-none.bd-pub-marked-for-publish > .bd-tree-publishingIcon:hover,
+    /* no publish state, marked for publish: remove invite */
+.bd-tree-page-lock.bd-pub-nextAction-cancel > .bd-tree-publishingIcon:hover,
+    /* no publish state, marked for publish: remove invite */
+.bd-tree-page-published.bd-pub-marked-for-publish > .bd-tree-publishingIcon:hover{
+    /* published, marked for publish: remove invite */
+    background-position: -55px -275px;
+}
+.bd-tree-page-masterpage-block > .bd-tree-publishingIcon {
+    /*display: none!important;*/
+}
+/* may be needed later. let's see first if the above rules suffice */
+.bd-tree-page-pub-state-none .bd-tree-publishingIcon {
+
+}
+.bd-tree-pageTraffic .bd-tree-publishingIcon {
+
+}
+
+.bd-pub-messagesContainer {
+	z-index: 1000;
+	position: absolute;
+	width: 100%;
+	display: none;
+	height: 35px;
+	overflow: hidden;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	-o-transition: all .1s linear;
+	-ms-transition: all .1s linear;
+	transition: all .1s linear;
+}
+
+.bd-pub-messageContainer-expanded {
+	/*overflow: visible;*/
+}
+
+.bd-pub-multiple-notifications {
+	margin-top: 0;
+}
+
+.bd-pub-notification-expand {
+	float: right;
+	text-decoration: none;
+	cursor: pointer;
+	border-bottom: 1px dotted #888;
+	line-height: 12px;
+	margin-top: 6px;
+}
+
+.bd-pub-messageInProgress .bd-pub-notification-close {
+	width: 12px;
+	height: 12px;
+	position: absolute;
+	top: 12px;
+	right: 3px;
+	cursor: pointer;
+}
+
+.bd-pub-notification-menu {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	cursor: pointer;
+	opacity: 1;
+}
+
+.bd-pub-messagesInnerContainer {
+	position: relative;
+	background-color: #FFF7CC;
+	border-top: 1px solid #FFE57D;
+
+}
+.bd-pub-messageInProgress-scroll .bd-pub-messagesInnerContainer:last-child {
+	border-bottom: 1px solid #FFE57D;
+}
+p.bd-pub-messageInProgress {
+	color: #444;
+	background-color: #fdf9db;
+	/* border: 1px solid #FFE57D; */
+	border-width: 1px 0;
+	margin: 0;
+	padding: 5px 10px;
+	font-size: 0.9em;
+	height: 35px;
+	z-index: 1;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	line-height: 25px;
+	overflow: hidden;
+	position: absolute;
+	-webkit-transition: margin-top .3s linear, left .15s linear;
+	-moz-transition: margin-top .3s linear, left .15s linear;
+	-o-transition: margin-top .3s linear, left .15s linear;
+	-ms-transition: margin-top .3s linear, left .15s linear;
+	transition: margin-top .3s linear, left .15s linear;
+}
+
+
+.bd-pub-messageContainer-expanded .bd-pub-messageInProgress-scroll {
+	max-height: 450px;
+	overflow-y: auto;
+}
+
+.bd-pub-notification-failed .bd-pub-messageInProgress {
+	background-color: #a20000;
+	border-color: #FF9999;
+	color: #fff;
+}
+
+.bd-pub-progress-bar{
+	/*height: 100%;*/
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 10;
+}
+
+.bd-pub-notification-state.hide,
+.bd-pub-notification-progress.hide{
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.bd-pub-notification-state,
+.bd-pub-notification-progress{
+	opacity: 1;
+	filter: alpha(opacity=1);
+	position: absolute;
+	top:0; left:0;
+
+	transition: opacity .25s ease-in-out;
+	-moz-transition: opacity .25s ease-in-out;
+	-webkit-transition: opacity .25s ease-in-out;
+}
+.bd-pub-notification-message .bd-pub-notification-info {
+	cursor: default;
+}
+.bd-pub-notification-message .bd-pub-notification-package,
+.bd-pub-notification-message .bd-pub-notification-info {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	display: block;
+	float: left;
+	line-height: 15px;
+	margin-top: 7px;
+	overflow: hidden;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.bd-pub-notification-message .bd-pub-notification-package {
+	border-bottom: 1px dotted #444;
+	max-width: 41%;
+	cursor: pointer;
+}
+
+.bd-pub-notification-message .bd-pub-notification-info {
+	text-decoration: none!important;
+	padding-left: 3px;
+	max-width: 45%;
+}
+
+p.bd-pub-messageInProgress.bd-pub-messages-count {
+	margin-top: -35px;
+	text-decoration: none;
+	cursor: default;
+}
+
+.bd-pub-notification-close.bc-icn{
+	background-position:-418px -238px;
+}
+
+.bd-pub-notification-menu.bc-icn{
+	background-position:-80px -275px;
+}
+
+.bd-pub-notification-failed .bd-pub-notification-close.bc-icn {
+	background-position:-160px -78px;
+}
+
+.bd-pub-notification-failed .bd-pub-notification-menu.bc-icn{
+	background-position:-80px -355px;
+}
+
+.bd-pub-notification-failed .bd-pub-notification-message .bd-pub-notification-package {
+	border-bottom-color: #FFF;
+}
+
+.bd-pub-multiple-notifications p.bd-pub-messageInProgress.bd-pub-messages-count {
+	margin-top: 0;
+}
+
+.bd-pub-messageInProgress .bd-pub-iconRefresh {
+   background: url("../../../backbase.com.2012.components/media/mini-icons3.png") no-repeat -160px -40px;
+	display: block;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	right: 10px;
+	top: 6px;
+	opacity: .7;
+	cursor: pointer;
+}
+.bd-pub-messageInProgress .bd-pub-iconRefreshInProgress {
+    background: url(media/pageTree/loading.gif) no-repeat 1px 1px;
+	opacity: 1;
+}
+.bd-pub-notification-inProgress .bd-pub-messageInProgress {
+	position: relative;
+	left: 0;
+
+}
+
+.bd-pub-notification-actions {
+	position: absolute;
+	color: #444;
+	background-color: #fdf9db;
+	border: 1px solid #fdf9db;
+	/*
+	border-top: #e5dbb8 1px solid;
+	border-bottom: #e5dbb8 1px solid;
+	border-width: 1px;
+	*/
+	z-index: 1000;
+	width: 60%;
+	height: 0;
+	overflow: hidden;
+	top: -999em;
+	right: 0;
+	-webkit-transition: height .1s ease-out;
+	-moz-transition: height .1s ease-out;
+	-o-transition: height .1s ease-out;
+	-ms-transition: height .1s ease-out;
+	transition: height .1s ease-out;
+}
+
+.bd-pub-notification-actions.bd-pub-notification-failed {
+	background-color: #a20000;
+	border: 1px solid #a20000;
+	color:#fff;
+}
+
+.bd-pub-notification-failed .bd-pub-notification-action:hover {
+	color:#a20000;
+	background-color: #fff;
+	text-decoration:none;
+}
+
+.bd-pub-notification-open {
+	height: 110px;
+}
+
+.bd-pub-notification-action {
+	list-style: none;
+	display: block;
+	/*border-bottom: 1px solid #FFE57D;*/
+	padding: 6px;
+	font-size: 11px;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+.bd-pub-notification-action:hover {
+	background-color: #e5dbb8;
+	text-decoration:none;
+}
+
+.bd-pub-notification-action-inactive, .bd-pub-notification-action-inactive:hover, .bd-pub-notification-failed .bd-pub-notification-action-inactive:hover {
+	background-color: inherit;
+	padding-left: 3px!important;
+}
+
+.bd-pub-notification-action-inactive, .bd-pub-notification-action-inactive:hover {
+	color: #aaa;
+}
+
+.bd-pub-notification-failed .bd-pub-notification-action-inactive:hover {
+	color: #aaa;
+}
+
+.launchPublishApp {
+	cursor: pointer;
+}
+
+.bd-loadMoreIcon {
+	background: url(media/pageTree/loading.gif) no-repeat 1px 1px;
+	opacity: 1;
+	width: 20px;
+	height: 20px;
+	display: block;
+	position: absolute;
+	left: 22px;
+}
+
+#loading .bd-tree-page {
+	left: 20px;
+	position: relative;
+}
+
+.bd-loading {
+	display: block;
+	width: 100%;
+	padding-left: 20px;
+	left: 22px;
+	position:  relative;
+}
+
+.bd-loading .bd-loadMoreIcon {
+	position: relative;
+	left: -20px;
+	top: 20px;
+}
+
+.bd-pub-launchPubApp {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.bd-pub-inProgress .bd-tree-publishingIcon {
+	display: none!important;
+}
+
+.bd-pub-inProgress .bd-pub-button-container {
+	display: none;
+}
+
+.bd-pub-inProgress .bd-settings-publishButton {
+	opacity: .5;
+}
+.bd-pub-inProgress .bd-editPageSettings, .bd-read-only .bd-editPageSettings, .bd-permission-read-only .bd-editPageSettings {
+	display: none;
+}
+.bd-read-only .bd-alias-form .bd-editPageSettings {
+	display: inline-block;
+}
+.bd-pub-notification-inProgress .bd-pagesListContainer .jstree-no-dots {
+	top: 115px;
+}
+
+.bd-tree-page-spinner .bc-pub-publish,
+.bd-tree-page-spinner .bc-pub-unpublish{
+    /*
+    background-position: -60px -440px;
+    */
+    margin:0!important;
+    width:20px!important;
+    height:20px!important;
+    background: url(media/pageTree/ajax-loader.gif) no-repeat 4px 0px!important;
+}
+
+/*
+    Unpublish icon
+*/
+
+.bd-portalPagesListViewport .bd-tree-page:hover .bd-tree-actionIcon
+{
+	display: block;
+}
+.bd-portalPagesListViewport .jstree-hovered{
+	background: #fafafa;
+}
+
+
+.bd-tree-page-unpublished,
+.bd-pub-markedForUnpublishing
+{
+    text-decoration: line-through!important;
+}
+
+/*
+    Publish Button on Settings form
+*/
+.bd-publish-button,
+.bd-unpublish-button,
+.bd-cancelUnpublish-button,
+.bd-cancelPublish-button,
+.bd-editPageSettings {
+	font-size: 12px;
+	font-weight: normal;
+	margin: 0;
+	padding: 6px 3px;
+}
+
+
+.bd-pub-disabled .bd-publish-button,
+.bd-pub-disabled .bd-unpublish-button,
+.bd-pub-disabled .bd-cancelUnpublish-button,
+.bd-pub-disabled .bd-cancelPublish-button
+{
+    display: none!important;
+}
+.bd-publish-button span:after {
+    content: "Mark for publish";
+}
+
+.bd-unpublish-button span:after {
+    content: "Mark for unpublish";
+}
+
+.bd-cancelUnpublish-button span:after {
+    content: "Clear publication mark";
+}
+
+.bd-cancelPublish-button span:after {
+    content: "Clear publication mark";
+}
+
+/*
+.bd-portalPagesListViewport .bd-tree-moveHandle {
+    background: url(media/pageTree/icon-pageTree-moveHandle.png) no-repeat;
+    width: 13px;
+    right: 1px;
+	cursor: move;
+}
+*/
+
+
+.bd-tree-pageManagement .bd-tree-pageTitle {
+	display: block;
+	margin: 0 65px 0 10px;
+	z-index: 10;
+	zoom:1;
+}
+
+
+/*.bd-portalPagesListViewport .bd-tree-page {*/
+.bd-portalPagesListViewport a {
+	text-decoration: none;
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+
+
+.bd-portalPagesListViewport a:hover {
+	background-color: #ddd;
+}
+
+
+.bd-pagesListContainer a.bd-tree-root {
+	border-top: 1px solid #fff;
+	text-transform: uppercase;
+	padding: 12px 70px 11px 10px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: block;
+	font-size: 14px;
+	color:#444;
+	height:16px;
+	line-height:16px;
+
+	/* gradient */
+	background-color: #E6E6E6; /* Old browsers */
+}
+
+.bd-pagesListContainer li:first-of-type a.bd-tree-root,
+.bd-pagesListContainer li.bd-tree-masterpage a.bd-tree-root {
+	border-top-style: none;
+}
+
+.bd-tree-breaker {
+    height: 1px;
+    width: auto;
+    display: block;
+    background: url(media/dots.png) #FFF no-repeat top center;
+}
+
+.bd-tree-breaker:hover{
+	cursor:move;
+	cursor:row-resize;
+}
+
+.bd-tree-masterpage{
+	border-bottom: 1px solid #BBBBBB;
+}
+
+.bd-tree-masterpage .bd-tree-scrollbar{
+	display:block;
+	padding-top : 10px;
+}
+
+/* TODO: avoid using ul ul ul.. */
+.bd-portalPagesListViewport a.bd-tree-page {padding: 6px 40px 6px 45px}
+.bd-portalPagesListViewport ul ul ul .bd-tree-page {padding-left: 55px}
+.bd-portalPagesListViewport ul ul ul ul .bd-tree-page {padding-left: 65px}
+.bd-portalPagesListViewport ul ul ul ul ul .bd-tree-page {padding-left: 75px}
+.bd-portalPagesListViewport ul ul ul ul ul ul .bd-tree-page {padding-left: 85px}
+.bd-portalPagesListViewport ul ul ul ul ul ul ul .bd-tree-page {padding-left: 95px}
+.bd-portalPagesListViewport ul ul ul ul ul ul ul ul .bd-tree-page {padding-left: 105px}
+.bd-portalPagesListViewport ul ul ul ul ul ul ul ul ul .bd-tree-page {padding-left: 115px}
+
+.bd-portalPagesListViewport a.bd-tree-page:hover {
+    padding-right: 60px;
+}
+.bd-portalPagesListViewport a.bd-tree-page .bd-pub-button-container{
+    display: none;
+}
+.bd-portalPagesListViewport a.bd-tree-page:hover .bd-pub-button-container{
+    display: block;
+}
+
+/* disable marking page if it's locked */
+.bd-portalPagesListViewport .bc-pub-in-progress {
+	display: none;
+	position: absolute;
+	top: 8px;
+	right: 15px;
+	cursor: default;
+	opacity: .8;
+}
+.bd-portalPagesListViewport .bd-tree-page-lock .bd-pub-button-container {
+	display: none!important;
+}
+.bd-portalPagesListViewport .bd-tree-page-lock .bc-pub-in-progress {
+	display: block!important;
+}
+.bd-portalPagesListViewport .bd-tree-page-lock.bd-pub-marked-for-publish .bd-pub-button-container,
+.bd-portalPagesListViewport .bd-tree-page-lock.bd-pub-marked-for-unpublish .bd-pub-button-container {
+	display: block!important;
+}
+.bd-portalPagesListViewport .bd-tree-page-lock.bd-pub-marked-for-publish .bc-pub-in-progress,
+.bd-portalPagesListViewport .bd-tree-page-lock.bd-pub-marked-for-unpublish .bc-pub-in-progress {
+	display: none!important;
+}
+
+/* open/close icon */
+
+.bd-portalPagesListViewport .jstree-icon {
+	position: absolute;
+	top: 6px;
+}
+
+.bd-portalPagesListViewport .jstree-icon {left: 29px}
+.bd-portalPagesListViewport ul ul ul .jstree-icon {left: 39px}
+.bd-portalPagesListViewport ul ul ul ul .jstree-icon {left: 49px}
+.bd-portalPagesListViewport ul ul ul ul ul .jstree-icon {left: 59px}
+.bd-portalPagesListViewport ul ul ul ul ul ul .jstree-icon {left: 69px}
+.bd-portalPagesListViewport ul ul ul ul ul ul ul .jstree-icon {left: 79px}
+.bd-portalPagesListViewport ul ul ul ul ul ul ul ul .jstree-icon {left: 89px}
+.bd-portalPagesListViewport ul ul ul ul ul ul ul ul ul .jstree-icon {left: 99px}
+
+
+.bd-portalPagesListViewport .bd-tree-pageInactive a.bd-tree-page {font-style: italic;}
+
+.bd-portalPagesListViewport a.bd-tree-pageCurrent {
+	background-color: #fff!important;
+	font-weight: bold;
+	color: #480;
+}
+.bd-tree-pageInactive a {color: #bbb;}
+
+
+.bd-tree-clearFilterLabel {
+	font-size: 10px;
+	margin: 0 0 10px 15px;
+	border-bottom: 1px dashed #AAA;
+	float: left;
+	cursor: pointer;
+}
+
+
+/* pageDetails */
+
+.bd-settingsPanel h3 {
+	margin-bottom: 0;
+	font-size: 108%;
+	font-weight: bold;
+}
+
+.bd-pageMgmtTree .bd-pageSettings {
+	margin: 0;
+	overflow : hidden;
+}
+	.bd-pageSettings  .bd-tabs {
+		width: auto;
+		clear: both;
+		overflow: hidden;
+	}
+	.bd-pageSettings  .bd-tabs .block {
+		padding: 10px;
+	}
+
+.bd-tdIframeContainer {
+	width: 100%;
+	height: 100%;
+}
+
+
+
+
+
+.bd-pageSettingsContainer {
+	position: absolute;
+	width: 500px;
+	height: 100%;
+	background-color: #F2F2F2;
+	float: left;
+	right: 0;
+    z-index: -2;
+	/*position: relative;*/
+	/*top: 0;*/
+	/*bottom: 0;*/
+	/*right: 0;*/
+}
+
+	.bd-pagesLayoutWide .bd-pageSettingsContainer {
+		border-right: 1px solid #eee;
+	}
+	.bd-pagesLayoutWide .bd-pageSettingsContainer:before {
+		border-left: 1px solid #F8F9F9;
+		/*content: '';*/
+		/*width: 1px;*/
+		/*position: absolute;*/
+		top: 0;
+		bottom: 0;
+		left: 0;
+	}
+
+	.bd-pageSettingsContainer .bd-columnHeader {
+		margin: 0;
+		overflow: hidden;
+		/*width : 600px;*/
+
+	}
+
+	.bd-pageSettingsContainer .bd-columnHeader .bd-tabLabel{
+		text-transform: uppercase;
+		/*xfont-weight:bold;*/
+		padding-left: 11px;
+    	padding-right: 14px;
+	}
+
+	.bd-pageSettingsContainer .bd-columnHeader .bd-hiddenTabLabel{
+		display: none;
+	}
+
+	.bd-pageMgmtTree .bd-pageSettingsContainer .bd-columnEditor {
+		margin: 0;
+		padding: 0;
+		border-bottom: 1px solid #F8F9F9;
+	}
+
+	.bd-pageMgmtTree .bd-pageSettingsContainer h2 {
+		font-size: 14px;
+		margin: 0;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		padding: 16px 230px 13px 10px;
+		border-bottom: 1px dotted #ccc;
+		white-space: nowrap;
+		text-transform: uppercase;
+	}
+
+	.bd-pageSettingsContainer h2 span {
+		color: #999;
+	}
+
+    .bd-pageSettingsContainer .bd-tabs{
+        font-size: 100%;
+    }
+
+    .bd-pageSettingsContainer .bd-tabs h4.bc-formheading {
+		min-height: 40px;
+    }
+
+/*
+		.bd-pageMgmtTree .bd-columnEditor h2 {
+		}
+		.bd-columnEditor .bd-label {
+			float: left
+		}
+*/
+		.bd-pageMgmtTree .bd-dropdowncheckbox .bd-label {
+			/*xpadding: 1px 30px 2px 10px;*/
+			text-transform:capitalize;
+		}
+
+
+		.bd-settingsPanel .td-field .bd-ellipsis {
+			overflow:hidden;
+			width: 300px;
+			text-overflow: ellipsis;
+		}
+
+/* form table */
+/*.bd-settingsPanel .table-form {
+	table-layout: fixed;
+}
+.bd-settingsPanel .table-form .td-label {
+	width: 35%;
+}
+.bd-settingsPanel .table-form .td-field {
+	width: 65%;
+	padding-right: 10px;
+	overflow:hidden;
+	text-overflow: ellipsis;
+}
+*/
+.bd-table-space-before td {
+	padding-top: 30px;
+}
+
+.bd-settingsPanel .table-form .td-field {
+	padding-right: 10px;
+}
+.bd-settingsPanel .field-wide {
+	width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.bd-pageEditingForm .bd-scrollbar{
+	/*border-radius: 3px 3px 3px 3px;*/
+	background: white;
+}
+.bd-pageSettingForm .td-field{
+	height: 30px;
+	padding-left: 50px;
+}
+
+.bd-pageSettingForm > .bc-form-top > .bc-table-wrapp > .bc-buttons-cell {
+  padding-right: 3px;
+}
+
+.bd-pageSettingForm > .bc-form-top > .bc-table-wrapp > .bc-buttons-cell > button {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.bd-permissionForm .bc-button-row.bd-buttons.bd-permissionsEditButtonRow {
+  right: 0;
+}
+
+.bd-permissionForm .bd-permissionsEditButtonRow > .bd-buttons-inner > button {
+  margin-right: 4px;
+}
+
+.bd-settingsPanel .form-label {
+	width:25%;
+}
+.bd-settingsPanel .form-field {
+	margin-left:26%;
+}
+.bd-pageEditingForm .bd-editableContainer{
+    line-height: 17px;
+}
+.bd-pageEditingForm .bd-editable {
+	text-overflow: ellipsis;
+	display: inline-block;
+	/*xmax-width: 300px;*/
+	line-height: 17px;
+}
+/* css hack for IE9 */
+:root .bd-pageEditingForm .bd-editable {vertical-align: middle\9;}
+
+.bc-pages-form .bc-1-3 {
+    padding-top: 2px;
+    vertical-align: top;
+}
+
+.bc-pages-form .bc-2-3 {
+    vertical-align: top;
+}
+.bc-pages-form .bc-2-3 .bc-i.bc-ellipsis {
+    line-height: 20px;
+}
+
+.bd-pageNameLink {
+	display: inline-block;
+	width: 300px;
+    white-space: normal;
+    word-break: break-all;
+}
+
+.bd-urlTemplate,
+body.dashboard .bd-urlTemplate a {
+	display: inline-block;
+	width: 300px;
+	color: #999;
+}
+
+.bd-pageMgmtTree .bd-settingsPanel .bd-scrollbar {
+	position: absolute;
+	overflow-x: hidden;
+	overflow-y: visible;
+	width:488px;
+	height: 100%;
+}
+/* .bd-pageMgmtTree .bd-settingsPanel .bd-buttons {
+	padding-top: 0;
+	position: absolute;
+	bottom: 16px;
+	left:18px;
+	right:18px;
+	border-top: 1px dotted #CCCCCC;
+} */
+.bd-pageMgmtTree .bd-settingsPanel .bd-buttons {
+	padding-top: 0;
+    position: absolute;
+    right: 12px;
+    top: 36px;
+}
+.bd-pageMgmtTree .bd-settingsPanel .bd-buttons .bd-buttons-inner {
+	padding-top: 9px;
+}
+
+.bd-ul-shadow-top{
+	top: auto;
+	background: url(../../media/bg_top_shadow_sm.png) no-repeat 50% 0;
+	height: 10px;
+	display: none;
+	width: 100%;
+	position:absolute;
+	pointer-events:none;
+}
+.bd-pageMgmtSearchResult .bd-ul-shadow-top,
+.bd-pageMgmtSearchResultJstree .bd-ul-shadow-top,
+.bd-tree-masterpage .bd-ul-shadow-top,
+.bd-pageMgmt-accordion-active .bd-ul-shadow-top{
+	z-index:10;
+	display: block;
+}
+.bd-ul-shadow-bottom{
+	position: absolute;
+	background: url(../../media/bg_bottom_shadow_sm.png) no-repeat 50% 0;
+	top: auto;
+	bottom: 0px;
+	height: 10px;
+	display: none;
+	width: 100%;
+	z-index:-1;
+	pointer-events:none;
+}
+
+.bd-pageMgmt-accordion-active .bd-ul-shadow-bottom{
+	display: block;
+}
+
+.bd-pageMgmt-loadMoreTrigger{
+	height: 0px !important;
+}
+.bd-swapMasterPage {
+	margin:0 0 15px;
+	text-align:left;
+}
+
+.bd-swapContent .bd-dropdowncheckbox{
+	float: none;
+	min-width: 200px;
+}
+
+/* Template tablets */
+.pageDropDownList .bd-dropdowncheckbox {
+	float: left;
+	min-width: 200px;
+}
+.pageDropDownList .bd-dropdowncheckbox .bd-icon {
+	float: right;
+}
+
+ .bd-templates .bd-template {
+	vertical-align: middle;
+	margin: 0 0px 2px 0;
+/* 	padding: 0!important; */
+	display: inline-block;
+	font-size: 12px;
+	cursor: pointer;
+	text-decoration: none;
+	text-transform: none;
+	color: #666;
+}
+.bd-templates .bd-template:hover {
+	background-color: #eee;
+}
+.bd-template-image {
+	display: inline-block;
+	vertical-align: middle;
+	width: 40px;
+	height: 40px;
+	border-right: 2px solid #fff;
+	margin-right: 10px;
+}
+
+.bd-template-label {
+	display:inline-block;
+	vertical-align: middle;
+	padding-right:20px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-transform:capitalize;
+	max-width:250px
+}
+
+.bd-templates .bd-templateSelected {
+	color: #4E8E0F;
+	background-color: #eee;
+	cursor: default;
+	font-weight: bold;
+}
+.pageDropDownList .bd-label {
+	height: 22px;
+    vertical-align: middle;
+}
+
+
+
+
+/* Publish */
+
+.bd-columnEditor .bd-pageMntPublishBtn {
+    margin: 0;
+    font-size: 11px;
+    line-height: 16px;
+    padding: 6px 4px;
+    color: #fff;
+    font-weight: normal;
+    text-shadow: none;
+    border-color: transparent;
+    width: 70px;
+}
+
+.bd-pageMntPublishBtn .bd-icon {
+    display: none;
+	float: left;
+   background: url("../../../backbase.com.2012.components/media/mini-icons3.png") no-repeat -60px -40px;
+	width: 16px;
+	height: 16px;
+	margin-right: 3px;
+}
+
+
+/* Icon Sprites */
+.bd-nav-icon {
+	background-repeat:no-repeat;
+	display:block;
+	float:left;
+	background-image: url(../../../backbase.com.2012.components/media/mini-icons3.png);
+	margin-right:5px;
+	height:16px;
+	position:relative;
+}
+.bd-settingsPanel .bd-nav-icon {
+	float:none;
+	/*xmargin-left:8px;*/
+	margin-right:7px;
+	margin-bottom: -3px;
+	display:inline-block;
+}
+.bd-page-icon           	{width:14px; background-position:-22px -20px}
+.bd-alias-icon         	{width:13px; background-position:-22px -40px}
+.bd-state-icon         	{width:16px; background-position:-22px -60px}
+.bd-menuheader-icon 	{width:14px; background-position:-20px -80px}
+.bd-extlink-icon      	{width:15px; background-position:-21px -100px}
+.bd-home-icon           	{width:17px; background-position:-20px -120px}
+.bd-targeting-icon  	{width:14px; background-position:-22px -200px; height: 17px}
+.bd-divider-icon      	{width:15px; background-position:-20px -140px;
+	background-color : #eee;
+	padding-right : 5px;
+}
+.bd-redirect-icon     {width:16px; background-position:-40px -200px}
+
+.bd-pub-wizard .bd-divider-icon{
+    background-color: #fff;
+    padding: 0;
+}
+.bd-pub-wizard .bd-menuheader-icon{
+    width:15px;
+	background-position:-3px -62px
+}
+.jstree-hovered .bd-divider-icon{
+    background-color : #ddd;
+}
+.bd-tree-pageCurrent .bd-divider-icon{
+	background-color : #F8F9F9;
+}
+
+.bd-pub-wizard-steps {
+
+}
+
+
+/* Update permission panel */
+.editPageTabs_Permissions .bd-formheading {
+	padding-left: 10px;
+	margin-bottom: 10px;
+	margin-top: 0;
+
+	font-size: 14px;
+	margin: 0;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding: 16px 230px 13px 10px;
+	border-bottom: 1px dotted #CCC;
+	white-space: nowrap;
+	text-transform: none;
+}
+
+.editPageTabs_Permissions .bd-permissionsEditRegion {
+	/*xborder-top: 1px solid #F8F9F9;*/
+	margin: -10px 10px 5px 10px;
+	/*xheight:100%;*/
+	/*xposition:relative*/
+}
+
+.editPageTabs_Permissions .bd-permissionsEditRegion.bd-permissions-sameAsParent .bd-permissionForm-list {
+	margin-top:-1px;
+}
+
+.editPageTabs_Permissions .bd-sameParentWrapper{
+	padding-left: 20px;
+	min-width:200px;
+    height:38px;
+    margin-bottom: 5px;
+	/*overflow:hidden;*/
+}
+
+
+.editPageTabs_Permissions .bd-buttons {
+	margin-top: 0;
+}
+.bc-margin-top-15 {
+	margin-top:15px
+}
+
+
+/* FF specific styles */
+@-moz-document url-prefix() {
+	/* update button height in FF */
+	/*.bd-swapContent .bd-button,
+	.bd-pageSettingsContainer .bd-button {
+		-moz-box-sizing: border-box;
+		height: 23px;
+		padding: 0 7px 2px 8px;
+		letter-spacing: 1px;
+	} */
+/*
+	.bd-swapContent .bd-button{
+		background:#A4A4A4;
+	}
+	.bd-swapContent .bd-button:hover{
+		background:#FFFFFF;
+	}*/
+}
+
+
+/** floating balloon */
+.bd-float-balloon {
+	background: #000;
+    border-radius: 5px 5px 5px 5px;
+    color: #FFFFFF;
+    left: 300px;
+    margin: 10px;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    top: 60px;
+    width: 150px;
+    display:none;
+
+	-moz-box-shadow: 0px 0px 16px rgba(255,255,255,.5);
+	-webkit-box-shadow: 0px 0px 16px rgba(255,255,255,.5);
+	-ms-box-shadow: 0px 0px 16px rgba(255,255,255,.5);
+	box-shadow: 0px 0px 16px rgba(255,255,255,.5);
+
+	animation:updown 5s linear 2s infinite alternate;
+	-moz-animation:updown 5s linear 2s infinite alternate;
+	-webkit-animation:updown 3s ease-out 0 infinite alternate;
+}
+
+@keyframes updown {
+	0%   {margin-top:10px;}
+	50%   {margin-top:20px;}
+	100% {margin-top:10px;}
+}
+@-moz-keyframes updown {
+	0%   {margin-top:10px;}
+	50%   {margin-top:20px;}
+	100% {margin-top:10px;}
+}
+@-webkit-keyframes updown {
+	0%   {margin-top:10px;}
+	50%   {margin-top:20px;}
+	100% {margin-top:10px;}
+}
+
+
+
+.bd-float-balloon .bd-float-balloon-arrow{
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #000000;
+    border-top: 10px solid transparent;
+    height: 0;
+    left: -10px;
+    position: absolute;
+    top: 15px;
+    width: 0;
+}
+
+/*
+publish related
+*/
+.bd-tree-viewOnly-blocker,
+.bd-pub-blocker {
+    position: absolute;
+    left:0;
+    right:0;
+    bottom:0;
+	display: none;
+	z-index:1;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 0;
+    -moz-border-radius-bottomright: 0;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+    border-radius: 5px 0 0 5px;
+}
+.bd-tree-viewOnly-blocker{
+    position: absolute;
+    height: 100%;
+    top:0;
+    right:12px;
+}
+.bd-pub-blocker {
+    height:40px;
+}
+/*.bd-page-locked .bd-tree-viewOnly-blocker,*/
+.bd-page-locked .bd-pub-blocker {
+	display: block;
+}
+
+.bd-tree-viewOnly-blocker div,
+.bd-pub-blocker div{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 11px 16px 0 0;
+    height: 40px;
+    background: #fdf9db;
+}
+.bd-tree-viewOnly-blocker p,
+.bd-pub-blocker p {
+    line-height     : 18px;
+    vertical-align  : middle;
+    text-transform  : uppercase;
+    padding: 0 10px;
+	margin: 0;
+    font-size       : .9em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.bd-tree-viewOnly-blocker p:before,
+.bd-pub-blocker p:before {
+	content: "";
+	display: block;
+	width: 20px;
+	height: 18px;
+	float: left;
+   background : url("../../../backbase.com.2012.components/media/mini-icons3.png") no-repeat -120px -100px;
+}
+
+
+.bd-buttons-locked .bd-settings-publishButton, .bd-buttons-locked .bd-editPageSettings{
+    visibility: hidden;
+}
+.bd-upcaseLabel{
+	text-transform:capitalize;
+}
+
+
+
+
+
+/* TOOLTIP */
+#tooltip {
+	position: absolute;
+	z-index: 3000;
+	border: 1px solid #111;
+	font-family: "Roboto", "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif;
+	border: none;
+	height: auto;
+	width: auto;
+	margin-left:-30px;
+	text-align: left;
+	float: left;
+	color:#fff;
+	background-color: #353535;
+	background-color: rgba(53,53,53,0.9);
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow:  0px 0px 5px 2px rgba(53, 53, 53, .6);
+    box-shadow:  0px 0px 5px 2px rgba(53, 53, 53, .6);
+    padding:10px;
+    margin-top:18px;
+    line-height:18px;
+}
+#tooltip h3 {
+	margin:0;
+	padding:0 0 3px 0;
+}
+.tooltipWrapper {
+	font-weight:normal;
+}
+#tooltip.viewport-bottom {
+	margin-top:-5px;
+}
+#tooltip .tooltipPointer {
+	position:absolute;
+	top:-13px;
+	background:url('media/tooltip-arrow.png') no-repeat;
+	width:20px;
+	height:20px;
+}
+#tooltip.viewport-bottom .tooltipPointer {
+	top:auto;
+	bottom:-20px;
+	background:url('media/tooltip-arrow-down.png') no-repeat;
+}
+
+/* icon respect to the security profile */
+
+.ie8minus .bd-tree-viewOnly-blocker > div{ /*IE 8-*/
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#ebebeb',GradientType=0 );
+}
+
+.bd-tree-extended-page-flag {
+    background: url("../../../backbase.com.2012.components/media/mini-icons3.png") no-repeat scroll -20px -180px transparent;
+    cursor: default;
+    right : 0;
+}
+.bd-portalPagesListViewport .bd-tree-extended-page-flag{
+    display : block;
+}
+.bd-portalPagesListViewport .jstree-hovered .bd-tree-extended-page-flag{
+    display : none;
+}
+
+.bd-portalPagesListViewport .bd-tree-extended-page-count {
+    cursor: default;
+    right : 6px;
+    width:auto;
+}
+.bd-portalPagesListViewport .bd-tree-extended-page-count{
+    display : block;
+}
+.bd-portalPagesListViewport .jstree-hovered .bd-tree-extended-page-count{
+    display : none;
+}
+
+.bd-tree-masterpage .bd-page-icon, .bd-masterpage-icon{
+	background-position:-22px -160px
+}
+
+.bd-read-only .bd-editButton, .bd-permission-read-only .bd-editButton {
+    display: none;
+}
+
+.bd-permission-read-only .bd-tree-viewOnly-blocker {
+	display: block;
+}
+
+
+
+/* new page management MVC */
+
+.bd-widget-PageMgmtMVC .bd-pageContainerClosed {
+    padding-right: 0;
+}
+
+.bd-widget-PageMgmtMVC .bd-tree-scrollbar > li:first-child > a{
+    border-top: 0 none;
+}
+/*
+.bd-widget-PageMgmtMVC .bd-tree-scrollbar .jstree-last a{
+    margin-bottom: 0 !important;
+    border-bottom: 0 none;
+}
+
+
+.bd-widget-PageMgmtMVC .bd-tree-scrollbar .jstree-leaf:first-child a {
+    margin-top:0!important;
+}
+*/
+
+.bd-widget-PageMgmtMVC .jstree-no-dots > li.jstree-closed > ul{
+    display : block !important;
+}
+
+body.dashboard .bd-widget-PageMgmtMVC .bd-inPlaceEditor input{
+    width:50%;
+}
+
+.jstree-loading .jstree-icon{
+    background: url(../../../dashboard/js/lib/jstree/themes/default/throbber.gif) 0 0 no-repeat !important;
+}
+
+.bd-initSelectNavParent .bd-pageMgmtFilterBar,
+.bd-initSelectNavParent .bd-tree-pageDetailsLink{
+	display: none !important;
+}
+.bd-initSelectNavParent .bd-tree-masterpage{
+	display: none !important;
+	height: 0;
+}
+.bc-dropdown-items.bd-pageMgmt-add .bc-scroll-section {
+	max-height: 200px;
+}
+
+.bd-addPageButton:before{
+    background-position: -20px -20px;
+}
+.bd-addTargetingPageButton:before{
+    background-position: -20px -200px;
+}
+.bd-addExternalLinkButton:before{
+    background-position: -20px -100px;
+}
+.bd-addDividerButton:before{
+    background-position: -20px -140px;
+}
+.bd-addHeaderButton:before{
+    background-position: -20px -80px;
+}
+.bd-addAliasButton:before{
+    background-position: -20px -40px;
+}
+
+.bd-addStateLinkButton:before{
+    background-position: -20px -60px;
+}
+
+.bd-addRedirectButton:before {
+    background-position: -40px -200px;
+}
+
+.bd-pm-view-toggle {
+	/*opacity: 1;*/
+	font-size: 10px;
+	font-weight: normal;
+	transition: opacity .3s;
+	padding: 2px 3px!important;
+}
+
+.bd-pm-view-toggle .bc-view-toggle {
+    margin-left: 0;
+    margin-top: 5px;
+}
+
+.bd-portal-layout-toggle-wrapper .bd-pm-view-toggle {
+	padding: 4px 5px!important;
+}
+
+.bd-pageMgmt-no-ellipsis{
+    vertical-align: text-top;
+}
+.bd-masterPage-Property .field .field-wide,
+.bd-inheried-Property .field .field-wide{
+	border:1px solid #308aba;
+	border-left:4px solid #308aba;
+}
+/* new publishing stuff */
+.bd-pub-button-container {
+	position: absolute;
+	top: 8px;
+	right: 30px;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+	border-radius: 2px;
+	opacity: 0;
+	filter:alpha(opacity=0);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+	-webkit-transition: width 200ms linear;
+	-moz-transition: width 200ms linear;
+	-ms-transition: width 200ms linear;
+	-o-transition: width 200ms linear;
+	transition: width 200ms linear;
+}
+
+.bd-pub-marked-for-publish .bc-icn,
+.bd-pub-marked-for-unpublish .bc-icn,
+.bd-pub-button-container:hover .bc-icn {
+	background-image: url('../../../backbase.com.2012.components/media/mini-icons3.png');
+}
+
+.bd-pub-marked-for-publish .bd-pub-button-container,
+.bd-pub-marked-for-unpublish .bd-pub-button-container,
+.bd-tree-page:hover .bd-pub-button-container {
+	opacity: 1;
+	filter: alpha(opacity=100);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+}
+
+.bd-pub-link .bc-icn.bc-pub-unpublish {
+	background-position:-40px -240px;
+}
+
+.bd-pub-button-container-inner {
+	width: 36px;
+	position: absolute;
+	right: 0px;
+	-webkit-transition: right 200ms linear;
+	-moz-transition: right 200ms linear;
+	-ms-transition: right 200ms linear;
+	-o-transition: right 200ms linear;
+	transition: right 200ms linear;
+}
+
+.bd-tree-page-publishedHasChanges.bd-pub-marked-for-unpublish .bd-pub-button-container-inner {
+	right: -18px;
+}
+
+.bd-pub-button-container:hover .bd-pub-button-container-inner {
+	right: 0px;
+}
+
+.bd-tree-page-publishedHasChanges .bd-pub-button-container:hover {
+	width: 36px;
+	-webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+	background-color: #fff;
+}
+
+.bd-pub-button-container .bc-icn {
+	margin: 2px 3px;
+	float: right;
+	width: 12px;
+	height: 12px;
+	display: none;
+}
+
+.bd-tree-page-published .bc-pub-unpublish,
+.bd-tree-page-publishedHasChanges .bc-pub-publish,
+.bd-tree-page-publishedHasChanges .bc-pub-unpublish,
+.bd-tree-page-pub-state-none .bc-pub-publish,
+.bd-tree-pageTraffic .bc-pub-publish {
+	display: block;
+}
+
+.bd-pub-marked-for-publish .bc-pub-publish {
+	display: block;
+}
+
+.bd-pub-marked-for-publish .bc-pub-unpublish {
+	display: none;
+}
+
+.bd-pub-marked-for-publish .bc-pub-publish:hover,
+.bd-pub-marked-for-unpublish .bc-pub-unpublish:hover {
+	background-position: -60px -280px;
+}
+
+/*.bd-pub-dependency {
+	color: #BF2A2A;
+	font-size: 12px;
+	margin-left: 43px;
+}
+
+.bd-pub-error {
+	color: #BF2A2A;
+}
+
+.bd-pub-requests.bc-panel-hoverlist li.bd-pub-dependency-line,
+.bd-pub-requests.bc-panel-hoverlist li.bd-pub-dependency-line:hover {
+	border-bottom: none;
+	cursor: default;
+	background-color: #fff;
+}
+
+.bd-pub-requests .bd-pub-dependency {
+	margin-left: 15px;
+}
+*/
+
+.bd-search-active .bd-pm-view-toggle {
+}
+
+.bc-search-cancel-button {
+    display: none;
+}
+
+.bd-search-active .bc-search-cancel-button {
+    display: block;
+}
+
+.bd-pm-action-publish {
+/*	opacity: 1;
+	filter                     : alpha(opacity=100);
+	-ms-filter                 : "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	-moz-opacity               : 1;*/
+	transition                 : opacity .3s;
+    display: none;
+    padding: 0 0 0 5px;
+    width: 85px;
+}
+
+.bd-publish-button-active .bd-pm-action-publish {
+    display: table-cell;
+}
+
+
+/*.bd-search-no-result {
+    font-size                 : 13px;
+    font-weight               : normal;
+    padding                   : 3px 20px;
+}*/
+.bd-portalPagesListViewport a.bd-search-no-result{
+    cursor: default;
+}
+.bd-portalPagesListViewport a.bd-search-no-result:hover{
+    background-color: #eeeeee;
+    cursor: default;
+}
+
+.bd-all-cur-grabbing.bd-link-drag-start-jstree .bc-dnd-helper {display: none;}
+.bd-link-drag-start-jstree #vakata-dragged.jstree-default {display: none;}
+.bd-all-cur-grabbing #vakata-dragged.jstree-default {display: block;}
+
+
+/* hide icons when dragging link */
+.bd-link-drag-start .bd-pub-button-container,
+.bd-link-drag-start .bd-tree-pageDetailsLink {
+	visibility:hidden;
+}
+
+
+.bd-form-label .bc-g{
+    line-height: 16px;
+    min-height: 1px;
+    padding: 0;
+}
+
+.bd-form-info-ttip-text{
+    min-width: 100px;
+}
+.bd-form-label .bd-form-info-ttip{
+    background-position: -40px -180px;
+    height: 16px;
+    width: 16px;
+}
+.bc-form-body .bd-form-label{
+    padding: 5px 0;
+}
+
+/* BOF - action button for each tree node*/
+.bd-portalPagesListViewport .bd-tree-actionIcon{
+    cursor: pointer;
+    display: none;
+    right: 50px;
+    height: 20px;
+}
+.bd-portalPagesListViewport .bd-tree-actionIcon .bc-selectbox{
+    background: transparent;
+    border: 0 none;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    z-index: auto;
+
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.bd-portalPagesListViewport .bd-tree-actionIcon .bc-selectbox.bc-open{
+    border: 0 none;
+}
+.bd-portalPagesListViewport .bd-tree-actionIcon .bc-icn.bc-triangle {
+    width: 13px;
+}
+.bd-portalPagesListViewport .bd-tree-actionIcon .bc-open.bc-slideup .bc-icn.bc-triangle {
+    background-position: -77px -398px;
+}
+
+.bd-tree-actionIcon .bc-gradient-grey{
+    box-shadow: none;
+}
+.bd-divider .bd-tree-actionIcon{
+    text-indent: 0;
+}
+.bd-portalPagesListViewport a.bd-tree-actionIcon-opened{
+    padding-right: 60px;
+}
+.bd-portalPagesListViewport a.bd-tree-actionIcon-opened .bd-tree-pageDetailsLink,
+.bd-portalPagesListViewport a.bd-tree-actionIcon-opened .bd-pub-button-container,
+.bd-portalPagesListViewport a.bd-tree-actionIcon-opened .bd-tree-actionIcon{
+    display: block;
+}
+
+.bd-pageMgmt-actionDD .bc-scroll-section {
+    max-height: 250px;
+}
+
+.bd-pageMgmt-actionDD .bc-dropdown-item:before {
+    background-image: url("../../../backbase.com.2012.components/media/mini-icons3.png");
+    content: "";
+    height: 20px;
+    left: 8px;
+    position: absolute;
+    top: 5px;
+    width: 20px;
+}
+.bd-pageMgmt-actionDD .bc-component-disabled:before{
+    opacity : 0.3;
+    filter:alpha(opacity=30);
+}
+.bd-pageMgmt-actionDD .bc-option-label{
+    margin-left: 25px;
+}
+.bd-pageMgmt-actionDD .bc-dd-divider .bc-option-label{
+    margin-left: 0;
+}
+.bd-pageMgmt-actionDD .bd-copyPage:before { background-position: -299px -140px; }
+.bd-pageMgmt-actionDD .bd-deletePage:before { background-position:-299px -200px; }
+.bd-pageMgmt-actionDD .bd-showReference:before { background-position: -199px -39px; }
+.bd-pageMgmt-actionDD .bd-option-unpublish-link:before { background-position: -299px -220px; }
+.bd-pageMgmt-actionDD .bd-option-to-targeted:before { background-position: -20px -200px;}
+.bd-pageMgmt-actionDD .bd-option-to-regular:before { background-position: -20px -20px; }
+.bd-pageMgmt-actionDD .bd-republishAll:before { background-position: -299px -179px; }
+
+/* EOF - action button for each tree node*/
+
+/* BOF - search token input*/
+.bd-pageMgmtActionBar .bc-search-container {
+    z-index                    : 99;
+    transition                 : right .3s, width .3s;
+    -webkit-transition         : right .3s, width .3s;
+    -moz-transition            : right .3s, width .3s;
+    -o-transition              : right .3s, width .3s;
+    overflow                   : visible;
+}
+.bd-publish-button-active .bd-pageMgmtActionBar .bc-search-container {
+    width: 100%;
+}
+.bd-pm-search-container, .bd-ap-search-container {
+    display: block;
+}
+
+.bd-pm-search {
+    padding: 0 5px;
+}
+
+
+.bd-pm-search-container {
+    display: block;
+}
+
+.bd-ap-search-container {
+    display: none;
+}
+
+.bd-assetPicker-on .bd-pm-search-container {
+    display: none;
+}
+
+.bd-assetPicker-on .bd-ap-search-container {
+    display: block;
+}
+
+.z-migration-widget .bd-pageMgmtActionBar .bc-search-container {
+	bottom: 0;
+    right: 0;
+}
+.bd-pageMgmtActionBar .bc-search-input-container .bc-search-icon:focus {
+    outline:none;
+}
+.bd-pageMgmtActionBar .bc-search-container ul.token-input-list li input{
+}
+.bd-pageMgmtActionBar .bc-search-container .token-input-token.bc-tokenized .token-input-delete-token{
+    top: -1px;
+}
+.bd-pageMgmtActionBar .bc-searchToken-text{
+    line-height: 11px;
+}
+
+.bd-pm-search-container .bc-search-button {
+    background-color: transparent;
+    top: 0;
+    left: 0;
+    height: 28px;
+}
+
+.bd-pm-search-container .bc-search-input-container .token-input-list {
+    width: calc(100% - 40px);
+}
+.bd-pm-search-container .bc-search-input-container .token-input-list .token-input-input-token {
+	width: 100%;
+}
+#token-input-pagemgnt-search {
+    /* needs !important to counter jQuery Tokeninput resizing the width,
+       otherwise this element would keep growing wider as you type */
+    width: 100% !important;
+}
+
+.bc-search-button .bc-selectbox.bc-open,
+.bc-search-button .bc-selectbox{
+    border-top-right-radius    : 3px;
+    border-top-left-radius : 3px;
+
+    white-space: normal;
+    width: auto;
+}
+.bc-search-button a.bc-button {
+    height: 21px;
+    width: 18px;
+}
+.bc-search-button .bc-selectbox .bc-dd-arrow .bc-icn {
+    margin-top: 9px;
+}
+.bd-search-active .bc-search-button a.bc-button
+{
+    border-radius: 5px 0 0 5px;
+    width: 40px;
+}
+.bc-search-button a.bc-button .bc-search-black
+{
+    left: 2px;
+    top: 4px;
+}
+.bd-search-active .bc-search-button a.bc-button .bc-search-black
+{
+    left: 12px;
+}
+.bd-pm-search-container .bc-tokenized .bc-searchToken-cmd{
+    max-width: 35px;
+}
+.bd-pm-search-container .bc-tokenized .bc-searchToken-value{
+    max-width: 161px;
+}
+
+.ie8 .bd-search-active .bc-search-button .bc-selectbox .bc-dd-arrow {
+    float:right;
+}
+
+
+.bd-nosearch-showall{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.bd-deletelink-showreferences.bd-dialog-wrapper-small .bd-dialog-container {
+    width: 420px;
+}
+
+.bd-close-settings-panel-arrow {
+    width: 15px;
+    height: 20px;
+    float: right;
+    position: relative;
+    left: 4px;
+    top: -8px;
+    cursor: pointer;
+}
+
+
+.bi.bi-pm-spinner {
+    color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -16px;
+    margin-top: -16px;
+}
+
+.bi.bi-pm-spinner:before {
+    top: auto;
+}

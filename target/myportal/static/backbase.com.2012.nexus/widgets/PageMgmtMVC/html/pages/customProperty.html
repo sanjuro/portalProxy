@@ -1,0 +1,22 @@
+{{#regularPro}}
+{{#manageable}}
+{{#label}}
+<ul class="bc-g">
+    <li class="bc-1-3"><div class="bc-i">{{label}}</div></li>
+    <li class="bc-15-24">
+        <div class="bc-i bc-ellipsis">
+            <input name="{{name}}" class="bd-page-{{name}} bd-exposedPageProperty" type="hidden" value="{{#value}}{{value}}{{/value}}" />
+            <input id="{{name}}Input" data-for=".bd-page-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" />
+        </div>
+    </li>
+    <li class="bc-1-24"></li>
+</ul>
+{{/label}}
+{{^label}}
+<div class="bc-i bc-ellipsis hidden">
+    <input name="{{name}}" class="bd-page-{{name}} bd-exposedPageProperty" type="hidden" value="{{#value}}{{value}}{{/value}}" />
+    <input id="{{name}}Input" data-for=".bd-page-{{name}}" type="text" class="field field-wide bd-exposedPropertyInput" size="20" maxlength="200" value="{{#value}}{{value}}{{/value}}" viewHint="{{viewHint}}" label="{{label}}" />
+</div>
+{{/label}}
+{{/manageable}}
+{{/regularPro}}

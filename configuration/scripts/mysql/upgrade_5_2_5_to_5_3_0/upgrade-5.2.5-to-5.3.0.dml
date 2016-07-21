@@ -1,0 +1,347 @@
+-- Master Pages changes
+-- New group
+-- New user which is part of this group
+insert into users (username, password, enabled) values ('designer', '1e4f52a959f00546bff6e2f2adf6bbea729b86ae97c1032aa7330c1148761bc4', true);
+SET @new_user_id = LAST_INSERT_ID();
+insert into groups (name, role, description) values ('master page designer', 'MANAGER', null);
+set @new_group_id = LAST_INSERT_ID();
+insert into users_groups (users_id, groups_id) values (@new_user_id, @new_group_id);
+
+insert into acl_sid (principal, sid) values (false, 'group_master page designer');
+
+-- Group permissions added to dashboard items
+--
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select acl_object_identity
+,      max(ace_order) + 1
+,      (select id from acl_sid where sid = 'group_master page designer')
+,      1
+,      1
+,      0
+,      0
+from  acl_entry ace
+,     acl_object_identity obj
+,     items ite
+,     acl_class cls
+where obj.id = ace.acl_object_identity
+and   obj.object_id_class = cls.id
+and   ite.id = obj.object_id_identity
+and   cls.class = 'com.backbase.portal.foundation.domain.model.Portal'
+and   ite.contextItemName = '[BBHOST]'
+and   ite.name = 'dashboard'
+;
+
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select acl_object_identity
+,      max(ace_order) + 1
+,      (select id from acl_sid where sid = 'group_master page designer')
+,      1
+,      1
+,      0
+,      0
+from  acl_entry ace
+,     acl_object_identity obj
+,     items ite
+,     acl_class cls
+where obj.id = ace.acl_object_identity
+and   obj.object_id_class = cls.id
+and   ite.id = obj.object_id_identity
+and   cls.class = 'com.backbase.portal.foundation.domain.model.Link'
+and   ite.contextItemName = 'dashboard'
+and   ite.name = 'navroot_mainmenu'
+;
+
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select acl_object_identity
+,      max(ace_order) + 1
+,      (select id from acl_sid where sid = 'group_master page designer')
+,      1
+,      1
+,      0
+,      0
+from  acl_entry ace
+,     acl_object_identity obj
+,     items ite
+,     acl_class cls
+where obj.id = ace.acl_object_identity
+and   obj.object_id_class = cls.id
+and   ite.id = obj.object_id_identity
+and   cls.class = 'com.backbase.portal.foundation.domain.model.Link'
+and   ite.contextItemName = 'dashboard'
+and   ite.name = 'navroot_notinmenu'
+;
+
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select acl_object_identity
+,      max(ace_order) + 1
+,      (select id from acl_sid where sid = 'group_master page designer')
+,      1
+,      1
+,      0
+,      0
+from  acl_entry ace
+,     acl_object_identity obj
+,     items ite
+,     acl_class cls
+where obj.id = ace.acl_object_identity
+and   obj.object_id_class = cls.id
+and   ite.id = obj.object_id_identity
+and   cls.class = 'com.backbase.portal.foundation.domain.model.Link'
+and   ite.contextItemName = 'dashboard'
+and   ite.name = 'link_portal_details'
+;
+
+insert into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select acl_object_identity
+,      max(ace_order) + 1
+,      (select id from acl_sid where sid = 'group_master page designer')
+,      1
+,      1
+,      0
+,      0
+from  acl_entry ace
+,     acl_object_identity obj
+,     items ite
+,     acl_class cls
+where obj.id = ace.acl_object_identity
+and   obj.object_id_class = cls.id
+and   ite.id = obj.object_id_identity
+and   cls.class = 'com.backbase.portal.foundation.domain.model.Link'
+and   ite.contextItemName = 'dashboard'
+and   ite.name = 'link_default_page'
+;
+
+
+
+
+
+-- VTabLayoutContainer
+-- Change thumbnailUrl
+update property_definition
+set    internalvalue = '$(contextRoot)/static/backbase.com.2012.nexus/media/icons/icon_verticaltab.png'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'VTabLayoutContainer')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'VTabLayoutContainer'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and   name = 'thumbnailUrl'
+;
+
+-- SPITabContainer
+-- Change thumbnailUrl
+update property_definition
+set    internalvalue = '$(contextRoot)/static/backbase.com.2012.nexus/media/icons/pagedesigner-layouts-icons_deck.png'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'SPITabContainer')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'SPITabContainer'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and   name = 'thumbnailUrl'
+;
+
+-- SPITabContainer
+-- Change title
+update property_definition
+set    internalvalue = 'Deck'
+where (item_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'SPITabContainer')
+   or  item_id in (select ext.id
+                  from items ext
+                  ,    items ite
+                  where ite.CONTEXTITEMNAME = '[BBHOST]'
+                  AND   ite.NAME = 'SPITabContainer'
+                  and   ite.id = ext.extendedItem_id
+                  )
+       )
+and   name = 'title'
+;
+
+-- CatalogBrowser widget
+-- Add property catalogBrowserTemplate
+INSERT INTO PROPERTY_DEFINITION
+( NAME
+, INTERNALVALUE
+, TYPE
+, LABEL
+, VIEWHINT
+, ITEM_ID
+)
+SELECT
+  'catalogBrowserTemplate'
+, '$(contextRoot)/static/backbase.com.2012.sabre/widgets/CatalogBrowser/catalogTemplates/BBStyleTemplate.html'
+, 'string'
+, 'Template'
+, 'select-one,designModeOnly,user'
+, ID
+FROM  ITEMS
+WHERE (CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'CatalogBrowser')
+or  extendedItem_id in (select id from items where CONTEXTITEMNAME = '[BBHOST]' AND   NAME = 'CatalogBrowser')
+;
+
+-- Dashboard CatalogManagement widget
+-- Change src
+update property_definition
+set    internalvalue = '$(contextRoot)/static/dashboard/widgets/CatalogManagement/index.html'
+where item_id in (select id from items where CONTEXTITEMNAME = 'dashboard' AND   NAME = 'CatalogManagement')
+and   name = 'src'
+;
+
+-- Insert ACL for every unsecured property. Property will inherit security from its item.
+insert into acl_object_identity
+(
+  OBJECT_ID_CLASS
+, OBJECT_ID_IDENTITY
+, PARENT_OBJECT
+, OWNER_SID
+, ENTRIES_INHERITING
+)
+select (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+,      pdn.id
+,      (select id
+        from acl_object_identity
+        where OBJECT_ID_IDENTITY = ite.id
+        and   object_id_class = (select id from acl_class where class = cls.class)
+       )
+,      (select owner_sid
+        from acl_object_identity
+        where OBJECT_ID_IDENTITY = ite.id
+        and   object_id_class = (select id from acl_class where class = cls.class)
+       )
+,      1
+from   acl_object_identity obj
+,      acl_class           cls
+,      items               ite
+,      property_definition pdn
+where  OBJ.OBJECT_ID_IDENTITY = ite.id
+and    obj.object_id_class = cls.id
+and    cls.class =  concat('com.backbase.portal.foundation.domain.model.', ite.discriminator)
+and    ite.id = PDN.ITEM_ID
+and    pdn.id not in (select object_id_identity
+                      from   acl_object_identity
+                      where  object_id_class in (select id from acl_class where class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition')
+                    )
+;
+
+-- All server catalog items area and order should get CONTRIBUTOR rights for role_anonymous.
+-- Only apply this change to properties that do not inherit permissions from the item.
+
+-- Add sid for role_anonymous
+-- The inserts might fail on a unique constraint. That is ok. That means the record is already there.
+insert ignore into acl_sid
+( sid
+, principal
+)
+values
+( 'role_anonymous'
+, false
+)
+;
+
+-- Add READ rights for role_anonymous
+insert ignore into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select obj.id
+,      (select max(ace_order) from acl_entry where acl_object_identity = obj.id) + 1
+,      (select id from acl_sid where sid = 'role_anonymous')
+,      1
+,      1
+,      0
+,      0
+from   acl_object_identity obj
+,      acl_class           cls
+,      property_definition pdn
+,      items               ite
+where  cls.id = obj.object_id_class
+and    cls.class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition'
+and    obj.object_id_identity = pdn.id
+and    obj.entries_inheriting = 0
+and    pdn.item_id = ite.id
+and    ite.contextItemName = '[BBHOST]'
+and    ite.discriminator not in ('Template', 'Portal', 'PortalFoundation')
+and    pdn.name in ('area', 'order')
+;
+
+-- Add WRITE rights for role_anonymous
+insert ignore into acl_entry
+(      acl_object_identity
+,      ace_order
+,      sid
+,      mask
+,      granting
+,      audit_success
+,      audit_failure
+)
+select obj.id
+,      (select max(ace_order) from acl_entry where acl_object_identity = obj.id) + 1
+,      (select id from acl_sid where sid = 'role_anonymous')
+,      2
+,      1
+,      0
+,      0
+from   acl_object_identity obj
+,      acl_class           cls
+,      property_definition pdn
+,      items               ite
+where  cls.id = obj.object_id_class
+and    cls.class = 'com.backbase.portal.foundation.domain.conceptual.PropertyDefinition'
+and    obj.object_id_identity = pdn.id
+and    obj.entries_inheriting = 0
+and    pdn.item_id = ite.id
+and    ite.contextItemName = '[BBHOST]'
+and    ite.discriminator not in ('Template', 'Portal', 'PortalFoundation')
+and    pdn.name in ('area', 'order')
+;

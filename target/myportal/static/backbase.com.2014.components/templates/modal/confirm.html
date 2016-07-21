@@ -1,0 +1,14 @@
+<div class="bb-pm-modal bb-pm-modal-dark bb-pm-confirm" data-cid="bb-pm-confirm-{{uid}}">
+    <div class="bd-pm-modal-confirmationInner">
+        <span class="bb-pm-icn bb-pm-icn-modal bb-pm-icn-{{icon}}"></span>
+        <div class='bb-pm-dialog-content'>
+            <h2>{{title}}</h2>
+            <div class="bb-pm-dialog-body">{{#text}}{{text}}{{/text}}{{#html}}{{{html}}}{{/html}}</div>
+            <div class="bb-pm-buttons">
+                {{#buttons}}
+                <button class="btn btn-{{type}}{{#class}} {{class}}{{/class}}">{{title}}</button>
+                {{/buttons}}
+            </div>
+        </div>
+    </div>
+</div>

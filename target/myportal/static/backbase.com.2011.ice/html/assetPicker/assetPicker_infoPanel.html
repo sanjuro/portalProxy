@@ -1,0 +1,41 @@
+<div class="bd-AP-info">
+<!-- Copyright © 2011 Backbase B.V. -->
+    <div class="bd-columnHeader bd-tabLabels">
+        <div class="bd-tabLabel bd-tab1 bd-AP-itemInfo bd-activeTab" for=".bd-AP-itemInfo"><span class="bc-tab-icon bi bi-s bi-pm-square-info" title="Info" data-tab-name="info"></span><span class="bc-tab-text">Info</span></div>
+        {{#permissions}}
+            <div class="bd-tabLabel bd-tab2 bd-AP-permissions bd-AP-permissions" for=".bd-AP-permissions"><span class="bc-tab-icon bi bi-s bi-pm-groups" title="Permissions" data-tab-name="permission"></span><span class="bc-tab-text">Permissions</span></div>
+        {{/permissions}}
+        {{#settings}}
+            <div class="bd-tabLabel bd-tab3 bd--APsettings-tab" for=".bd-AP-settings-tab" ><span class="bc-tab-icon" title="Settings" data-tab-name="settings bi bi-s bi-pm-wrench"></span><span class="bc-tab-text">Settings</span></div>
+        {{/settings}}
+        {{#showVersionTab}}
+            <div class="bd-tabLabel bd-tab4 bd-AP-versions" for=".bd-AP-versions"><span class="bc-tab-icon bi bi-s bi-pm-sign-clock" title="Versions" data-tab-name="versions"></span><span class="bc-tab-text">Versions</span></div>
+        {{/showVersionTab}}
+    </div>
+
+    <div class="bd-tabs bc-pages-form">
+        <div class="bd-tab bd-AP-itemInfo">
+            <div id="bd_AP_Info">
+            </div>
+        </div>
+        {{#permissions}}
+        <div class="bd-tab bd-page-permissions">
+            <div class="bd-settingsPanel">
+                <div id="editPageTabs_Permissions" class="editPageTabs_Permissions"></div>
+            </div>
+        </div>
+        {{/permissions}}
+        {{#settings}}
+            <div class="bd-tab bd-tab1 bd-settings-tab">
+                <div id="editPageTabs_Settings"></div>
+            </div>
+        {{/settings}}
+        {{#showVersionTab}}
+        <div class="bd-tab bd-versions">
+            <div class="bd-settingsPanel">
+                <div id="editPageTabs_Versions" class="editPageTabs_Versions"></div>
+            </div>
+        </div>
+        {{/showVersionTab}}
+    </div>
+</div>

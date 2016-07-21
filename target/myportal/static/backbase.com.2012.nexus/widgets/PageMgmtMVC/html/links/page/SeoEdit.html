@@ -1,0 +1,46 @@
+<form id="updateSEOForm" class="bc-default-form bc-pages-form bd-settingsPanel bd-pageEditingForm">
+    <input name="portalName" type="hidden" value="{{portalName}}" />
+    <input name="linkUUID" type="hidden" value="{{uuid}}" />
+    <input name="pageName" id="pageName" type="hidden" value="{{pageName}}" maxlength="150" />
+    <div class="bc-form-top">
+        <h4 class="bc-formheading"><span class="bc-form-title bc-ellipsis"><span class="bd-{{itemType}}-icon bd-nav-icon"></span>{{linkTitle}}</span></h4>
+    </div>
+    <div class="bc-form-body bd-scrollbar">
+        <ul class="bc-g">
+            <li class="bc-1"><div class="bc-i"><h3 class="bc-no-margin-top">SEO</h3></div></li>
+        </ul>
+
+        {{#seoArray}}
+        <ul class="bc-g{{#linkRef}} bd-token-dnd{{/linkRef}}">
+            <li class="bc-1-3 bd-form-label">
+                <div class="bc-g">
+                    <div class="bc-7-8"><div class="bc-i">{{label}}</div></div>
+                    <div class="bc-1-8">
+                        {{#tooltip}}
+                        <div class="bc-i">
+                            <i class="bi bi-pm-square-info bc-ttip-bottom-right info-text">
+                                <span class="bc-align-left" style="width: 316px">
+                                    {{{tooltip}}}
+                                    {{#docLink}}<a href="{{docLink}}" class="bc-doc-link" target="_blank">Learn more...</a>{{/docLink}}
+                                </span>
+                            </i>
+                        </div>
+                        {{/tooltip}}
+                    </div>
+                </div>
+            </li>
+            <li class="bc-2-3">
+                <div class="bc-i bc-ellipsis">
+                    <input id="{{name}}" data-for=".{{name}}" type="text" class="field field-wide {{name}}" size="20" maxlength="350" value="{{#value}}{{value}}{{/value}}" name="{{name}}"/>
+                </div>
+            </li>
+        </ul>
+        {{/seoArray}}
+    </div>
+    <div class="bd-buttons">
+        <div class="bd-buttons-inner">
+        <button class="bd-updatePageSEO bd-button bd-green bd-roundcorner-3" type="submit">Save</button>
+        <button class="bd-canclePageSEO bd-buttonText" pagename="{{pageName}}">Cancel</button>
+        </div>
+    </div>
+</form>

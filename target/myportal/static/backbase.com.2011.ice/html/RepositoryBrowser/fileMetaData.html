@@ -1,0 +1,19 @@
+{{#metaData}}
+<div class="bd-RepositoryBrowser-preview-info bd-rb-{{name}} {{#isEditable}}bd-RepositoryBrowser-preview-editable{{/isEditable}}" propid="{{propId}}">
+    <h4 class="bd-rb-preview-title">{{propName}}</h4>
+    <div class="bd-editableContainer">
+        <div class="bd-rb-preview-value bd-RepositoryBrowser-{{name}}">{{propValue}}</div>
+         <!--<input class="bd-button bd-gradient-grey bd-buttonEditable bd-roundcorner-3 bd-RepositoryBrowser-editSingleMetaData" type="button" value="Edit" style="float:right;">-->
+    </div>
+</div>
+{{/metaData}}
+<div class="bd-RepositoryBrowser-preview-actionButtonWrapper">
+    {{#canEdit}}
+    {{#isAdmin}}
+    <button class="bd-RepositoryBrowser-preview-actionButton-edit bd-button bd-gradient-grey bd-buttonEditable bd-roundcorner-3">Edit</button>
+    <button class="bd-RepositoryBrowser-preview-actionButton-save bd-updatePage bd-button bd-gradient-green bd-roundcorner-3" style="display:none;">Save</button>
+    <button class="bd-buttonText bd-RepositoryBrowser-preview-actionButton-cancel" style="color:#EEEEEE; display:none;">Cancel</button>
+    <!-- -->
+    {{/isAdmin}}
+    {{/canEdit}}
+</div>

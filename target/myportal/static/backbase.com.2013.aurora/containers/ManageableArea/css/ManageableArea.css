@@ -1,0 +1,39 @@
+div.bp-manageableArea-masterpage {
+    min-height: 200px;
+}
+.bp-manageableArea--message {
+    display: none;
+    height: 100px;
+    position: relative;
+    top: 25px;
+    padding-top: 45px;
+    margin: 0 10px;
+    text-align: center;
+    text-decoration: center;
+    font-style: italic;
+    font-weight: bold;
+    color: #448800;
+    background: transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAkCAMAAAAw96PuAAAABlBMVEVDiAH///8VP3spAAAAAnRSTlP/AOW3MEoAAAAiSURBVDjLY2CgCmDEB4aYCmJ9y0DQllEVoypGVRCjgmIAABToA2tyn5rGAAAAAElFTkSuQmCC") no-repeat center 5px;
+}
+.bp-manageableArea-empty.bd-dm-hovered .bp-manageableArea--message {
+    display: block;
+}
+.bp-manageableArea-noDropZone .bp-drag-indicator {
+    display : none !important; 
+}
+.bp-manageableArea-masterpage.bd-dm-hovered {
+    background-color: #c6dab2;
+    border-color: #99cc66;
+    transition: background-color .2s;
+    -moz-transition: background-color .2s;
+    -webkit-transition: background-color .2s;
+    -o-transition: background-color .2s;
+}
+.bp-page .bp-manageableArea-masterpage.bd-dm-clicked {
+    box-shadow: 0 0 1px 1px #448800 inset;
+    border: none;
+}
+.bp-manageableArea{
+    height:100%;
+    box-sizing: border-box;
+}

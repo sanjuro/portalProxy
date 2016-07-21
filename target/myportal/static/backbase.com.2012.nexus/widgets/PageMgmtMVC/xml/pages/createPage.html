@@ -1,0 +1,50 @@
+<page>
+<!-- Copyright © 2011 Backbase B.V. -->
+    <name>{{pageName}}</name>
+    {{#extendedPage}}<extendedItemName>{{extendedPage}}</extendedItemName>{{/extendedPage}}
+
+    {{#isMasterPage}}
+    <manageable>true</manageable>
+    {{/isMasterPage}}
+
+    <type>page</type>
+    <properties>
+        <property name="title">
+            <value>{{pageTitle}}</value>
+        </property>
+        {{#pageTemplate}}
+        <property name="TemplateName">
+            <value>{{pageTemplate}}</value>
+        </property>
+        {{/pageTemplate}}
+        <property name="client-template" label="Client Template">
+            <value>page</value>
+        </property>
+        <property name="bundleName">
+            <value>dashboard</value>
+        </property>
+        <property name="createdBy">
+            <value>{{createdBy}}</value>
+        </property>
+        <property name="behaviors">
+            <value type="string">be.perspective.Manager be.portalClientExt.PortalManagerPreferencesForm</value>
+        </property>
+        {{#exposedPageProperties}}
+        <property name="{{name}}"{{#label}} label="{{label}}"{{/label}}{{#viewHint}} viewHint="{{viewHint}}"{{/viewHint}}>
+            <value>{{value}}</value>
+        </property>
+        {{/exposedPageProperties}}
+    </properties>
+
+    {{#hasTags}}
+    <tags>
+        {{#tags}}
+            {{#value}}<tag{{#type}} type="{{type}}"{{/type}} manageable="{{manageable}}">{{value}}</tag>{{/value}}
+        {{/tags}}
+    </tags>
+    {{/hasTags}}
+
+    {{^hasTags}}
+    <tags/>
+    {{/hasTags}}
+</page>

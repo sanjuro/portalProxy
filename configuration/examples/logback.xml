@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--NOTE If no unit of time is specified, then the unit of time is assumed to be milliseconds,
+which is usually inappropriate. If you change the default scanning period, do not forget to
+specify a time unit.-->
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+
+    <conversionRule conversionWord="smsg"
+                    converterClass="com.backbase.portal.commons.api.logging.SecureMessageConverter"/>
+    <conversionRule conversionWord="smdc"
+                    converterClass="com.backbase.portal.commons.api.logging.SecureMDCConverter"/>
+    <contextName>Portal Foundation</contextName>
+
+    <!-- To enable jmx access to the appenders -->
+    <jmxConfigurator/>
+
+    <!-- Console -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] -%smdc{user}- %-5level %logger{36} - %smsg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Plain Text Rolling Appender -->
+    <appender name="EXCEPTIONS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Append>true</Append>
+        <file>/tmp/exceptions.log</file>
+        <encoder>
+            <pattern>[%thread] %d %level %smdc %logger{35} - %smsg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>/tmp/exceptions.log.%i</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <!--Log levels for root appender (STDOUT)-->
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.apache" level="ERROR"/>
+    <logger name="org.apache.velocity.app" level="OFF"/>
+    <logger name="net.sf.ehcache" level="ERROR"/>
+    <logger name="httpclient.wire.header" level="OFF"/>
+    <logger name="httpclient.wire.content" level="OFF"/>
+    <logger name="com.backbase" level="WARN"/>
+
+    <!--Log level for exceptions.log-->
+    <logger name="com.backbase" level="ERROR">
+        <appender-ref ref="EXCEPTIONS"/>
+    </logger>
+
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
+

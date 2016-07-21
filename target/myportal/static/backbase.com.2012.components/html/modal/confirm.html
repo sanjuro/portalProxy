@@ -1,0 +1,17 @@
+<div class="bc-modal bc-modal-dark bc-modal-confirm bc-roundcorner-8" data-cid="bc-confirm-{{uid}}">
+    <a class="bc-modal-close bc-close bc-icn bc-x-white" data-cid="bc-confirm-close-{{uid}}"></a>
+    <ul class="bc-g">
+        <li class="bc-u"><span class="bc-i bc-icn-alert"></span></li>
+        <li class="bc-u">
+            <div class="bc-i">
+                <p class="bc-h6">{{title}}</p>
+                <p class="bc-confirm-msg">{{message}}</p>
+                {{#showTextBox}}<textarea rows="" cols="" name="bdTextBox" id="bdTextBox" class="bd-text-box" />{{/showTextBox}}
+                <span class="bc-button-row">
+                    <button class="bc-button bc-roundcorner-3 bc-primary bc-button-white bd-ok" data-cid="bc-confirm-ok-{{uid}}">{{okBtnText}}</button>
+                    <button class="bc-button bc-button-white bc-button-text bd-cancel" data-cid="bc-confirm-cancel-{{uid}}">{{cancelBtnText}}</button>
+                </span>
+            </div>
+        </li>
+    </ul>
+</div>

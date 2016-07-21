@@ -1,0 +1,28 @@
+declare @sys2sys_user_id int
+declare @sys2sys_group_id int
+
+-- add system to system group and user
+insert into users (username, password, enabled) values ('sys2sys', 'ac2e9f96dc73314df3e7c554751ed8e4d0b962428fcdbf1252cdaa452a8cc9a9', 1)
+select @sys2sys_user_id = @@IDENTITY
+insert into groups (name, role, description) values ('sys2sys', 'SYS2SYS', 'System to System Group')
+set @sys2sys_group_id = @@IDENTITY
+
+insert into users_groups (users_id, groups_id) values (@sys2sys_user_id, @sys2sys_group_id)
+
+insert into acl_sid (principal, sid) values (1, 'sys2sys')
+insert into acl_sid (principal, sid) values (0, 'group_sys2sys')
+
+
+declare @oid int = 2
+set @oid = (SELECT obj.id FROM acl_object_identity obj, acl_class cls WHERE obj.object_id_class = cls.id and cls.class = 'com.backbase.portal.foundation.domain.model.PortalFoundation')
+
+declare @sys2sys_group_sid int = 1
+set @sys2sys_group_sid = (select id from acl_sid where sid = 'group_sys2sys')
+
+insert into acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) values (@oid, 6, @sys2sys_group_sid, 1, 1, 0, 0);
+insert into acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) values (@oid, 7, @sys2sys_group_sid, 2, 1, 0, 0);
+insert into acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) values (@oid, 8, @sys2sys_group_sid, 4, 1, 0, 0);
+insert into acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) values (@oid, 9, @sys2sys_group_sid, 8, 1, 0, 0);
+insert into acl_entry (acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) values (@oid, 10, @sys2sys_group_sid, 16, 1, 0, 0);
+GO
+

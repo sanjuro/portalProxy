@@ -1,0 +1,62 @@
+<link>
+<!-- Copyright © 2011 Backbase B.V. -->
+    {{#linkName}}<name>{{linkName}}</name>{{/linkName}}
+    {{#parentItemName}}<parentItemName>{{parentItemName}}</parentItemName>{{/parentItemName}}
+    <properties>
+        {{#linkTitle}}<property name="title">
+            <value>{{linkTitle}}</value>
+        </property>
+        {{/linkTitle}}
+        {{#sectionName}}<property name="sectionName">
+            <value>{{sectionName}}</value>
+        </property>
+        {{/sectionName}}
+        {{#itemRef}}
+        <property name="ItemRef">
+            <value type="uuidRef">{{itemRef}}</value>
+        </property>
+        {{/itemRef}}
+        {{#Url}}
+        <property name="Url"{{#resetUrl}} markedForDeletion="true"{{/resetUrl}}>
+            <value>{{Url}}</value>
+        </property>
+        {{/Url}}
+        {{^Url}}
+            {{#resetUrl}}
+            <property name="Url" markedForDeletion="true" />
+            {{/resetUrl}}
+        {{/Url}}
+        {{#state}}
+        <property name="State">
+            <value>{{state}}</value>
+        </property>
+        {{/state}}
+        {{#order}}
+        <property name="order">
+            <value  type="double">{{order}}</value>
+        </property>
+        {{/order}}
+        {{#extraProperties}}
+        <property name="{{propertyName}}">
+            <value{{#propertyType}} type="{{propertyType}}"{{/propertyType}}>{{propertyValue}}</value>
+        </property>
+        {{/extraProperties}}
+        {{#exposedLinkProperties}}
+        <property name="{{name}}" label="{{label}}" viewHint="{{viewHint}}">
+            <value>{{value}}</value>
+        </property>
+        {{/exposedLinkProperties}}
+    </properties>
+
+    {{#hasTags}}
+    <tags>
+        {{#tags}}
+            {{#value}}<tag {{#type}}type="{{type}}"{{/type}}{{#blacklist}} blacklist="{{blacklist}}"{{/blacklist}}>{{value}}</tag>{{/value}}
+        {{/tags}}
+    </tags>
+    {{/hasTags}}
+
+    {{^hasTags}}
+    <tags/>
+    {{/hasTags}}
+</link>

@@ -1,0 +1,161 @@
+/*!
+ *	----------------------------------------------------------------
+ *	Copyright Backbase b.v. 2003/2012
+ *	All rights reserved.
+ *	----------------------------------------------------------------
+ *	Version 5.5
+ *	Author : Backbase R&D - Amsterdam - New York
+ *	----------------------------------------------------------------
+ */
+
+body {
+    font: 13px/1.231 arial, helvetica, clean, sans-serif;
+    color: #000;
+    background: #FFF;
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: bold;
+    font-style: normal;
+}
+
+h1 {
+    font-size: 138.5%;
+}
+
+h2 {
+    font-size: 123.1%;
+}
+
+h3 {
+    font-size: 108%;
+}
+
+h1, h2, h3 {
+    margin: 1em 0 0.5em 0;
+}
+
+blockquote, ol, dl {
+    margin: 1em;
+}
+
+caption {
+    margin-bottom: .5em;
+    text-align: center;
+}
+
+fieldset {
+    border: 0;
+}
+
+fieldset, pre {
+    margin-bottom: 1em;
+}
+
+q:before, q:after { content: ''; }
+sup { vertical-align: text-top; }
+sub { vertical-align: text-bottom; }
+ins { text-decoration: none; }
+del { text-decoration: line-through; }
+
+.bp-container {
+    position:relative;
+    z-index:0;
+}
+.bp-area {
+    position:relative;
+}
+.bp-widget {
+    position:relative;
+}
+
+/* Pref Pane */
+.bp-pref-table {
+    table-layout: fixed;
+    position: relative;
+}
+.bp-pref-td {
+    padding-right:4px;
+}
+.bp-pref-text {
+    width:240px;
+}
+.bp-container-pref {
+    display:none;
+}
+
+.bp-gradient1 {
+    background-color: #EEEEEE;
+    background: -moz-linear-gradient(center top , #FFFFFF 0pt, #EEEEEE 100%) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFFFFF), color-stop(100%, #EEEEEE) );
+    background: -webkit-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background: -o-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background: -ms-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#EEEEEE', GradientType=0 );
+    background: linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+}
+
+/* Generic */
+
+.bp-align-top {
+    vertical-align: top;
+}
+.bp-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.bp-container-grip {
+    background: url("../../dashboard/media/common/draggrippy.png") no-repeat scroll 0 0 transparent;
+    top:0;
+    left:0;
+    height: 19px;
+    position: absolute;
+    width: 8px;
+    z-index: 1000;
+}
+
+.bp-drag-indicator {
+    position:relative;
+    top: 4px;
+    height: 8px;
+    border-style: solid;
+    border-color: #C12121;
+    border-width: 1px 0 0 0;
+    border-radius: 4px;
+    margin: 0 10px 0 5px;
+}
+.bp-drag-indicator-in {
+    position:relative;
+    height: 8px;
+    margin-top: -9px;
+    border-style: solid;
+    border-color: #C12121;
+    border-width: 0 0 1px 0;
+    border-radius: 4px;
+}
+
+
+.bp-manageableArea-masterpage .bp-drag-indicator-in {
+	background-color: #bad0a8;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAA7CAMAAAAkXtjkAAAAGFBMVEWXuHiux5RDiAJ8pVVmlzjA1qpUjh7G2rKF8/cUAAAACHRSTlP/////////AN6DvVkAAAEPSURBVEjH7ZTBEoMwCESXR8L+/x/3oNVEY6eHHstFJ/OGBFhWHkNZBVTLmI7P32jFGZUrqAE0KULKmrA3FAWlfqZNoPUJEjAg2+1QMUCCmhHbPd+nsu04M8/FQjugWuQZKdlOCK8jQbbsXgzdMjC8C5otO+fLJsiCsOw50QXq0CwH9GfISVlOyh8gQZcb+QnqIF2ftIByhJjjOP0p9NXDc5v0ExQQsr5pZufjWIpm2W1u+W3Asvbvk1SK2kTXnoQ5iO5R4pN8LcgVFftS6b29i1xiF7+OHa+4r91ekQYnaAPWBZQuhqHNIyJ6j9DmHnG3nqxJBKWVP9k6HKomF9O16lAqLpXKX8Qf+kN/6KfQCzn0MqGKqHfpAAAAAElFTkSuQmCC);
+	background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+.bp-manageableArea-masterpage .bp-drag-text {
+    color: #226600;
+    text-shadow: 1px 1px 0 #ddffdd;
+}
+
+.bp-absolute {
+    position:absolute!important;
+}

@@ -1,0 +1,1 @@
+CREATE unique INDEX IDX_TAG_NAME_CTX_TYPE ON tags (name, contextItemName, type);
