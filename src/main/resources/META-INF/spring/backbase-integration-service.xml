@@ -4,5 +4,34 @@
     xsi:schemaLocation="
          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
          http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
-	
+    
+    <bean id="getUserDetailsProcessor" class="com.trexis.proxy.GetUserDetailsProcessor"/> 
+    
+	<camel:routeContext id="com.trexis.proxy.Proxyservice"
+	 xmlns="http://camel.apache.org/schema/spring">
+	    <route>
+	        <from uri="restlet:/v1/myService" />
+			<doTry>
+				<process ref="getUserDetailsProcessor"/>
+				<setBody>
+					<simple>
+						{"status":"success", "data":${body}}
+					</simple>
+				</setBody>
+				<doCatch>
+					<exception>java.lang.Exception</exception>
+                    <setBody>
+                        <simple>
+                            {"status":"error", "message" : "${exception.message}"}
+                        </simple>
+                    </setBody>
+				</doCatch>
+                <doFinally>
+                    <setHeader headerName="Content-Type">
+                        <simple>application/json; charset=UTF-8</simple>
+                    </setHeader>
+                </doFinally>
+			</doTry>
+	    </route>
+	</camel:routeContext>
 </beans>
