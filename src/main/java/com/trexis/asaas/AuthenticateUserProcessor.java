@@ -30,14 +30,13 @@ public class AuthenticateUserProcessor implements Processor {
 
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 			User bbuser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			User user;
 			
 			String userName = exchange.getIn().getHeader("username").toString();
 			String password = exchange.getIn().getHeader("password").toString();
 			
 			setProperty(bbuser, "bob_username", userName);
 			setProperty(bbuser, "bob_password", password);
-			user = updateUser(bbuser, userName, password);
+			bbuser = updateUser(bbuser, userName, password);
 		}
     	
     }
