@@ -7,14 +7,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.backbase.portal.foundation.business.service.GroupBusinessService;
 import com.backbase.portal.foundation.business.service.UserBusinessService;
 import com.backbase.portal.foundation.commons.exceptions.FoundationDataException;
 import com.backbase.portal.foundation.commons.exceptions.FoundationReadOnlyException;
 import com.backbase.portal.foundation.commons.exceptions.FoundationRuntimeException;
-import com.backbase.portal.foundation.commons.exceptions.ItemAlreadyExistsException;
 import com.backbase.portal.foundation.commons.exceptions.ItemNotFoundException;
-
+import com.backbase.portal.foundation.domain.conceptual.StringPropertyValue;
 import com.backbase.portal.foundation.domain.conceptual.UserPropertyDefinition;
 import com.backbase.portal.foundation.domain.model.User;
 
